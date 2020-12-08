@@ -18,3 +18,24 @@ We use a lot of multiplexer to get this done:
 The diagram below depicts all components. Power is supplied by a regulator, delivering 5V to the LED driver and 4.7V to the Teensy and XFM2. This way, the USB can still be used to power the Teensy OR the XFM2 if we need to maintain the program on one of these MCU's. Normally, we don't use the USB ports...
 
 ![](components-schema.png)
+
+The main IC's are distributed over three separate PCB's:
+- Power
+- Teensy
+- XFM2
+
+The TCA9548A is directly fixed to front panel, as are the zeven OLED screens. The screens, TCA9548A and Teensy are connected using a special-made jumper cable, displayed below:
+
+![](oled-cable.png)
+
+The MAX7219CNG and 74HCT125 IC's are placed on panel 1, with six LED toggle switches. The other panels (2,3,4,5) are connected to this pain panel via a 8-pin jumper cable. From panel 1 a 6-pin jumper cable runs back to the Teensy. The other panels have a 2-pin connection back to the teensy.
+
+The MCP23017 IC's are places on a separate PCB. A 6-pin jumper cable runs back to the Teensy. The rotary encoders are connected directly to the MCP23017s, using in total 31 jumper cables (3 per rotary encoder, 10 encoders in total, plus ground).
+
+The picture below depicts the schema for the Teensy PCB, showing all connections to the other boards.
+
+![](teensy-schema.png)
+
+The Teensy itself is placed on a 5x7 PCB:
+
+![](teensy-pcb.png)
