@@ -29,6 +29,8 @@ Tenslotte is het van belang om twee 10K pull-up resistors te verbinden met SDA e
 Zie ook: https://electronics.stackexchange.com/questions/102611/what-happens-if-i-omit-the-pullup-resistors-on-i2c-lines
 Hoewel de wire library de interne pull-ups van de Arduino/Teensy activeert, zijn deze te groot (50K?). Dus dan werken 10K beter. Of wellicht 4.7K nog iets beter. Uiteindelijk is het een verhouding tussen R en C, waarbij C toeneemt als je meer draadjes of elementen toevoegd aan de I2C bus. En aangezien we nogal wat OLEDs willen toevoegen, is de kans groot dat we de pull-ups nog wat lager willen doen.
 
+![](teensy-oled-schema.png)
+
 Het resultaat ziet er dan op een breadboard als volgt uit:
 ![](teensy-oled_bb.png)
 
