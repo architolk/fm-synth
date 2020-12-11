@@ -27,7 +27,7 @@ Merk op dat daarmee de OLED op 5V draait met de Arduino, en op 3.3V op de Teensy
 Tenslotte is het van belang om twee 10K pull-up resistors te verbinden met SDA en SCK. Pull-up resistors zijn noodzakelijk bij een I2C bus. Dergelijke pull-up resistors kunnen al op een bordje zitten waarop het OLED scherm zit, maar dit is niet altijd het geval. Onduidelijk is ook of dit voor dit schermpje zo is, maar het lijkt van niet: dus deze ook afzonderlijk toevoegen.
 
 Zie ook: https://electronics.stackexchange.com/questions/102611/what-happens-if-i-omit-the-pullup-resistors-on-i2c-lines
-Hoewel de wire library de interne pull-ups van de Arduino/Teensy activeert, zijn deze te groot (50K?). Dus dan werken 10K beter. Of wellicht 4.7K nog iets beter. Uiteindelijk is het een verhouding tussen R en C, waarbij C toeneemt als je meer draadjes of elementen toevoegd aan de I2C bus. En aangezien we nogal wat OLEDs willen toevoegen, is de kans groot dat we de pull-ups nog wat lager willen doen.
+Hoewel de wire library de interne pull-ups van de Arduino/Teensy activeert, zijn deze te groot (50K?). Dus dan werken 10K beter. Of wellicht 4.7K nog iets beter. Uiteindelijk is het een verhouding tussen R en C, waarbij C toeneemt als je meer draadjes of elementen toevoegd aan de I2C bus. En aangezien we nogal wat OLEDs willen toevoegen, is de kans groot dat we de pull-ups nog wat lager willen doen. Zie https://www.ti.com/lit/an/slva689/slva689.pdf?ts=1607667801873 voor een mooie uitleg over het bepalen van de waarde voor R.
 
 ![](teensy-oled-schema.png)
 
