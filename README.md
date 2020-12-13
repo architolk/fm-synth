@@ -15,6 +15,16 @@ We use a lot of multiplexer to get this done:
 - A 74HCT125 to levelshift between the Teensy and the LED driver
 - Two MCP23017 to monitor the rotary encoders (2 ports for the encoder, 1 port for the button). These MCP23017 will create an interupt after which you can read the level of a particular encoder
 
+## Individual parts
+
+- [Power PCB](power-source.md)
+- [Teensy PCB](teensy-pcb.md)
+- [TCA9548A and OLEDs](TCA9548A-OLEDs.md)
+- [MCP23017s](MCP23017s.md)
+- [LED Panels](LED-panel.md)
+
+## Overview
+
 The diagram below depicts all components. Power is supplied by a regulator, delivering 5V to the LED driver and 4.7V to the Teensy and XFM2. This way, the USB can still be used to power the Teensy OR the XFM2 if we need to maintain the program on one of these MCU's. Normally, we don't use the USB ports...
 
 ![](components-schema.png)

@@ -20,4 +20,5 @@ We need to cut the PCB very tightly, because we need ground and 5V to be connnec
 - 2x male headers 6pins
 - 1x male header 4pins
 - 5x male headers 2 pins (or 2x 2x3 pins female - if we use male jumper cable)
+- 5x female-female 2 pins jumper cable (or male/male??) => need to make, or use individuals...
 - 1x male header 2pins
