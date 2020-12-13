@@ -22,6 +22,14 @@ Some jumper cables are not placed to not cloud the pcb, the dotted lines mark wh
 
 ![](panel2-pcb.png)
 
+The switches are on one side of the PCB, the header is on the other side. The resistors are also on the back.
+
+Soldering the PCB in this order:
+1. Solder routing wires on back & front (wires to the headers are on the front, others are on the back!)
+2. Solder resistors (and use resistor wire to make routing complete)
+3. Plug in switches and solder all connections
+4. Finish with the two connection wires that are on the front and connected to the switches
+
 ## BOM
 
 For panel #1:
@@ -37,6 +45,7 @@ For panel #1:
 - 5x male header 8 pins (to all other panels)
 - 5x female-female jumpber cable 8 pins (to all other panels)
 - 6x blue tactle LED button
+- 6x 1.5kOhm resistor (9 kOhm total)
 
 For panel #2:
 
@@ -44,31 +53,41 @@ For panel #2:
 - 1x male header 8 pins (from panel #1)
 - 5x red tactle LED button
 - 1x male header 2 pins (to teensy)
+- 5x 2.2kOhm resistor (11 kOhm total)
 
 For panel #3:
 
-- 1x PCB
+- 1x PCB 12x2.2
 - 1x male header 8 pins (from panel #1)
 - 6x green tactle LED button
 - 1x male header 2 pins (to teensy)
+- 6x 1.5kOhm resistor (9 kOhm total)
 
 For panel #4:
 
-- 1x PCB
+- 1x PCB 10x4
 - 1x male header 8 pins (from panel #1)
 - 9x orange tactle LED button
 - 1x male header 2 pins (to teensy)
+- 9x 1kOhm resistor (9 kOhm total)
 
 For panel #5:
 
-- 1x PCB
+- 1x PCB 6x6
 - 1x male header 8 pins (from panel #1)
 - 6x orange tactle LED button
 - 1x male header 2 pins (to teensy)
+- 6x 1.5 kOhm resistor (9 kOhm total)
 
 For panel #6:
 
-- 1x PCB
+- 1x PCB 10x6.1
 - 1x male header 8 pins (from panel #1)
 - 9x green tactle LED button
 - 1x male header 2 pins (to teensy)
+- 9x 1 kOhm resistor (9 kOhm total)
+
+Resistor total:
+- 1 kOhm: 9+9 = 18
+- 1.5 kOhm: 6+6+6 = 18
+- 2.2 kOhm: 5
