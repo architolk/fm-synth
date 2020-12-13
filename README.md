@@ -21,7 +21,7 @@ We use a lot of multiplexer to get this done:
 - [Teensy PCB](teensy-pcb.md)
 - [TCA9548A and OLEDs](TCA9548A-OLEDs.md)
 - [MCP23017s](MCP23017s.md)
-- [LED Panels](LED-panel.md)
+- [LED Panels](LED-panels.md)
 
 ## Overview
 
