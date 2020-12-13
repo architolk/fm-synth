@@ -33,6 +33,8 @@ The output to the other circuits is via 2 male sockets. Every circuit (XFM2, Tee
 
 ![](ps-pcb.png)
 
+The 5x7 PCB is a bit to large, no problem: room enough, and using this PCB we can use the screw holes.
+
 ## Power consumption
 
 * The OLED screens consume around 25mA all pixels enabled. This will however never happen. Normal consumption will max 10mA and min 1,6mA (seee: https://www.youtube.com/watch?v=MF3Qfimeo3c).
@@ -43,3 +45,14 @@ The output to the other circuits is via 2 male sockets. Every circuit (XFM2, Tee
 * The 7805 maxes at 1.5A, but will probably heat up a bit, so 1000mA is probably a safe bet (the Teensy has a 500mA fuse)
 
 Using a 1A wall transistor at 9V is probably more than enough...
+
+## BOM
+
+- 1x 7805 Power regulator 5V
+- 1x 470uF capacitor
+- 1x 100nF capacitor
+- 1x 220nF capacitor
+- 2x Skotty diode 20V
+- 1x power rectifier diode
+- 3x JST male 2-pin connectors
+- 1x 5x7 PCB
