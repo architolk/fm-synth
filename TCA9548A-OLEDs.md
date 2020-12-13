@@ -11,3 +11,16 @@ Onderstaand figuur geeft het schema voor de verbindingen.
 Het idee is om alle OLEDs direct op het frontpanel te bevestigen. Vervolgens hebben we twee PCBs (5x7 en 6x8) die female headers hebben waarop de OLEDs aangesloten kunnen worden. Op die manier "klik" je eigenlijk de PCB's op de OLEDs. De twee PCB's worden verbonden met een custom 8x8 female header kabel. Op de grootste PCB zit ook de TCA9548A multiplexer (op de andere kant dan de female headers). Aan deze kant zit ook weer een male header (4 pins), waarmee de TCA9548A verbonden is met de Teensy.
 
 ![](oleds-pcb.png)
+
+Unsure: do we need pull-up resistors for the I2C lines? Not a problem to add to the board, but unsure...
+
+## BOM
+
+- 1 TCA9548A
+- 7 OLEDs
+- 1 PCB 5x7
+- 1 PCB 6x8
+- 7 female headers 4 pins
+- 1 male header 4 pins
+- 2 male headers 8 pins
+- 1 custom female wire 8 pins
