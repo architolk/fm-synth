@@ -73,7 +73,7 @@ For panel #4:
 
 For panel #5:
 
-- 1x PCB 6x6
+- 1x PCB 6x5.5
 - 1x male header 8 pins (from panel #1)
 - 6x orange tactle LED button
 - 1x male header 2 pins (to teensy)
