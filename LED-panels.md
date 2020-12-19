@@ -78,7 +78,7 @@ For panel #4:
 For panel #5:
 
 - 1x PCB 6x5.5
-  - Pin count: 24x22
+  - Pin count: 23x21
 - 1x male header 8 pins (from panel #1)
 - 6x orange tactle LED button
 - 1x male header 2 pins (to teensy)
@@ -87,7 +87,7 @@ For panel #5:
 For panel #6:
 
 - 1x PCB 10x6.1
-  - Pin count: 37x23
+  - Pin count: 37x20
 - 1x male header 8 pins (from panel #1)
 - 9x green tactle LED button
 - 1x male header 2 pins (to teensy)
