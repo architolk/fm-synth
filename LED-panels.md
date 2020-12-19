@@ -34,7 +34,8 @@ Soldering the PCB in this order:
 
 For panel #1:
 
-- 1x PCB 12x5 (cut from a 15x9 PCB)
+- 1x PCB 12x5 (cut from a 15x9 PCB / 54x34 pins)
+  - Pin count: 47x18
 - 1x MAC7219CNG
 - 1x 74HCT125
 - 1x 24-pin IC socket
@@ -49,7 +50,8 @@ For panel #1:
 
 For panel #2:
 
-- 1x PCB 10x2.2
+- 1x PCB 10x2.2 (cut from a 15x9 PCB / 54x34 pins)
+  - Pin count: 38x8
 - 1x male header 8 pins (from panel #1)
 - 5x red tactle LED button
 - 1x male header 2 pins (to teensy)
@@ -58,6 +60,7 @@ For panel #2:
 For panel #3:
 
 - 1x PCB 12x2.2
+  - Pin count: 46x8
 - 1x male header 8 pins (from panel #1)
 - 6x green tactle LED button
 - 1x male header 2 pins (to teensy)
@@ -66,6 +69,7 @@ For panel #3:
 For panel #4:
 
 - 1x PCB 10x4
+  - Pin count: 38x15
 - 1x male header 8 pins (from panel #1)
 - 9x orange tactle LED button
 - 1x male header 2 pins (to teensy)
@@ -74,6 +78,7 @@ For panel #4:
 For panel #5:
 
 - 1x PCB 6x5.5
+  - Pin count: 24x22
 - 1x male header 8 pins (from panel #1)
 - 6x orange tactle LED button
 - 1x male header 2 pins (to teensy)
@@ -82,6 +87,7 @@ For panel #5:
 For panel #6:
 
 - 1x PCB 10x6.1
+  - Pin count: 37x23
 - 1x male header 8 pins (from panel #1)
 - 9x green tactle LED button
 - 1x male header 2 pins (to teensy)
@@ -91,3 +97,18 @@ Resistor total:
 - 1 kOhm: 9+9 = 18
 - 1.5 kOhm: 6+6+6 = 18
 - 2.2 kOhm: 5
+
+Panels total:
+- 1x PCB 12x5 (cut from a 15x9 PCB / 54x34 pins)
+  - Pin count: 47x18
+- 1x PCB 10x2.2 (cut from a 15x9 PCB / 54x34 pins)
+  - Pin count: 38x8
+- 1x PCB 12x2.2 (cut from a 15x9 PCB / 54x34 pins)
+  - Pin count: 46x8
+- 1x PCB 10x4 (cut from a 15x9 PCB / 54x34 pins)
+  - Pin count: 38x15
+- 1x PCB 10x6.1 (cut from a 15x9 PCB / 54x34 pins)
+  - Pin count: 37x23
+
+- 1x PCB 6x5.5 (cut from 7x9 or 6x8 board)
+  - Pin count: 24x22

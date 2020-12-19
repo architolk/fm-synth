@@ -14,6 +14,12 @@ Het idee is om alle OLEDs direct op het frontpanel te bevestigen. Vervolgens heb
 
 Unsure: do we need pull-up resistors for the I2C lines? Not a problem to add to the board, but unsure...
 
+Minimum dimensions for the board:
+- PCB 5x7 cm: 18x17
+- PCB 6x8 cm: 18x27
+
+The OLED screens are fixed to the front panel, the PCB board are attached to the OLED screens via the female headers, this means that we don't have to use the screw holes of the PCBs.
+
 ## BOM
 
 - 1 TCA9548A

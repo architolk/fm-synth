@@ -18,10 +18,33 @@ We use a lot of multiplexer to get this done:
 ## Individual parts
 
 - [Power PCB](power-source.md)
+  - 5x7 PCB
 - [Teensy PCB](teensy-pcb.md)
+  - 5x7 PCB
+- [XFM2 and DAC](XFM2.md)
+  - 6x8 PCB
 - [TCA9548A and OLEDs](TCA9548A-OLEDs.md)
+  - 5x7 PCB
+  - 6x8 PCB
 - [MCP23017s](MCP23017s.md)
+  - 5x7 PCB
 - [LED Panels](LED-panels.md)
+  - 15x9 PCB
+    - Panel 1 (12x5)
+    - Panel 2 (10x2.2)
+  - 15x9 PCB
+    - Panel 3 (12x2.2)
+    - Panel 4 (10x4)
+  - 7x9 PCB
+    - Panel 5 (6x5.5)
+  - 15x9 PCB
+    - Panel 6 (10x6.1)
+
+Total PCB count:
+- 4x PCB 5x7
+- 2x PCB 6x8
+- 1x PCB 7x9
+- 3x PCB 15x9
 
 ## Overview
 
