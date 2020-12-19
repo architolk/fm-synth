@@ -12,6 +12,8 @@ We use (again...) a 5x7 PCB to hold the Teensy:
 
 We need to cut the PCB very tightly, because we need ground and 5V to be connnected, BUT also directly outside the PCB, because we want to be able to use the mini USB! This also means that we have to drill some extra holes to fix the Teensy PCB to the enclosure.
 
+Minimal pins on the PCB: 17x17
+
 ## BOM
 
 - 1x 5x7 PCB
