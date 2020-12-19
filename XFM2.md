@@ -30,3 +30,19 @@ Het PCB kan in principe aan de onderkant ook een stukje korter gemaakt worden, o
 ![](XFM2-pcb.png)
 
 Merk op dat de "to Power" header feitelijk gewoon de draden zijn naar de powerconnector.
+
+## BOM
+
+- 1x PCB 6x8
+- CMOD A7 35T
+- UDA1334a
+- 24LC1025 memory
+- 8 pins IC voetje
+- 4N35 optocoupler
+- 1N4148 diode
+- 220 Ohm resistor
+- 470 Ohm resistor
+- 1x 2-pin male header
+- 1x JST power cable
+- 1x dual wire to MIDI out
+- 1x triple wire to stereo audio out
