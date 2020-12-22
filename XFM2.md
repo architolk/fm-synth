@@ -42,7 +42,17 @@ Merk op dat de "to Power" header feitelijk gewoon de draden zijn naar de powerco
 - 1N4148 diode
 - 220 Ohm resistor
 - 470 Ohm resistor
-- 1x 2-pin male header
+- 1x 5-pin male header (2 pins to Teensy, 3 pins for audio out)
+- 1x 2-pin male header (for midi-in)
 - 1x JST power cable
-- 1x dual wire to MIDI out
-- 1x triple wire to stereo audio out
+
+## Installatie
+De installatie volgens de website van de XFM2 gaat vrij straight-forward. Wel handig om in Realterm de display op uint8 te zetten, dan krijg je nummertjes terug in plaats van letters. In mijn geval was de com-poort nummer 6 (dat is te zien in Realterm), dus COM6 bij installatie met XLoad.
+
+## Resultaat
+Onderstaande afbeelding geeft het resultaat. Merk op dat de MIDI poort via een jumper-kabeltje is aangesloten, op de volgende manier:
+
+- GROEN (4, vcc pin) gaat naar de weerstand
+- GEEL (5, data-pin) gaat naar de diode
+
+![](xfm2-build.png)
