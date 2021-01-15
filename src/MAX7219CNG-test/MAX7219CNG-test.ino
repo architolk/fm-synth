@@ -17,6 +17,8 @@ const uint16_t MAXOP_SHUTDOWN = 12;
 const uint8_t MAXVAL_OPERATIONAL = 1;
 const uint8_t MAXVAL_NONE = 0;
 
+const uint8_t BTNMAP[8][6] = {{2,0,4,5,6,1},{0,0,0,0,0,0},{0,2,4,1,6,5},{6,1,4,2,0,5},{0,0,0,0,0,0},{2,0,4,6,1,5},{6,1,4,2,0,5},{2,0,4,6,1,5}};
+
 uint8_t rows[8] = {0,0,0,0,0,0,0,0};
 
 void setup() {
@@ -24,8 +26,8 @@ void setup() {
   SPI.begin();
   sendData(MAXOP_SHUTDOWN, MAXVAL_OPERATIONAL);
   sendData(MAXOP_DECODEMODE, MAXVAL_NONE);
-  sendData(MAXOP_SCANLIMIT, 1); // 1 = Displays 0 and 1 are active
-  sendData(MAXOP_INTENSITY, 8);
+  sendData(MAXOP_SCANLIMIT, 7); // 1 = Displays 0 and 1 are active
+  sendData(MAXOP_INTENSITY, 10);
 
   clearDisplay();
 
@@ -35,17 +37,37 @@ void setup() {
   setLed(0,2,true);
   setLed(0,1,true);
   setLed(0,0,true);
-  delay(3000);
 
-  clearDisplay();
+  setLed(5,0,true);
+  setLed(5,1,true);
+  setLed(5,2,true);
+
+  setLed(3,2,true);
+  setLed(6,2,true);
+
+  setLed(2,2,true);
+  
+  delay(2000);
+
+  //clearDisplay();
 
 }
 
 void loop() {
-  for (uint8_t i=4; i<=6; i++) {
-    setLed(0,i,true);
+  for (uint8_t i=0; i<=5; i++) {
+    setLed(0,BTNMAP[0][i],true);
+    setLed(2,BTNMAP[2][i],true);
+    setLed(3,BTNMAP[3][i],true);
+    setLed(5,BTNMAP[5][i],true);
+    setLed(6,BTNMAP[6][i],true);
+    setLed(7,BTNMAP[7][i],true);
     delay(500);
-    setLed(0,i,false);
+    setLed(0,BTNMAP[0][i],false);
+    setLed(2,BTNMAP[2][i],false);
+    setLed(3,BTNMAP[3][i],false);
+    setLed(5,BTNMAP[5][i],false);
+    setLed(6,BTNMAP[6][i],false);
+    setLed(7,BTNMAP[7][i],false);
   }
 }
 
