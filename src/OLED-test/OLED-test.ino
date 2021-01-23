@@ -1,0 +1,79 @@
+/*
+ Simple test for OLED and Teensy
+
+ Pin layout:
+ GND => GND
+ VCC => 3.3V
+ SCL => Teensy SCL0 Pin 19
+ SDA => Teensy SDA0 Pin 18
+*/
+
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+#define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+//                                              1                   2                   3                   4                   5                   6
+//                            1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
+const uint8_t WAVE_SINUS[] = {1,3,3,3,3,3,3,3,3,3,2,3,2,2,3,2,2,2,2,6,2,2,6,2,6,6,6,6,6,6,6,6,6,4,6,6,6,6,6,6,6,6,6,2,6,2,2,6,2,2,2,2,3,2,2,3,2,3,3,3,3,3,3,3,3,3,0,0,0};
+
+void setup() {
+
+  // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+    for(;;); // Don't proceed, loop forever
+  }
+
+  // Show initial display buffer contents on the screen --
+  // the library initializes this with an Adafruit splash screen.
+  // Clear the buffer
+  display.clearDisplay();
+
+  display.setTextSize(1);             // Normal 1:1 pixel scale
+  display.setTextColor(SSD1306_WHITE);        // Draw white text
+  display.setCursor(0,0);             // Start at top-left corner
+  display.println(F("Hello, world!"));
+
+  display.setTextColor(SSD1306_BLACK, SSD1306_WHITE); // Draw 'inverse' text
+  display.println(3.141592);
+
+  display.setTextSize(2);             // Draw 2X-scale text
+  display.setTextColor(SSD1306_WHITE);
+  display.print(F("0x")); display.println(0xDEADBEEF, HEX);
+
+  display.display();
+  delay(2000);
+
+  display.clearDisplay();
+  display.drawRect(0,0,128,64,SSD1306_WHITE);
+  showCurve();
+  display.display();
+  
+
+}
+
+void loop() {
+}
+
+void showCurve() {
+  uint8_t x = 10;
+  uint8_t y = 20;
+  for( uint8_t i=0; i<68; i++) {
+    display.drawPixel(x, y, SSD1306_WHITE);
+    display.drawPixel(x+1, y, SSD1306_WHITE); //A bit fatter
+    switch (WAVE_SINUS[i]) {
+      case 1: y--; break;
+      case 2: x++; break;
+      case 3: x++; y--; break;
+      case 4: y++; break;
+      case 6: x++; y++; break;
+    }
+  }
+}
