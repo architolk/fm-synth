@@ -34,7 +34,7 @@ void setup() {
   Wire.beginTransmission(MCP23017);
   Wire.send(GPPUA);
   Wire.send(B00000000); //No pull-ups for Port-A
-  Wire.send(B11100000); //Pull-ups for Port-B GPB7 (=pin 1), GPB6 (=pin 2), GPB5 (=pin 3)
+  Wire.send(B00000111); //Pull-ups for Port-B GPB0 (=pin 1), GPB1 (=pin 2), GPB2 (=pin 3)
   Wire.endTransmission();
 
   //Simple case: no interupts
