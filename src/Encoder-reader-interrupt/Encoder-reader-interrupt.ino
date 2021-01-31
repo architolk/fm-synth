@@ -1,19 +1,13 @@
 /*
-* Read all encoder
-* We have two MCP23017 chips:
-* - At 0x20 and at 0x24
+* Test of all encoders
 *
-* In two registers (Port A and Port B) are the elements
-* We have 10 encoders:
-* - We need to know if the button is pressed
-* - We need to know if the value is decreased, or increased
-* An encoder has five values
-* - Address: 0x20 or 0x24
-* - Port: A or B
-* - Bits (three)
-* We have two MCP23017 and each has 2 ports, so
-* ports[4]: four ports available. Every port holds an uint8_t byte of data
-*
+* Pin layout:
+* - Pin 1 (closed to pins from encoder) INT chip A -> To pin 2 of Teensy
+* - Pin 2 INT chip B -> To pin 3 of Teensy
+* - Pin 3 3.3V -> To 3V pin of Teensy
+* - Pin 4 GND -> To GND pin of Teensy
+* - Pin 5 SCL -> To pin 19 of Teensy, using 4.7K pull-up resistor
+* - Pin 6 SDA -> To pin 18 of Teensy, using 4.7K pull-up resistor
 */
 
 #include <Wire.h>
