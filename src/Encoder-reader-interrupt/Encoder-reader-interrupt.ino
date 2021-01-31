@@ -12,13 +12,12 @@
 
 #include <Wire.h>
 
-const byte MCP23017 = 0x20; //I2C address of the IC: A0, A1 and A2 are to GND
-const byte GPPUA = 0x0C; //Pull-up resistor PortA
-const byte GPIOA = 0x12; //GPIO register PortA
-const byte INTCAPA = 0x10; //GPIO values at time of the interupt PortA
-const byte IOCON = 0x0A; //Configuration
-const byte GPINTENA = 0x04; //Interupt settings PortA
-const byte INTFA = 0x0E; //Interrupt flag register PortA
+const uint8_t GPPUA = 0x0C; //Pull-up resistor PortA
+const uint8_t GPIOA = 0x12; //GPIO register PortA
+const uint8_t INTCAPA = 0x10; //GPIO values at time of the interupt PortA
+const uint8_t IOCON = 0x0A; //Configuration
+const uint8_t GPINTENA = 0x04; //Interupt settings PortA
+const uint8_t INTFA = 0x0E; //Interrupt flag register PortA
 
 const uint8_t MCP23017[2] = {0x20,0x24};
 
@@ -44,7 +43,7 @@ typedef struct {
   uint8_t btnPort;
   uint8_t btnBit;
 } encoderBits_type;                      //0           1           2           3           4           5           6           7           8           9
-const encoderBits_type encoderBits[10] = {{1,5,7,1,6},{2,5,6,2,7},{2,4,5,0,3},{0,5,6,0,7},{1,1,2,1,0},{2,1,2,2,0},{0,0,1,0,2},{3,6,7,3,5},{3,3,4,3,2},{3,0,1,1,3}}
+const encoderBits_type encoderBits[10] = {{1,5,7,1,6},{2,5,6,2,7},{2,4,5,0,3},{0,5,6,0,7},{1,1,2,1,0},{2,1,2,2,0},{0,0,1,0,2},{3,6,7,3,5},{3,3,4,3,2},{3,0,1,1,3}};
 
 bool encoderALastValue[10];
 
@@ -53,15 +52,15 @@ typedef struct {
   uint8_t mask;
   uint8_t encoder;
 } encoderMask_type;
-const encoderMask_type encodermask[12] = {{3,B11100000,7},{3,B00011100,8},{3,B00000011,9},
+const encoderMask_type encoderMask[12] = {{3,B11100000,7},{3,B00011100,8},{3,B00000011,9},
                                           {1,B11100000,0},{1,B00001000,9},{1,B00000111,4},
                                           {2,B11100000,1},{2,B00011000,2},{2,B00000111,5},
                                           {0,B11100000,3},{0,B00001000,2},{0,B00000111,6}};
 
 void setupEncoders() {
   for (int i=0; i<10; i++) {
-    encoders[i].buttonPressed = FALSE;
-    encoders[i].buttonClick = FALSE;
+    encoders[i].buttonPressed = false;
+    encoders[i].buttonClick = false;
     encoders[i].value = 0;
     encoderALastValue[i] = LOW;
   }
@@ -110,21 +109,21 @@ void doInterruptA() {
   scanEncoders(0);
 }
 
-void doInterruptA() {
+void doInterruptB() {
   scanEncoders(1);
 }
 
 //Only one MCP23017 needs to be scanned at one time, due to separate interrupts
 void scanEncoders(uint8_t portOffset) {
-  bool somethingHappened = FALSE;
+  bool somethingHappened = false;
   //Read which input has triggered the interrupt
   readRegister(INTFA,portOffset);
   //Find out which encoder has been turned
   encoder = -1;
   for (int i=0; i<12; i++) {
     if ((encoderMask[i].port==portOffset) || (encoderMask[i].port==(portOffset+2))) {
-      if (portsValue[encodermask[i].port] & encodermask[i].mask)!=0) {
-        encoder = encodermask[i].encoder;
+      if ((portsValue[encoderMask[i].port] & encoderMask[i].mask)!=0) {
+        encoder = encoderMask[i].encoder;
       }
     }
   }
@@ -139,21 +138,21 @@ void scanEncoders(uint8_t portOffset) {
       } else {
         encoders[encoder].value++;
       }
-      somethingHappened = TRUE;
+      somethingHappened = true;
     }
     encoderALastValue[encoder] = n;
     if (bitRead(portsValue[encoderBits[encoder].btnPort],encoderBits[encoder].btnBit) == LOW) {
       if (encoders[encoder].buttonPressed) {
         //Button is still pressed, maybe a turn of the encoder without releasing the button? Not a click!
-        encoders[encoder].buttonClick = FALSE;
+        encoders[encoder].buttonClick = false;
       } else {
-        encoders[encoder].buttonClick = TRUE;
-        encoders[encoder].buttonPressed = TRUE;
-        somethingHappened = TRUE;
+        encoders[encoder].buttonClick = true;
+        encoders[encoder].buttonPressed = true;
+        somethingHappened = true;
       }
     } else {
       //Button is released, maybe a turn of the encoder? Not a click!
-      encoders[encoder].buttonClick = FALSE;
+      encoders[encoder].buttonClick = false;
     }
   }
   if (somethingHappened) {
