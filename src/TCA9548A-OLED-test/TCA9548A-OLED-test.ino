@@ -80,6 +80,7 @@ void loop() {
   display.display();
 
   display.clearDisplay();
+  showRectangle();
   showCurve();
   TCA9548A(5);
   display.display();
@@ -89,6 +90,7 @@ void loop() {
   display.setTextColor(SSD1306_WHITE);        // Draw white text
   display.setCursor(0,0);             // Start at top-left corner
   display.println(F("Dadada"));
+  showRectangle();
   TCA9548A(4);
   display.display();
 
@@ -97,6 +99,7 @@ void loop() {
   display.setTextColor(SSD1306_WHITE);        // Draw white text
   display.setCursor(0,0);             // Start at top-left corner
   display.println(F("Display 6"));
+  showRectangle();
   TCA9548A(6);
   display.display();
 
@@ -105,6 +108,7 @@ void loop() {
   display.setTextColor(SSD1306_WHITE);        // Draw white text
   display.setCursor(0,0);             // Start at top-left corner
   display.println(F("Display 7"));
+  showRectangle();
   TCA9548A(7);
   display.display();
 

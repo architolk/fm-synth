@@ -16,7 +16,8 @@
 
 #include <Wire.h>
 
-const byte MCP23017 = 0x20; //I2C address of the IC: A0, A1 and A2 are to GND
+//const byte MCP23017 = 0x20; //I2C address of the IC: A0, A1 and A2 are to GND
+const byte MCP23017 = 0x24; //I2C address of the IC: A0, A1 to GND, A2 to VCC
 const byte GPPUA = 0x0C; //Pull-up resistor PortA;
 const byte GPIOA = 0x12;
 const byte GPIOB= 0x13;
