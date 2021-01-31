@@ -35,14 +35,15 @@ void setup() {
 
   Wire.beginTransmission(MCP23017);
   Wire.send(IOCON);
-  Wire.send(B00100000); //Enable sequential addresses, 16-bit mode
+  Wire.send(B00000000); //Enable sequential addresses, 16-bit mode
+  Wire.send(B00000000); //Enable sequential addresses, 16-bit mode
   Wire.endTransmission();
 
   //Default mode of the MCP23017 is GPIO pins as input, so we don't need to set this up
 
   Wire.beginTransmission(MCP23017);
   Wire.send(GPPUA);
-  Wire.send(B00000000); //No pull-ups for Port-A
+  Wire.send(B00000111); //No pull-ups for Port-A
   Wire.send(B00000111); //Pull-ups for Port-B GPB0 (=pin 1), GPB1 (=pin 2), GPB2 (=pin 3)
   Wire.endTransmission();
 
@@ -55,9 +56,9 @@ void setup() {
 
 void loop() {
   readRegisters();
-  n = bitRead(registerB,0);
+  n = bitRead(registerA,1);
   if ((encoderPinALast == LOW) && (n == HIGH)) {
-    if (bitRead(registerB,1) == LOW) {
+    if (bitRead(registerA,0) == LOW) {
       encoderPos--;
     } else {
       encoderPos++;
@@ -65,7 +66,7 @@ void loop() {
     Serial.println(encoderPos);
   }
   encoderPinALast = n;
-  if (bitRead(registerB,2) == LOW) {
+  if (bitRead(registerA,2) == LOW) {
     encoderPos = 5;
     Serial.println(encoderPos);
   }

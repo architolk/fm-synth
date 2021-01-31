@@ -36,24 +36,28 @@ void setup() {
 
   Wire.beginTransmission(MCP23017);
   Wire.send(IOCON);
-  Wire.send(B01100000); //Enable sequential addresses, 16-bit mode, mirror interupts, active-low interupt
+  Wire.send(0b01000000); //Enable sequential addresses, 16-bit mode, mirror interupts, active-low interupt
+  Wire.send(0b01000000); //Enable sequential addresses, 16-bit mode, mirror interupts, active-low interupt
   Wire.endTransmission();
 
   //Default mode of the MCP23017 is GPIO pins as input, so we don't need to set this up
 
   Wire.beginTransmission(MCP23017);
   Wire.send(GPPUA);
-  Wire.send(B00000000); //No pull-ups for Port-A
-  Wire.send(B00000111); //Pull-ups for Port-B GPB0 (=pin 1), GPB1 (=pin 2), GPB2 (=pin 3)
+  Wire.send(0b00000000); //No pull-ups for Port-A
+  Wire.send(0b00000111); //Pull-ups for Port-B GPB0 (=pin 1), GPB1 (=pin 2), GPB2 (=pin 3)
   Wire.endTransmission();
 
   //Configure interupts
   Wire.beginTransmission(MCP23017);
   Wire.send(GPINTENA);
-  Wire.send(B00000000); //No interupts for Port-A
-  Wire.send(B00000111); //Interupts for Port-B GPB0, GPB1 and GPB2
+  Wire.send(0b00000000); //No interupts for Port-A
+  Wire.send(0b00000111); //Interupts for Port-B GPB0, GPB1 and GPB2
   Wire.endTransmission();
   //INTCOND and DEFVAL remain at default positions, meaning pins are compared to previous pin value
+
+  //Extra read registers, to reset interrupts
+  readRegisters();
 
   //attach interupt
   attachInterrupt(2, doInterrupt, CHANGE);
@@ -87,7 +91,7 @@ void readRegisters() {
 
 void doInterrupt() {
   readRegisters();
-  n = bitRead(registerB,0);
+  n = bitRead(registerB,2);
   if ((encoderPinALast == LOW) && (n == HIGH)) {
     if (bitRead(registerB,1) == LOW) {
       encoderPos--;
@@ -97,7 +101,7 @@ void doInterrupt() {
     Serial.println(encoderPos);
   }
   encoderPinALast = n;
-  if (bitRead(registerB,2) == LOW) {
+  if (bitRead(registerB,0) == LOW) {
     encoderPos = 5;
     Serial.println(encoderPos);
   }

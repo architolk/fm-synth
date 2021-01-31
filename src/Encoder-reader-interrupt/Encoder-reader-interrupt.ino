@@ -1,6 +1,8 @@
 /*
 * Test of all encoders
 *
+* NB: Chip will NOT be reset when new code is uploaded, so please: disconnect before re-upload code!!!
+*
 * Pin layout:
 * - Pin 1 (closed to pins from encoder) INT chip A -> To pin 2 of Teensy
 * - Pin 2 INT chip B -> To pin 3 of Teensy
@@ -29,6 +31,8 @@ typedef struct {
 } encoder_type;
 encoder_type encoders[10]; //Encoder values 0-9
 
+bool rotating = false; //debounce management
+
 // 0 = PortA of IC 0x20
 // 1 = PortA of IC 0x24
 // 2 = PortB of IC 0x20
@@ -43,7 +47,7 @@ typedef struct {
   uint8_t btnPort;
   uint8_t btnBit;
 } encoderBits_type;                      //0           1           2           3           4           5           6           7           8           9
-const encoderBits_type encoderBits[10] = {{1,5,7,1,6},{2,5,6,2,7},{2,4,5,0,3},{0,5,6,0,7},{1,1,2,1,0},{2,1,2,2,0},{0,0,1,0,2},{3,6,7,3,5},{3,3,4,3,2},{3,0,1,1,3}};
+const encoderBits_type encoderBits[10] = {{1,1,0,1,2},{2,5,6,2,7},{2,4,3,0,4},{0,0,2,0,1},{1,5,6,1,7},{2,2,1,2,0},{0,6,7,0,5},{3,7,6,3,5},{3,3,4,3,2},{3,0,1,1,4}};
 
 bool encoderALastValue[10];
 
@@ -53,9 +57,9 @@ typedef struct {
   uint8_t encoder;
 } encoderMask_type;
 const encoderMask_type encoderMask[12] = {{3,B11100000,7},{3,B00011100,8},{3,B00000011,9},
-                                          {1,B11100000,0},{1,B00001000,9},{1,B00000111,4},
+                                          {1,B00000111,0},{1,B00010000,9},{1,B11100000,4},
                                           {2,B11100000,1},{2,B00011000,2},{2,B00000111,5},
-                                          {0,B11100000,3},{0,B00001000,2},{0,B00000111,6}};
+                                          {0,B00000111,3},{0,B00010000,2},{0,B11100000,6}};
 
 void setupEncoders() {
   for (int i=0; i<10; i++) {
@@ -69,7 +73,8 @@ void setupEncoders() {
 void setupMCP23017(uint8_t portOffset) {
   Wire.beginTransmission(MCP23017[portOffset]);
   Wire.send(IOCON);
-  Wire.send(B01100000); //Enable sequential addresses, 16-bit mode, mirror interupts, active-low interupt
+  Wire.send(0b01000000); //Enable sequential addresses, 16-bit mode, mirror interupts, active-low interupt
+  Wire.send(0b01000000); //Enable sequential addresses, 16-bit mode, mirror interupts, active-low interupt
   Wire.endTransmission();
 
   //Default mode of the MCP23017 is GPIO pins as input, so we don't need to set this up
@@ -77,15 +82,15 @@ void setupMCP23017(uint8_t portOffset) {
   //Configure pull-ups
   Wire.beginTransmission(MCP23017[portOffset]);
   Wire.send(GPPUA);
-  Wire.send(B11111111); //Pull-ups for Port-A
-  Wire.send(B11111111); //Pull-ups for Port-B
+  Wire.send(0b11111111); //Pull-ups for Port-A
+  Wire.send(0b11111111); //Pull-ups for Port-B
   Wire.endTransmission();
 
   //Configure interupts
   Wire.beginTransmission(MCP23017[portOffset]);
   Wire.send(GPINTENA);
-  Wire.send(B11111111); //Interrupts for Port-A
-  Wire.send(B11111111); //Interrupts for Port-B
+  Wire.send(0b11111111); //Interrupts for Port-A
+  Wire.send(0b11111111); //Interrupts for Port-B
   Wire.endTransmission();
   //INTCOND and DEFVAL remain at default positions, meaning pins are compared to previous pin value
 }
@@ -106,11 +111,15 @@ void reactToEncoder() {
 }
 
 void doInterruptA() {
+  if ( rotating ) delay (1);  // wait a little until the bouncing is done
   scanEncoders(0);
+  rotating = false;
 }
 
 void doInterruptB() {
+  if ( rotating ) delay (1);  // wait a little until the bouncing is done
   scanEncoders(1);
+  rotating = false;
 }
 
 //Only one MCP23017 needs to be scanned at one time, due to separate interrupts
@@ -119,7 +128,9 @@ void scanEncoders(uint8_t portOffset) {
   //Read which input has triggered the interrupt
   readRegister(INTFA,portOffset);
   //Find out which encoder has been turned
-  encoder = -1;
+  //Don't reset the encoder! Interrupt occur to often, so we need to know which to look at!
+  //By not resetting the encoder, we have some memory which encoder is turned!
+  //encoder = -1;
   for (int i=0; i<12; i++) {
     if ((encoderMask[i].port==portOffset) || (encoderMask[i].port==(portOffset+2))) {
       if ((portsValue[encoderMask[i].port] & encoderMask[i].mask)!=0) {
@@ -152,6 +163,7 @@ void scanEncoders(uint8_t portOffset) {
       }
     } else {
       //Button is released, maybe a turn of the encoder? Not a click!
+      encoders[encoder].buttonPressed = false;
       encoders[encoder].buttonClick = false;
     }
   }
@@ -180,6 +192,9 @@ void setup() {
   setupMCP23017(0);
   setupMCP23017(1);
 
+  readRegister(INTCAPA,0);
+  readRegister(INTCAPA,1);
+
   //attach interrupts
   attachInterrupt(2, doInterruptA, CHANGE);
   attachInterrupt(3, doInterruptB, CHANGE);
@@ -188,5 +203,6 @@ void setup() {
 }
 
 void loop() {
+  rotating = true;
   //Nothing happening, everything is handled by interrupts
 }
