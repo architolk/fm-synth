@@ -10,6 +10,14 @@
 * - Pin 4 GND -> To GND pin of Teensy
 * - Pin 5 SCL -> To pin 19 of Teensy, using 4.7K pull-up resistor
 * - Pin 6 SDA -> To pin 18 of Teensy, using 4.7K pull-up resistor
+*
+* Important structure is encoder, this is the last used encoder
+* and encoders[encoder], which gives you the values of the last used encoder:
+* - buttonPressed: true as long as a button is pressed (hold down)
+* - buttonClick: true when a button is pressed (but released immediatly thereafter)
+* - value: the current value of the encoder, range 0 - 255 (as used by the XFM2)
+*
+* TODO: speedup the increments of the encoder, depending on the "speed" of the turn
 */
 
 //#include <SPI.h>
@@ -150,11 +158,16 @@ void scanEncoders(uint8_t portOffset) {
     bool n = bitRead(portsValue[encoderBits[encoder].encPort],encoderBits[encoder].encAbit);
     if ((encoderALastValue[encoder] == LOW) && (n == HIGH)) {
       if (bitRead(portsValue[encoderBits[encoder].encPort],encoderBits[encoder].encBbit) == LOW) {
-        encoders[encoder].value--;
+        if (encoders[encoder].value>0) { //Don't go below zero
+          somethingHappened = true;
+          encoders[encoder].value--;
+        }
       } else {
-        encoders[encoder].value++;
+        if (encoders[encoder].value<255) { //Don't go above 255
+          somethingHappened = true;
+          encoders[encoder].value++;
+        }
       }
-      somethingHappened = true;
     }
     encoderALastValue[encoder] = n;
     if (bitRead(portsValue[encoderBits[encoder].btnPort],encoderBits[encoder].btnBit) == LOW) {
