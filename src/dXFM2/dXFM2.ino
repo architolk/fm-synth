@@ -8,6 +8,8 @@
 */
 #include "SPI.h"
 
+const uint8_t MAXPIN_LOAD = 10; //LOAD pin for Teensy of the MAX7219CNG chip
+
 void setup() {
   pinMode(MAXPIN_LOAD, OUTPUT); //MAXPIN_LOAD is defined in the submodule
   SPI.begin();
@@ -17,11 +19,7 @@ void setup() {
 
   delay(2000); //two seconds splash screen
 
-  clearLEDs(); //LEDs should all be off after splash screen
-
-  //Debugging, not for production
-  Serial.begin(9600);
-  Serial.println("Starting");
+  initLEDs(); //Initialize LEDs to startup position
 }
 
 void loop() {
@@ -30,22 +28,18 @@ void loop() {
 }
 
 void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
-  //Debugging, not for production
-  Serial.print("Panel: ");
-  Serial.print(panel);
-  Serial.print(" Button: ");
-  Serial.print(button);
-  Serial.print(" Menu: ");
-  Serial.print(menu);
-  Serial.print(" Btn: ");
-  Serial.println(btn);
-
-  if (menu<6) {
-    //Operators, so simple toggle (more than one LED can be active)
-    toggleLED(row,col,menu,btn);
-  } else {
-    //Menu mode, so only one LED can be active
-    //Need some work: menu 8 & 9 can have only one active LED!
+  if (menu==7) {
+    //Blue menu toggle
     toggleLEDRow(row,col,menu,btn);
+  } else {
+    if (menu>7) {
+      //Green menu toggle (a bit of a hack: buttons might not have the correct value, but we don't use that anyway...)
+      clearLEDRow(5);
+      clearLEDRow(7);
+      toggleLEDRow(row,col,menu,btn);
+    } else {
+      //Operator matrix set/unset
+      toggleLED(row,col,menu,btn);
+    }
   }
 }

@@ -7,7 +7,6 @@
 */
 
 //MAX7219CNG register addresses
-const uint8_t MAXPIN_LOAD = 10;
 const uint16_t MAXOP_DIGIT0 = 1;
 const uint16_t MAXOP_DECODEMODE = 9;
 const uint16_t MAXOP_INTENSITY = 10;
@@ -59,6 +58,17 @@ void setupLEDButtons() {
   clearLEDs();
 }
 
+void splashLEDs() {
+  setLED(0,1,true); //Volume LED on
+  setLED(0,2,true); //Level LED on
+  setLED(5,1,true); //Master LED on
+}
+
+void initLEDs() {
+  doLEDButtonPressed(0,1,7,0); //Volume button selected
+  doLEDButtonPressed(5,4,8,2); //Operator of synth A selected
+}
+
 void scanLEDButtons() {
   uint8_t p[6] = {0,0,0,0,0,0};
   p[0] = (analogRead(A9)+85)/171; //Range between 0 and 6 (six buttons on pannel 1, 0 means no button pressed)
@@ -67,14 +77,14 @@ void scanLEDButtons() {
   p[3] = (analogRead(A6)+57)/114; //Range between 0 and 9 (nine buttons on panel 4)
   p[4] = (analogRead(A7)+85)/171; //Range between 0 and 6 (six buttons on panel 5)
   p[5] = (analogRead(A2)+57)/114; //Range between 0 and 9 (nine buttons on panel 6)
-  for (int i=0; i<6; i++) {
-    if (panelvalue[i]!=p[i]) {
-      if (panelvalue[i]==0) {
+  for (int panel=0; panel<6; panel++) {
+    if (panelvalue[panel]!=p[panel]) {
+      if (panelvalue[panel]==0) {
         //Button down
         //What will happen, depends on the implementation of doLEDButtonPressed in the main module
-        doLEDButtonPressed(BTNMAP2[panel][button-1].row,BTNMAP2[panel][button-1].col,BTNMAP2[panel][button-1].menu,BTNMAP2[panel][button-1].btn);
+        doLEDButtonPressed(BTNMAP[panel][p[panel]-1].row,BTNMAP[panel][p[panel]-1].col,BTNMAP[panel][p[panel]-1].menu,BTNMAP[panel][p[panel]-1].btn);
       }
-      panelvalue[i]=p[i];
+      panelvalue[panel]=p[panel];
     }
   }
 }
@@ -82,7 +92,7 @@ void scanLEDButtons() {
 //Function to toggle one particular LED (all other LEDs remain the same state)
 void toggleLED(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
   buttons[menu][btn] = !buttons[menu][btn];
-  setLed(row,col,buttons[menu][btn]);
+  setLED(row,col,buttons[menu][btn]);
 }
 
 //Function to toggle an entire row (like radio buttons)
@@ -92,11 +102,11 @@ void toggleLEDRow(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
   }
   buttons[menu][btn] = true;
   clearLEDRow(row);
-  setled(row,col,true);
+  setLED(row,col,true);
 }
 
 //Low-level function to turn an individual LED on or off
-void setLed(uint8_t row, uint8_t col, bool onoff) {
+void setLED(uint8_t row, uint8_t col, bool onoff) {
   bitWrite(rows[row],col,onoff);
   sendData(MAXOP_DIGIT0+row,rows[row]);
 }
