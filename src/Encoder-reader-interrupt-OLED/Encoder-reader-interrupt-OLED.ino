@@ -27,6 +27,11 @@
 #include <Fonts/Dungeon9pt7b.h>
 #include <Fonts/Dungeon12pt7b.h>
 
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define OLED_RESET -1 //Share reset with Arduino reset pin
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
 const uint8_t GPPUA = 0x0C; //Pull-up resistor PortA
 const uint8_t GPIOA = 0x12; //GPIO register PortA
 const uint8_t INTCAPA = 0x10; //GPIO values at time of the interupt PortA
@@ -112,14 +117,7 @@ void reactToEncoder() {
   //This function is called whenever an encoder is used
   //It should look at the value of encoders[encoder]
   if (encoder>=0) {
-    Serial.print("Encoder: ");
-    Serial.print(encoder);
-    Serial.print(" buttonPressed: ");
-    Serial.print(encoders[encoder].buttonPressed);
-    Serial.print(" buttonClick: ");
-    Serial.print(encoders[encoder].buttonClick);
-    Serial.print(" value: ");
-    Serial.println(encoders[encoder].value);
+    showValue(encoders[encoder].value);
   }
 }
 
@@ -202,7 +200,69 @@ void readRegister(uint8_t reg, uint8_t portOffset) {
   }
 }
 
-void showValue(long value) {
+void setupOLEDs() {
+  TCA9548A(2);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    for(;;); // Don't proceed, loop forever
+  }
+  TCA9548A(1);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    for(;;); // Don't proceed, loop forever
+  }
+  TCA9548A(4);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    for(;;); // Don't proceed, loop forever
+  }
+  TCA9548A(5);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    for(;;); // Don't proceed, loop forever
+  }
+  TCA9548A(6);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    for(;;); // Don't proceed, loop forever
+  }
+  TCA9548A(7);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    for(;;); // Don't proceed, loop forever
+  }
+  TCA9548A(0);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    for(;;); // Don't proceed, loop forever
+  }
+}
+
+void initOLEDs() {
+  //Initialize OLEDs with some initial display text
+  showSplashScreen(0);
+  showSplashScreen(1);
+  showSplashScreen(2);
+  showSplashScreen(3);
+  showSplashScreen(4);
+  showSplashScreen(5);
+  showSplashScreen(6);
+  showSplashScreen(7);
+}
+
+void showSplashScreen(uint8_t bus) {
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,0);
+  display.print(F("Display "));
+  display.print(bus);
+  showRectangle();
+  TCA9548A(bus);
+  display.display();
+}
+
+void TCA9548A(uint8_t bus)
+{
+  Wire.beginTransmission(0x70);  // TCA9548A address is 0x70
+  Wire.write(1 << bus);          // send byte to select bus
+  Wire.endTransmission();
+}
+
+void showValue(uint8_t value) {
   display.clearDisplay();
   display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
@@ -218,11 +278,12 @@ void showValue(long value) {
   display.display();
 }
 
-void drawPercentbar(int x,int y, int width,int height, int progress) {
-  progress = progress > 100 ? 100 : progress;
-  progress = progress < 0 ? 0 :progress;
+void showRectangle() {
+  display.drawRect(0,0,128,64,SSD1306_WHITE);
+}
 
-  float bar = ((float)(width-4) / 100) * progress; 
+void drawPercentbar(int x,int y, int width,int height, uint8_t progress) {
+  float bar = ((float)(width-4) / 255) * progress; 
 
   display.drawRect(x, y, width, height, WHITE);
 
@@ -242,6 +303,8 @@ void setup() {
 
   Wire.begin();
 
+  setupOLEDs();
+
   setupMCP23017(0);
   setupMCP23017(1);
 
@@ -252,7 +315,7 @@ void setup() {
   attachInterrupt(2, doInterruptA, CHANGE);
   attachInterrupt(3, doInterruptB, CHANGE);
 
-  Serial.begin(9600);
+  initOLEDs();
 }
 
 void loop() {
