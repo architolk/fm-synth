@@ -7,6 +7,11 @@
 *
 */
 #include "SPI.h"
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <Fonts/Dungeon9pt7b.h>
+#include <Fonts/Dungeon12pt7b.h>
 
 const uint8_t MAXPIN_LOAD = 10; //LOAD pin for Teensy of the MAX7219CNG chip
 

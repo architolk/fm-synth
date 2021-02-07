@@ -4,7 +4,7 @@
 *  this module is about controlling the OLED screens via a TCA9548A
 *
 */
-const uint8_t SCRMAP[7] = {0,1,2,4,5,6,7}
+const uint8_t SCRMAP[7] = {5,7,2,4,0,1,6};
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -25,10 +25,22 @@ void splashScreens() {
     display.clearDisplay();
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
-    display.setCursor(5,5);
-    display.print(F("Display "));
-    display.print(screen);
-    showScreenBorder;
+    if (screen<6) {
+      //Show splash for operator
+      display.setFont(&Dungeon9pt7b);
+      display.setCursor(12,22);
+      display.print(F("Operator"));
+      display.setFont(&Dungeon12pt7b);
+      display.setCursor(12,47);
+      display.print(F("#"));
+      display.print(screen+1);
+    } else {
+      //Show splash for dXFM2
+      display.setFont(&Dungeon12pt7b);
+      display.setCursor(20,38);
+      display.print(F("dXFM2"));
+    }
+    //showScreenBorder();
     TCA9548A(SCRMAP[screen]);
     display.display();
   }
