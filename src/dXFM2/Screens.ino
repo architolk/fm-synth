@@ -4,6 +4,8 @@
 *  this module is about controlling the OLED screens via a TCA9548A
 *
 */
+
+//Mapping from logical screens to fysical OLEDs
 const uint8_t SCRMAP[7] = {5,7,2,4,0,1,6};
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
@@ -48,6 +50,32 @@ void splashScreens() {
 
 void initScreens() {
   //Nothing to do: initialization of screens is nothing at the moment
+}
+
+//Shows the value of some parameter (fixed to "Volume" at this moment)
+void showValueOnScreen(uint8_t screen, uint8_t value) {
+  display.clearDisplay();
+  display.setFont(&Dungeon12pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,20);
+  display.print(F("Volume:"));
+  drawPercentbar( 0, 30, 128, 30,value);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void drawPercentbar(int x,int y, int width,int height, uint8_t progress) {
+  float bar = ((float)(width-4) / 255) * progress;
+
+  display.drawRect(x, y, width, height, WHITE);
+  // Display progress text
+  display.setCursor((width/2) -16, y+21 );
+  display.setTextColor(WHITE);
+  display.print(progress);
+  // Bar, inverse: switch colors at text position
+  display.fillRect(x+2, y+2, bar , height-4, SSD1306_INVERSE);
 }
 
 //Shows a rectangle at the screen's border

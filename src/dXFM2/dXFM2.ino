@@ -22,8 +22,11 @@ void setup() {
   setupLEDButtons(); //setup instructions for the LED buttons
   splashLEDs(); //default splash screen for the LEDs
 
-  //Next, we splash the screens
+  //Next, we initialize the MCP23017 for the encoders
   Wire.begin();
+  setupEncoders();
+
+  //Next, we splash the OLED screens
   setupScreens();
   splashScreens();
 
@@ -38,6 +41,7 @@ void loop() {
   delay(50); //Some delay to mitigate bouncing, should be done with timer and not a delay - whatever for now!
 }
 
+//A LED button was pressed, respond!
 void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
   if (menu==7) {
     //Blue menu toggle
@@ -52,5 +56,13 @@ void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
       //Operator matrix set/unset
       toggleLED(row,col,menu,btn);
     }
+  }
+}
+
+//An encoder was used, respond!
+void doEncoderUsed(uint8_t encoder, uint8_t value) {
+  //We might be one of: encoder 0 is not screen 0!
+  if (encoder<7) {
+    showValueOnScreen(encoder,value);
   }
 }
