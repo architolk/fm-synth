@@ -24,9 +24,11 @@ const uint16_t MAXOP_SHUTDOWN = 12;
 const uint8_t MAXVAL_OPERATIONAL = 1;
 const uint8_t MAXVAL_NONE = 0;
 
+//Mapping van LED-buttons
 const uint8_t BTNMAP[8][6] = {{2,0,4,5,6,1},{2,0,1,6,5,4},{0,2,4,1,6,5},{6,1,4,2,0,5},{4,0,5,2,1,6},{2,0,4,6,1,5},{6,1,4,2,0,5},{2,0,4,6,1,5}};
 
 uint8_t rows[8] = {0,0,0,0,0,0,0,0};
+uint8_t panelvalue[6] = {0,0,0,0,0,0};
 
 void setup() {
   pinMode(MAXPIN_LOAD, OUTPUT);
@@ -71,9 +73,12 @@ void loop() {
     setLed(6,BTNMAP[6][i],true); //Panel 6a (green leds left)
     setLed(7,BTNMAP[7][i],true); //Panel 6b (green leds right)
 
+    /*
     delay(500);
     readAndDisplay();
-    
+    */
+    delayAndScan();
+
     setLed(0,BTNMAP[0][i],false);
     setLed(1,BTNMAP[1][i],false);
     setLed(2,BTNMAP[2][i],false);
@@ -85,13 +90,30 @@ void loop() {
   }
 }
 
+void delayAndScan() {
+  for (int i=0; i<10; i++) {
+    readAndDisplay();
+    delay(50);
+  }
+}
+
 void readAndDisplay() {
-  int p1 = analogRead(A9);
-  int p2 = analogRead(A8);
-  int p3 = analogRead(A3);
-  int p4 = analogRead(A6);
-  int p5 = analogRead(A7);
-  int p6 = analogRead(A2);
+  uint8_t p[6] = {0,0,0,0,0,0};
+  p[0] = analogRead(A9)/171; //Range between 0 and 6 (six buttons on pannel 1, 0 means no button pressed)
+  p[1] = analogRead(A8)/205; //Range between 0 and 5 (five buttons on panel 2)
+  p[2] = analogRead(A3)/171; //Range between 0 and 6 (six buttons on panel 3)
+  p[3] = analogRead(A6)/114; //Range between 0 and 9 (nine buttons on panel 4)
+  p[4] = analogRead(A7)/171; //Range between 0 and 6 (six buttons on panel 5)
+  p[5] = analogRead(A2)/114; //Range between 0 and 9 (nine buttons on panel 6)
+  for (int i=0; i<6 i++) {
+    if (panelvalue[i]!=p[i]) {
+      if (panelvalue[i]==0) {
+        buttonPressed(0,p[i]) //Button down
+      }
+      panelvalue[i]=p[i];
+    }
+  }
+  /*
   Serial.print("Analog: ");
   Serial.print(p1); Serial.print(" - ");
   Serial.print(p2); Serial.print(" - ");
@@ -99,6 +121,14 @@ void readAndDisplay() {
   Serial.print(p4); Serial.print(" - ");
   Serial.print(p5); Serial.print(" - ");
   Serial.println(p6);
+  */
+}
+
+void buttonPressed(uint8_t panel, uint8_t button) {
+  Serial.print("Panel: ");
+  Serial.print(panel);
+  Serial.print(" Button: ");
+  Serial.println(button);
 }
 
 void setLed(uint8_t row, uint8_t col, bool onoff) {
