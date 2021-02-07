@@ -60,7 +60,7 @@ void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
 }
 
 //An encoder was used, respond!
-void doEncoderUsed(uint8_t encoder, uint8_t value) {
+void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
   //We might be one of: encoder 0 is not screen 0!
   if (encoder<7) {
     showValueOnScreen(encoder,value);

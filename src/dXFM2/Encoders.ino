@@ -102,7 +102,7 @@ void doInterruptB() {
 }
 
 //Only one MCP23017 needs to be scanned at one time, due to separate interrupts
-void scanEncoders(uint8_t portOffset) {
+void scanEncoder(uint8_t portOffset) {
   bool somethingHappened = false;
   //Read which input has triggered the interrupt
   readRegister(INTFA,portOffset);
