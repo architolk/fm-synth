@@ -11,15 +11,21 @@
 const uint8_t MAXPIN_LOAD = 10; //LOAD pin for Teensy of the MAX7219CNG chip
 
 void setup() {
+  //We begin with the LEDs, splash them and continu with the OLED screens
   pinMode(MAXPIN_LOAD, OUTPUT); //MAXPIN_LOAD is defined in the submodule
   SPI.begin();
   setupLEDButtons(); //setup instructions for the LED buttons
-
   splashLEDs(); //default splash screen for the LEDs
+
+  //Next, we splash the screens
+  Wire.begin();
+  setupScreens();
+  splashScreens();
 
   delay(2000); //two seconds splash screen
 
   initLEDs(); //Initialize LEDs to startup position
+  initScreens(); //Initialize OLED screens to startup position
 }
 
 void loop() {
