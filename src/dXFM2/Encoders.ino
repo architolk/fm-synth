@@ -34,13 +34,13 @@ typedef struct {
   uint8_t btnBit;
 } encoderBits_type;
 const encoderBits_type encoderBits[10] = {
-  {1,1,0,1,2}  //0
-  ,{2,5,6,2,7} //1
-  ,{2,4,3,0,4} //2
-  ,{0,0,2,0,1} //3
-  ,{1,5,6,1,7} //4
-  ,{2,2,1,2,0} //5
-  ,{0,6,7,0,5} //6
+  {2,5,6,2,7}  //0
+  ,{2,4,3,0,4} //1
+  ,{0,0,2,0,1} //2
+  ,{1,5,6,1,7} //3
+  ,{2,2,1,2,0} //4
+  ,{0,6,7,0,5} //5
+  ,{1,1,0,1,2} //6
   ,{3,7,6,3,5} //7
   ,{3,3,4,3,2} //8
   ,{3,0,1,1,4} //9
@@ -54,9 +54,9 @@ typedef struct {
 } encoderMask_type;
 const encoderMask_type encoderMask[12] = {
   {3,0b11100000,7},{3,0b00011100,8},{3,0b00000011,9},
-  {1,0b00000111,0},{1,0b00010000,9},{1,0b11100000,4},
-  {2,0b11100000,1},{2,0b00011000,2},{2,0b00000111,5},
-  {0,0b00000111,3},{0,0b00010000,2},{0,0b11100000,6}
+  {1,0b00000111,6},{1,0b00010000,9},{1,0b11100000,3},
+  {2,0b11100000,0},{2,0b00011000,1},{2,0b00000111,4},
+  {0,0b00000111,2},{0,0b00010000,1},{0,0b11100000,5}
 };
 
 int8_t encoder = -1; //Encoder that is used, range 0-9, -1 means: no encoder used
@@ -64,6 +64,7 @@ typedef struct {
   bool buttonPressed; //true when button is pressed, remains true while button is pressed
   bool buttonClick; //true when button is clicked, only true ones every button press (resets after button release)
   uint8_t value;
+  unsigned long lastUse; //captures the timestamp for last use, to enable speed-up
 } encoder_type;
 encoder_type encoders[10]; //Encoder values 0-9
 
@@ -123,15 +124,26 @@ void scanEncoder(uint8_t portOffset) {
   if (encoder>=0) {
     bool n = bitRead(portsValue[encoderBits[encoder].encPort],encoderBits[encoder].encAbit);
     if ((encoderALastValue[encoder] == LOW) && (n == HIGH)) {
+      uint8_t turnspeed = getSpeed();
       if (bitRead(portsValue[encoderBits[encoder].encPort],encoderBits[encoder].encBbit) == LOW) {
         if (encoders[encoder].value>0) { //Don't go below zero
           somethingHappened = true;
-          encoders[encoder].value--;
+          if (encoders[encoder].value < turnspeed) {
+            encoders[encoder].value = 0; //Don't go below zero, but do go to zero
+          } else {
+            encoders[encoder].value = encoders[encoder].value - turnspeed;
+          }
+          encoders[encoder].lastUse = millis();
         }
       } else {
         if (encoders[encoder].value<255) { //Don't go above 255
           somethingHappened = true;
-          encoders[encoder].value++;
+          if (encoders[encoder].value > 255 - turnspeed) {
+            encoders[encoder].value = 255; //Don't go above 255, but do go to 255
+          } else {
+            encoders[encoder].value = encoders[encoder].value + turnspeed;
+          }
+          encoders[encoder].lastUse = millis();
         }
       }
     }
@@ -156,6 +168,14 @@ void scanEncoder(uint8_t portOffset) {
     if (encoder>=0) {
       doEncoderUsed(encoder,encoders[encoder].buttonClick,encoders[encoder].value);
     }
+  }
+}
+
+uint8_t getSpeed() {
+  if (millis() - encoders[encoder].lastUse < 100) {
+    return 10; //If you go fast, please speedup!
+  } else {
+    return 1;
   }
 }
 
