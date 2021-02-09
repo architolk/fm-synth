@@ -66,6 +66,22 @@ void showValueOnScreen(uint8_t screen, uint8_t value) {
   display.display();
 }
 
+//DEBUG FUNCTION
+//This function (not very memory-friendly) will show some parameter
+void showParamValueOnScreen(const String& param, uint8_t screen, uint16_t value) {
+  display.clearDisplay();
+  display.setFont(&Dungeon12pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,10);
+  display.print(param);
+  display.setCursor(0,40);
+  display.print(value);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 void drawPercentbar(int x,int y, int width,int height, uint8_t progress) {
   float bar = ((float)(width-4) / 255) * progress;
 

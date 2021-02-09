@@ -15,6 +15,11 @@
 
 const uint8_t MAXPIN_LOAD = 10; //LOAD pin for Teensy of the MAX7219CNG chip
 
+//Default menu: OSC of unit 1, Volume
+uint8_t greenSelect = 2;
+uint8_t blueSelect = 5;
+uint8_t operatorSelect = 0;
+
 void setup() {
   //We begin with the LEDs, splash them and continu with the OLED screens
   pinMode(MAXPIN_LOAD, OUTPUT); //MAXPIN_LOAD is defined in the submodule
@@ -34,6 +39,8 @@ void setup() {
 
   initLEDs(); //Initialize LEDs to startup position
   initScreens(); //Initialize OLED screens to startup position
+
+  doMenuChange(); //Set OLED screens to current menu
 }
 
 void loop() {
@@ -46,12 +53,18 @@ void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
   if (menu==7) {
     //Blue menu toggle
     toggleLEDRow(row,col,menu,btn);
+    //Respond to menu change
+    blueSelect = btn;
+    doMenuChange();
   } else {
     if (menu>7) {
       //Green menu toggle (a bit of a hack: buttons might not have the correct value, but we don't use that anyway...)
       clearLEDRow(5);
       clearLEDRow(7);
       toggleLEDRow(row,col,menu,btn);
+      //Respond to menu change
+      greenSelect = btn;
+      doMenuChange();
     } else {
       //Operator matrix set/unset
       toggleLED(row,col,menu,btn);
@@ -65,4 +78,9 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
   if (encoder<7) {
     showValueOnScreen(encoder,value);
   }
+}
+
+// Menu change, all screens are affected!
+void doMenuChange() {
+  showMenu(greenSelect,blueSelect);
 }
