@@ -21,9 +21,9 @@ The "blue" menu consists of 6 possible values and depends on the value of the "g
 # Programming
 
 A "mapping" table maps the configuration of the green menu (0-8), blue menu (0-6) and the encoder that is used (0-6) to a particular parameter. This parameter value is used for the screen. Values above 1000 have a special meaning:
-- >1000: the value minus 1000 is the index to another array containing two parameters that the push button switches between
-- >2000: the value minus 2000 is the index to another array containing two parameters. The first is the parameter of the dial, the second is the parameter for the push button, true/false for a particular bit (corresponding with the operator)
-- >3000: the selected operator index should be added to the value minus 3000, the push button selects the chosen operator
+- 1000+: the value minus 1000 is the index to another array containing two parameters that the push button switches between
+- 2000+: the value minus 2000 is the index to another array containing two parameters. The first is the parameter of the dial, the second is the parameter for the push button, true/false for a particular bit (corresponding with the operator)
+- 3000+: the selected operator index should be added to the value minus 3000, the push button selects the chosen operator
 
 In the mapping tables below "51/63" means toggle between these two parameters and "27/14" means parameter 27 for dial and 14 for push button and "181+" means paramter 181 + operator index (0-5). The actual values in the matrix will for example have values 1001 and 2008 and 3181, corresponding to index 1 and 8 of the special array, and parameters 181 to 186, depending on the chosen operator.
 
@@ -60,6 +60,12 @@ Any combination of the green menu and the blue menu will change all screens, acc
 | 3+5 | 3 | Effects |
 | 3+5 | 4 | Effects |
 | 3+5 | 5 | Effects |
+| 4 | 0 | Mixer |
+| 4 | 1 | Mixer |
+| 4 | 2 | Velo sense |
+| 4 | 3 | Velo sense |
+| 4 | 4 | Master |
+| 4 | 5 | Master |
 
 # Green Menu
 
