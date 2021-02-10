@@ -91,9 +91,13 @@ void showKeyTracking() {
 }
 
 void showLFO() {
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("LFO"),i,getParam(greenSelect,blueSelect,i));
-  }
+  showParamValueOnScreen(F("LFO Wave"),0,getParam(greenSelect,blueSelect,0));
+  showParamValueOnScreen(F("LFO Speed"),1,getParam(greenSelect,blueSelect,1));
+  showParamValueOnScreen(F("LFO Sync"),2,getParam(greenSelect,blueSelect,2));
+  showParamValueOnScreen(F("LFO Fade"),3,getParam(greenSelect,blueSelect,3));
+  showParamValueOnScreen(F("LFO P.Depth"),4,getParam(greenSelect,blueSelect,4));
+  showParamValueOnScreen(F("LFO A.Depth"),5,getParam(greenSelect,blueSelect,5));
+  showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,6));
 }
 
 //
