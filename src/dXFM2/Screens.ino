@@ -53,13 +53,13 @@ void initScreens() {
 }
 
 //Shows the value of some parameter (fixed to "Volume" at this moment)
-void showValueOnScreen(uint8_t screen, uint8_t value) {
+void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.clearDisplay();
   display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0,20);
-  display.print(F("Volume:"));
+  display.print(param);
   drawPercentbar( 0, 30, 128, 30,value);
 
   TCA9548A(SCRMAP[screen]);
@@ -70,12 +70,13 @@ void showValueOnScreen(uint8_t screen, uint8_t value) {
 //This function (not very memory-friendly) will show some parameter
 void showParamValueOnScreen(const String& param, uint8_t screen, uint16_t value) {
   display.clearDisplay();
-  display.setFont(&Dungeon12pt7b);
+  display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0,10);
+  display.setCursor(5,20);
   display.print(param);
-  display.setCursor(0,40);
+  display.setFont(&Dungeon12pt7b);
+  display.setCursor(5,50);
   display.print(value);
 
   TCA9548A(SCRMAP[screen]);

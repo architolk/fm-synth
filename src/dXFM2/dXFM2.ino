@@ -13,14 +13,22 @@
 #include <Fonts/Dungeon9pt7b.h>
 #include <Fonts/Dungeon12pt7b.h>
 
+//Need to put the typedef here, for function's sake...
+typedef struct {
+  uint8_t unit; //the unit that is selected
+  uint16_t param; //the parameter that is selected
+} param_type;
+
 const uint8_t MAXPIN_LOAD = 10; //LOAD pin for Teensy of the MAX7219CNG chip
 
 //Default menu: OSC of unit 1, Volume
 uint8_t greenSelect = 2;
-uint8_t blueSelect = 5;
+uint8_t blueSelect = 0;
 uint8_t operatorSelect = 0;
 
 void setup() {
+  setupParams();
+
   //We begin with the LEDs, splash them and continu with the OLED screens
   pinMode(MAXPIN_LOAD, OUTPUT); //MAXPIN_LOAD is defined in the submodule
   SPI.begin();
@@ -35,7 +43,7 @@ void setup() {
   setupScreens();
   splashScreens();
 
-  delay(2000); //two seconds splash screen
+  delay(1000); //two seconds splash screen
 
   initLEDs(); //Initialize LEDs to startup position
   initScreens(); //Initialize OLED screens to startup position
@@ -74,13 +82,17 @@ void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
 
 //An encoder was used, respond!
 void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
-  //We might be one of: encoder 0 is not screen 0!
   if (encoder<7) {
-    showValueOnScreen(encoder,value);
+    setParamValue(greenSelect,blueSelect,encoder,0,value);
+    //showValueOnScreen(F("Volume"),encoder,value);
+    showMenu(encoder);
   }
 }
 
 // Menu change, all screens are affected!
 void doMenuChange() {
-  showMenu(greenSelect,blueSelect);
+  for (uint8_t op=0; op<7; op++) {
+    setEncoderValue(op,getParamValue(greenSelect,blueSelect,op,0));
+    showMenu(op);
+  }
 }

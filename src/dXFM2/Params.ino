@@ -6,28 +6,28 @@
 */
 const uint16_t PARAMMAP[5][6][7] PROGMEM = {
   { //0 & 8, LFO
-    {159,160,161,162,163,164,180},
-    {222,223,224,225,226,227,180},
-    {1000,1001,1002,1003,1004,1005,180},
-    {45,46,47,48,49,50,180},
+    {153,151,152,154,149,150,180},
     {57,58,59,60,61,62,180},
-    {153,151,152,154,149,150,180}
+    {45,46,47,48,49,50,180},
+    {1000,1001,1002,1003,1004,1005,180},
+    {222,223,224,225,226,227,180},
+    {159,160,161,162,163,164,180}
   },
   { //1 & 7, Oscillators
-    {205,130,131,132,133,207,146},
-    {134,135,136,0,137,208,206},
-    {286,287,288,289,290,291,0},
-    {268,269,270,271,272,273,0},
+    {236,237,238,239,240,241,180},
     {280,281,282,283,284,285,0},
-    {236,237,238,239,240,241,180}
+    {268,269,270,271,272,273,0},
+    {286,287,288,289,290,291,0},
+    {134,135,136,0,137,208,206},
+    {205,130,131,132,133,207,146}
   },
   {  //2 & 6, Operators
-    {3181,3075,3082,3089,3096,3193,3140},
-    {3103,3110,3117,0,3124,3199,3187},
-    {7,8,9,10,11,12,0},
-    {2006,2007,2008,2009,2010,2011,0},
+    {33,34,35,36,37,38,180},
     {1012,1013,1014,1015,1016,1017,0},
-    {33,34,35,36,37,38,180}
+    {2006,2007,2008,2009,2010,2011,0},
+    {7,8,9,10,11,12,0},
+    {3103,3110,3117,0,3124,3199,3187},
+    {3181,3075,3082,3089,3096,3193,3140}
   },
   { //3 & 5, Effects
     {0,330,332,331,0,333,0},
@@ -38,12 +38,12 @@ const uint16_t PARAMMAP[5][6][7] PROGMEM = {
     {0,370,320,321,380,410,180}
   },
   { //4, Master
-    {1021,1022,1023,1024,1025,1026,180},
-    {1021,1022,1023,1024,1025,1026,180},
-    {39,40,41,42,43,44,242},
-    {39,40,41,42,43,44,242},
+    {221,174,228,230,229,251,1027},
     {0,0,0,0,0,0,0},
-    {221,174,228,230,229,251,1027}
+    {39,40,41,42,43,44,242},
+    {39,40,41,42,43,44,242},
+    {1021,1022,1023,1024,1025,1026,180},
+    {1021,1022,1023,1024,1025,1026,180}
   }
 };
 const uint16_t PARAMEXMAP[28][2] = {
@@ -53,44 +53,47 @@ const uint16_t PARAMEXMAP[28][2] = {
   {303,307},{308,309},{31,317}, //EFX 1018-1020
   {256,257},{258,259},{260,261},{262,263},{264,265},{266,267}, //MASTER 1021-1026
   {411,412} //MASTER 1027
-}
+};
 
 uint8_t paramValue[2][500];
 
-typedef struct {
-  uint8_t unit; //the unit that is selected
-  uint8_t param; //the parameter that is selected
-} param_type;
+void setupParams() {
+  for (uint8_t unit=0; unit<2; unit++) {
+    for (uint16_t param=0; param<500; param++) {
+      paramValue[unit][param] = 5;
+    }
+  }
+}
 
-param_type getParam(uint8_t green, uint8_t blue, uint8_t operator, uint8_t toggle) {
+param_type getParam(uint8_t green, uint8_t blue, uint8_t op, uint8_t toggle) {
   uint8_t menu = green;
   uint8_t unit = 0;
   if (greenSelect>4) {
     menu = 8-green;
     unit = 1;
   }
-  uint16_t param = PARAMMAP[menu,blue,operator];
-  if (param>3000) {
-    return {unit,param-3000+operator};
+  uint16_t val = PARAMMAP[menu][blue][op];
+  if (val>3000) {
+    return {unit,val-3000+op};
   } else {
-    if (param>1999) {
-      return {unit,PARAMEXMAP[param-2000][toggle]};
+    if (val>1999) {
+      return {unit,PARAMEXMAP[val-2000][toggle]};
     } else {
-      if (param>999) {
-        return {unit,PARAMEXMAP[param-1000][toggle]};
+      if (val>999) {
+        return {unit,PARAMEXMAP[val-1000][toggle]};
       } else {
-        return {unit,param};
+        return {unit,val};
       }
     }
   }
 }
 
-uint8_t getParamValue(uint8_t green, uint8_t blue, uint8_t operator, uint8_t toggle) {
-  param_type param = getParam(green,blue,operator,toggle);
+uint8_t getParamValue(uint8_t green, uint8_t blue, uint8_t op, uint8_t toggle) {
+  param_type param = getParam(green,blue,op,toggle);
   return paramValue[param.unit][param.param];
 }
 
-setParamValue(uint8_t green, uint8_t blue, uint8_t operator, uint8_t toggle, uint8_t value) {
-  param_type param = getParam(green,blue,operator,toggle);
+void setParamValue(uint8_t green, uint8_t blue, uint8_t op, uint8_t toggle, uint8_t value) {
+  param_type param = getParam(green,blue,op,toggle);
   paramValue[param.unit][param.param] = value;
 }

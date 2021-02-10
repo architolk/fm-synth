@@ -216,3 +216,7 @@ void readRegister(uint8_t reg, uint8_t portOffset) {
     portsValue[portOffset + 2] = Wire.read();
   }
 }
+
+void setEncoderValue(uint8_t index, uint8_t value) {
+  encoders[index].value = value;
+}

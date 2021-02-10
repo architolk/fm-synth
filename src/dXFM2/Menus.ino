@@ -4,180 +4,181 @@
 *  this module contains the code to setup a particular screen
 *
 */
-void showMenu() {
+void showMenu(uint8_t op) {
   switch (greenSelect) {
-    case 0: showLFOMenu(); break;
-    case 1: showOSCMenu(); break;
-    case 2: showOPSMenu(); break;
-    case 3: showEFXMenu(); break;
-    case 4: showMasterMenu(); break;
-    case 5: showEFXMenu(); break;
-    case 6: showOPSMenu(); break;
-    case 7: showOSCMenu(); break;
-    case 8: showLFOMenu(); break;
+    case 0: showLFOMenu(op); break;
+    case 1: showOSCMenu(op); break;
+    case 2: showOPSMenu(op); break;
+    case 3: showEFXMenu(op); break;
+    case 4: showMasterMenu(op); break;
+    case 5: showEFXMenu(op); break;
+    case 6: showOPSMenu(op); break;
+    case 7: showOSCMenu(op); break;
+    case 8: showLFOMenu(op); break;
   }
 }
 
-void showLFOMenu() {
+void showLFOMenu(uint8_t op) {
   switch (blueSelect) {
-    case 0: showAMS();
-    case 1: showPMS();
-    case 2: showKeyTracking();
-    case 3: showKeyTracking();
-    case 4: showKeyTracking();
-    case 5: showLFO();
+    case 0: showLFO(op); break;
+    case 1: showKeyTracking(op); break;
+    case 2: showKeyTracking(op); break;
+    case 3: showKeyTracking(op); break;
+    case 4: showPMS(op); break;
+    case 5: showAMS(op); break;
   }
 }
 
-void showOSCMenu() {
+void showOSCMenu(uint8_t op) {
   switch (blueSelect) {
-    case 0: showPitchEnvelope();
-    case 1: showPitchEnvelope();
-    case 2: showPhase();
-    case 3: showWave(1);
-    case 4: showOSCRatio();
-    case 5: showWave(2);
+    case 0: showWave(op,2); break;
+    case 1: showOSCRatio(op); break;
+    case 2: showWave(op,1); break;
+    case 3: showPhase(op); break;
+    case 4: showPitchEnvelope(op); break;
+    case 5: showPitchEnvelope(op); break;
   }
 }
 
-void showOPSMenu() {
+void showOPSMenu(uint8_t op) {
   switch (blueSelect) {
-    case 0: showAmplitudeEnvelope();
-    case 1: showAmplitudeEnvelope();
-    case 2: showFeedback();
-    case 3: showPitch();
-    case 4: showRatio();
-    case 5: showLevel();
+    case 0: showLevel(op); break;
+    case 1: showRatio(op); break;
+    case 2: showPitch(op); break;
+    case 3: showFeedback(op); break;
+    case 4: showAmplitudeEnvelope(op); break;
+    case 5: showAmplitudeEnvelope(op); break;
   }
 }
 
-void showEFXMenu() {
+void showEFXMenu(uint8_t op) {
   //Nothing yet
   //Missing: Bitcrusher & Decimator
   //EFX routing could be done via screen swapping
   //Routing is:
   //Bitcrusher->Decimator->Filter->Chorus->Phaser->AM->Delay
   //Bitcrusher->Decimator->Filter->Delay->Chorus->Phaser->AM
-  showParamValueOnScreen(F("Filter"),6,getParam(greenSelect,blueSelect,6));
-  showParamValueOnScreen(F("Effects"),5,getParam(greenSelect,blueSelect,5));
-  showParamValueOnScreen(F("Chorus"),4,getParam(greenSelect,blueSelect,4));
-  showParamValueOnScreen(F("Reverb"),3,getParam(greenSelect,blueSelect,3));
-  showParamValueOnScreen(F("Phaser"),2,getParam(greenSelect,blueSelect,2));
-  showParamValueOnScreen(F("Delay"),1,getParam(greenSelect,blueSelect,1));
-  showParamValueOnScreen(F("AM"),0,getParam(greenSelect,blueSelect,0));
+  switch (op) {
+    case 0: showParamValueOnScreen(F("AM"),0,getParam(greenSelect,blueSelect,0,0).param); break;
+    case 1: showParamValueOnScreen(F("Delay"),1,getParam(greenSelect,blueSelect,1,0).param); break;
+    case 2: showParamValueOnScreen(F("Phaser"),2,getParam(greenSelect,blueSelect,2,0).param); break;
+    case 3: showParamValueOnScreen(F("Reverb"),3,getParam(greenSelect,blueSelect,3,0).param); break;
+    case 4: showParamValueOnScreen(F("Chorus"),4,getParam(greenSelect,blueSelect,4,0).param); break;
+    case 5: showParamValueOnScreen(F("Effects"),5,getParam(greenSelect,blueSelect,5,0).param); break;
+    case 6: showParamValueOnScreen(F("Filter"),6,getParam(greenSelect,blueSelect,6,0).param); break;
+  }
 }
 
-void showMasterMenu() {
+void showMasterMenu(uint8_t op) {
   switch (blueSelect) {
-    case 0: showMixer(0);
-    case 1: showMixer(1);
-    case 2: showVeloSense(0);
-    case 3: showVeloSense(1);
-    case 4: showReserved();
-    case 5: showMaster();
+    case 0: showMaster(op); break;
+    case 1: showReserved(op); break;
+    case 2: showVeloSense(op,0); break;
+    case 3: showVeloSense(op,1); break;
+    case 4: showMixer(op,0); break;
+    case 5: showMixer(op,1); break;
   }
 }
 
 //
 // LFO submenu
 //
-void showAMS() {
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("AMS"),i,getParam(greenSelect,blueSelect,i));
-  }
+void showAMS(uint8_t op) {
+  showParamValueOnScreen(F("AMS"),op,getParam(greenSelect,blueSelect,op,0).param);
 }
 
-void showAMS() {
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("PMS"),i,getParam(greenSelect,blueSelect,i));
-  }
+void showPMS(uint8_t op) {
+  showParamValueOnScreen(F("PMS"),op,getParam(greenSelect,blueSelect,op,0).param);
 }
 
-void showKeyTracking() {
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("Tracking"),i,getParam(greenSelect,blueSelect,i));
-  }
+void showKeyTracking(uint8_t op) {
+  showParamValueOnScreen(F("Tracking"),op,getParam(greenSelect,blueSelect,op,0).param);
 }
 
-void showLFO() {
-  showParamValueOnScreen(F("LFO Wave"),0,getParam(greenSelect,blueSelect,0));
-  showParamValueOnScreen(F("LFO Speed"),1,getParam(greenSelect,blueSelect,1));
-  showParamValueOnScreen(F("LFO Sync"),2,getParam(greenSelect,blueSelect,2));
-  showParamValueOnScreen(F("LFO Fade"),3,getParam(greenSelect,blueSelect,3));
-  showParamValueOnScreen(F("LFO P.Depth"),4,getParam(greenSelect,blueSelect,4));
-  showParamValueOnScreen(F("LFO A.Depth"),5,getParam(greenSelect,blueSelect,5));
-  showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,6));
+void showLFO(uint8_t op) {
+  switch (op) {
+    case 0: showParamValueOnScreen(F("LFO Wave"),0,getParam(greenSelect,blueSelect,0,0).param); break;
+    case 1: showParamValueOnScreen(F("LFO Speed"),1,getParam(greenSelect,blueSelect,1,0).param); break;
+    case 2: showParamValueOnScreen(F("LFO Sync"),2,getParam(greenSelect,blueSelect,2,0).param); break;
+    case 3: showParamValueOnScreen(F("LFO Fade"),3,getParam(greenSelect,blueSelect,3,0).param); break;
+    case 4: showParamValueOnScreen(F("LFO P.Depth"),4,getParam(greenSelect,blueSelect,4,0).param); break;
+    case 5: showParamValueOnScreen(F("LFO A.Depth"),5,getParam(greenSelect,blueSelect,5,0).param); break;
+    case 6: showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,6,0).param); break;
+  }
 }
 
 //
 // Oscillator submenu
 //
-void showPitchEnvelope() {
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("Pitch Env"),i,getParam(greenSelect,blueSelect,i));
-  }
+void showPitchEnvelope(uint8_t op) {
+  showParamValueOnScreen(F("Pitch Env"),op,getParam(greenSelect,blueSelect,op,0).param);
 }
 
-void showPhase() {
-  for (uint8_t i=0; i<6; i++) {
-    showParamValueOnScreen(F("Phase"),i,getParam(greenSelect,blueSelect,i));
-  }
-  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
-}
-
-void showWave(uint8_t widx) {
-  for (uint8_t i=0; i<6; i++) {
-    showParamValueOnScreen(F("Wave"),i,getParam(greenSelect,blueSelect,i));
-  }
-  if (widx==1) {
-    showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,6));
+void showPhase(uint8_t op) {
+  if (op==6) {
+    showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6,0).param);
   } else {
-    showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
+    showParamValueOnScreen(F("Phase"),op,getParam(greenSelect,blueSelect,op,0).param);
   }
 }
 
-void showOSCRatio() {
-  for (uint8_t i=0; i<6; i++) {
-    showParamValueOnScreen(F("OSC Ratio"),i,getParam(greenSelect,blueSelect,i));
+void showWave(uint8_t op, uint8_t widx) {
+  if (op==6) {
+    if (widx==1) {
+      showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,6,0).param);
+    } else {
+      showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6,0).param);
+    }
+  } else {
+    showParamValueOnScreen(F("Wave"),op,getParam(greenSelect,blueSelect,op,0).param);
   }
-  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
+}
+
+void showOSCRatio(uint8_t op) {
+  if (op==6) {
+    showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6,0).param);
+  } else {
+    showParamValueOnScreen(F("OSC Ratio"),op,getParam(greenSelect,blueSelect,op,0).param);
+  }
 }
 
 //
 // Operator submenu
 //
-void showAmplitudeEnvelope() {
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("Envelope"),i,getParam(greenSelect,blueSelect,i));
+void showAmplitudeEnvelope(uint8_t op) {
+  showValueOnScreen(F("Envelope"),op,getParamValue(greenSelect,blueSelect,op,0));
+}
+
+void showFeedback(uint8_t op) {
+  if (op==6) {
+    showValueOnScreen(F("NOP"),6,getParamValue(greenSelect,blueSelect,6,0));
+  } else {
+    showValueOnScreen(F("Feedback"),op,getParamValue(greenSelect,blueSelect,op,0));
   }
 }
 
-void showFeedback() {
-  for (uint8_t i=0; i<6; i++) {
-    showParamValueOnScreen(F("Feedback"),i,getParam(greenSelect,blueSelect,i));
+void showPitch(uint8_t op) {
+  if (op==6) {
+    showValueOnScreen(F("NOP"),6,getParamValue(greenSelect,blueSelect,6,0));
+  } else {
+    showValueOnScreen(F("Pitch"),op,getParamValue(greenSelect,blueSelect,op,0));
   }
-  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
 }
 
-void showPitch() {
-  for (uint8_t i=0; i<6; i++) {
-    showParamValueOnScreen(F("Pitch"),i,getParam(greenSelect,blueSelect,i));
+void showRatio(uint8_t op) {
+  if (op==6) {
+    showValueOnScreen(F("NOP"),6,getParamValue(greenSelect,blueSelect,6,0));
+  } else {
+    showValueOnScreen(F("Ratio"),op,getParamValue(greenSelect,blueSelect,op,0));
   }
-  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
 }
 
-void showRatio() {
-  for (uint8_t i=0; i<6; i++) {
-    showParamValueOnScreen(F("Ratio"),i,getParam(greenSelect,blueSelect,i));
+void showLevel(uint8_t op) {
+  if (op==6) {
+    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,6,0));
+  } else {
+    showValueOnScreen(F("Level"),op,getParamValue(greenSelect,blueSelect,op,0));
   }
-  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
-}
-
-void showLevel() {
-  for (uint8_t i=0; i<6; i++) {
-    showParamValueOnScreen(F("Level"),i,getParam(greenSelect,blueSelect,i));
-  }
-  showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,6));
 }
 
 //
@@ -187,30 +188,26 @@ void showLevel() {
 //
 // Master submenu
 //
-void showMixer(uint8_t unit) {
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("Mixer"),i,getParam(greenSelect,blueSelect,i));
-  }
+void showMixer(uint8_t op, uint8_t unit) {
+  showParamValueOnScreen(F("Mixer"),op,getParam(greenSelect,blueSelect,op,0).param);
 }
 
-void showVeloSense(uint8_t unit) {
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("Velo sense"),i,getParam(greenSelect,blueSelect,i));
-  }
+void showVeloSense(uint8_t op, uint8_t unit) {
+  showParamValueOnScreen(F("Velo sense"),op,getParam(greenSelect,blueSelect,op,0).param);
 }
 
-void showReserved() {
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("Reserved"),i,getParam(greenSelect,blueSelect,i));
-  }
+void showReserved(uint8_t op) {
+  showParamValueOnScreen(F("Reserved"),op,getParam(greenSelect,blueSelect,op,0).param);
 }
 
-void showMaster() {
-  showParamValueOnScreen(F("Pan"),0,getParam(greenSelect,blueSelect,0));
-  showParamValueOnScreen(F("Transpose"),1,getParam(greenSelect,blueSelect,1));
-  showParamValueOnScreen(F("Mono-Poly"),2,getParam(greenSelect,blueSelect,2));
-  showParamValueOnScreen(F("Porta time"),3,getParam(greenSelect,blueSelect,3));
-  showParamValueOnScreen(F("Porta mode"),4,getParam(greenSelect,blueSelect,4));
-  showParamValueOnScreen(F("Tuning"),5,getParam(greenSelect,blueSelect,5));
-  showParamValueOnScreen(F("Output/Gain"),6,getParam(greenSelect,blueSelect,6));
+void showMaster(uint8_t op) {
+  switch (op) {
+    case 0: showParamValueOnScreen(F("Pan"),0,getParam(greenSelect,blueSelect,0,0).param); break;
+    case 1: showParamValueOnScreen(F("Transpose"),1,getParam(greenSelect,blueSelect,1,0).param); break;
+    case 2: showParamValueOnScreen(F("Mono-Poly"),2,getParam(greenSelect,blueSelect,2,0).param); break;
+    case 3: showParamValueOnScreen(F("Porta time"),3,getParam(greenSelect,blueSelect,3,0).param); break;
+    case 4: showParamValueOnScreen(F("Porta mode"),4,getParam(greenSelect,blueSelect,4,0).param); break;
+    case 5: showParamValueOnScreen(F("Tuning"),5,getParam(greenSelect,blueSelect,5,0).param); break;
+    case 6: showParamValueOnScreen(F("Output/Gain"),6,getParam(greenSelect,blueSelect,6,0).param); break;
+  }
 }

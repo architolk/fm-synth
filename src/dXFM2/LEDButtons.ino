@@ -65,8 +65,12 @@ void splashLEDs() {
 }
 
 void initLEDs() {
+  toggleLEDRow(0,1,7,0); //Volume button selected
+  toggleLEDRow(5,4,8,2); //Operator of synth A selected
+/*
   doLEDButtonPressed(0,1,7,0); //Volume button selected
   doLEDButtonPressed(5,4,8,2); //Operator of synth A selected
+*/
 }
 
 void scanLEDButtons() {
