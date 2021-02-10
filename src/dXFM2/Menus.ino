@@ -53,9 +53,18 @@ void showOPSMenu() {
 
 void showEFXMenu() {
   //Nothing yet
-  for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("Effects"),i,getParam(greenSelect,blueSelect,i));
-  }
+  //Missing: Bitcrusher & Decimator
+  //EFX routing could be done via screen swapping
+  //Routing is:
+  //Bitcrusher->Decimator->Filter->Chorus->Phaser->AM->Delay
+  //Bitcrusher->Decimator->Filter->Delay->Chorus->Phaser->AM
+  showParamValueOnScreen(F("Filter"),6,getParam(greenSelect,blueSelect,6));
+  showParamValueOnScreen(F("Effects"),5,getParam(greenSelect,blueSelect,5));
+  showParamValueOnScreen(F("Chorus"),4,getParam(greenSelect,blueSelect,4));
+  showParamValueOnScreen(F("Reverb"),3,getParam(greenSelect,blueSelect,3));
+  showParamValueOnScreen(F("Phaser"),2,getParam(greenSelect,blueSelect,2));
+  showParamValueOnScreen(F("Delay"),1,getParam(greenSelect,blueSelect,1));
+  showParamValueOnScreen(F("AM"),0,getParam(greenSelect,blueSelect,0));
 }
 
 void showMasterMenu() {
@@ -64,7 +73,7 @@ void showMasterMenu() {
     case 1: showMixer(1);
     case 2: showVeloSense(0);
     case 3: showVeloSense(1);
-    case 4: showMaster();
+    case 4: showReserved();
     case 5: showMaster();
   }
 }
@@ -110,21 +119,28 @@ void showPitchEnvelope() {
 }
 
 void showPhase() {
-  for (uint8_t i=0; i<7; i++) {
+  for (uint8_t i=0; i<6; i++) {
     showParamValueOnScreen(F("Phase"),i,getParam(greenSelect,blueSelect,i));
   }
+  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
 }
 
 void showWave(uint8_t widx) {
-  for (uint8_t i=0; i<7; i++) {
+  for (uint8_t i=0; i<6; i++) {
     showParamValueOnScreen(F("Wave"),i,getParam(greenSelect,blueSelect,i));
+  }
+  if (widx==1) {
+    showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,6));
+  } else {
+    showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
   }
 }
 
 void showOSCRatio() {
-  for (uint8_t i=0; i<7; i++) {
+  for (uint8_t i=0; i<6; i++) {
     showParamValueOnScreen(F("OSC Ratio"),i,getParam(greenSelect,blueSelect,i));
   }
+  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
 }
 
 //
@@ -137,27 +153,31 @@ void showAmplitudeEnvelope() {
 }
 
 void showFeedback() {
-  for (uint8_t i=0; i<7; i++) {
+  for (uint8_t i=0; i<6; i++) {
     showParamValueOnScreen(F("Feedback"),i,getParam(greenSelect,blueSelect,i));
   }
+  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
 }
 
 void showPitch() {
-  for (uint8_t i=0; i<7; i++) {
+  for (uint8_t i=0; i<6; i++) {
     showParamValueOnScreen(F("Pitch"),i,getParam(greenSelect,blueSelect,i));
   }
+  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
 }
 
 void showRatio() {
-  for (uint8_t i=0; i<7; i++) {
+  for (uint8_t i=0; i<6; i++) {
     showParamValueOnScreen(F("Ratio"),i,getParam(greenSelect,blueSelect,i));
   }
+  showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,6));
 }
 
 void showLevel() {
-  for (uint8_t i=0; i<7; i++) {
+  for (uint8_t i=0; i<6; i++) {
     showParamValueOnScreen(F("Level"),i,getParam(greenSelect,blueSelect,i));
   }
+  showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,6));
 }
 
 //
@@ -179,8 +199,18 @@ void showVeloSense(uint8_t unit) {
   }
 }
 
-void showMaster() {
+void showReserved() {
   for (uint8_t i=0; i<7; i++) {
-    showParamValueOnScreen(F("Master"),i,getParam(greenSelect,blueSelect,i));
+    showParamValueOnScreen(F("Reserved"),i,getParam(greenSelect,blueSelect,i));
   }
+}
+
+void showMaster() {
+  showParamValueOnScreen(F("Pan"),0,getParam(greenSelect,blueSelect,0));
+  showParamValueOnScreen(F("Transpose"),1,getParam(greenSelect,blueSelect,1));
+  showParamValueOnScreen(F("Mono-Poly"),2,getParam(greenSelect,blueSelect,2));
+  showParamValueOnScreen(F("Porta time"),3,getParam(greenSelect,blueSelect,3));
+  showParamValueOnScreen(F("Porta mode"),4,getParam(greenSelect,blueSelect,4));
+  showParamValueOnScreen(F("Tuning"),5,getParam(greenSelect,blueSelect,5));
+  showParamValueOnScreen(F("Output/Gain"),6,getParam(greenSelect,blueSelect,6));
 }
