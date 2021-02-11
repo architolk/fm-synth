@@ -85,7 +85,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
   if (encoder<7) {
     setParamValue(greenSelect,blueSelect,encoder,0,value);
     //showValueOnScreen(F("Volume"),encoder,value);
-    showMenu(encoder);
+    showDisplay(encoder);
   }
 }
 
@@ -93,6 +93,6 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
 void doMenuChange() {
   for (uint8_t op=0; op<7; op++) {
     setEncoderValue(op,getParamValue(greenSelect,blueSelect,op,0));
-    showMenu(op);
+    showDisplay(op);
   }
 }
