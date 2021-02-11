@@ -36,36 +36,36 @@ Any combination of the green menu and the blue menu will change all screens, acc
 
 | Green | Blue | Screen |
 |-------|------|--------|
-| 0+8 | 0 | LFO-AMS |
-| 0+8 | 1 | LFO-PMS |
+| 0+8 | 0 | LFO |
+| 0+8 | 1 | Key tracking |
 | 0+8 | 2 | Key tracking |
 | 0+8 | 3 | Key tracking |
-| 0+8 | 4 | Key tracking |
-| 0+8 | 5 | LFO |
-| 1+7 | 0 | Pitch envelope |
-| 1+7 | 1 | Pitch envelope |
-| 1+7 | 2 | Oscillator phase |
-| 1+7 | 3 | Wave 2 |
-| 1+7 | 4 | OSC-Ratio |
-| 1+7 | 5 | Wave 1 |
-| 2+6 | 0 | Amplitude envelope |
-| 2+6 | 1 | Amplitude envelope |
-| 2+6 | 2 | Feedback |
-| 2+6 | 3 | Pitch |
-| 2+6 | 4 | Ratio |
-| 2+6 | 5 | Level |
+| 0+8 | 4 | LFO-PMS |
+| 0+8 | 5 | LFO-AMS |
+| 1+7 | 0 | Wave 1 |
+| 1+7 | 1 | OSC-Ratio |
+| 1+7 | 2 | Wave 2 |
+| 1+7 | 3 | Oscillator phase |
+| 1+7 | 4 | Pitch envelope |
+| 1+7 | 5 | Pitch envelope |
+| 2+6 | 0 | Level |
+| 2+6 | 1 | Ratio |
+| 2+6 | 2 | Pitch |
+| 2+6 | 3 | Feedback |
+| 2+6 | 4 | Amplitude envelope |
+| 2+6 | 5 | Amplitude envelope |
 | 3+5 | 0 | Effects |
 | 3+5 | 1 | Effects |
 | 3+5 | 2 | Effects |
 | 3+5 | 3 | Effects |
 | 3+5 | 4 | Effects |
 | 3+5 | 5 | Effects |
-| 4 | 0 | Mixer |
-| 4 | 1 | Mixer |
+| 4 | 0 | Master |
+| 4 | 1 | Master |
 | 4 | 2 | Velo sense |
 | 4 | 3 | Velo sense |
-| 4 | 4 | Master |
-| 4 | 5 | Master |
+| 4 | 4 | Mixer |
+| 4 | 5 | Mixer |
 
 # Green Menu
 
@@ -75,28 +75,28 @@ In LFO mode, the displays will show the parameter for the particular encoder
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 | AMS | AMS | AMS | AMS | AMS | AMS | Volume |
-| 1 | PMS | PMS | PMS | PMS | PMS | PMS | Volume |
-| 2 | L Depth/Curve | L Depth/Curve | L Depth/Curve | L Depth/Curve | L Depth/Curve | L Depth/Curve | Volume |
-| 3 | Key BP | Key BP | Key BP | Key BP | Key BP | Key BP | Volume |
-| 4 | R Depth/Curve | R Depth/Curve | R Depth/Curve | R Depth/Curve | R Depth/Curve | R Depth/Curve | Volume |
-| 5 | Wave | Speed | Sync | Fade | Pitch depth | Amp depth | Volume |
+| 0 | Wave | Speed | Sync | Fade | Pitch depth | Amp depth | Volume |
+| 1 | R Depth/Curve | R Depth/Curve | R Depth/Curve | R Depth/Curve | R Depth/Curve | R Depth/Curve | Volume |
+| 2 | Key BP | Key BP | Key BP | Key BP | Key BP | Key BP | Volume |
+| 3 | L Depth/Curve | L Depth/Curve | L Depth/Curve | L Depth/Curve | L Depth/Curve | L Depth/Curve | Volume |
+| 4 | PMS | PMS | PMS | PMS | PMS | PMS | Volume |
+| 5 | AMS | AMS | AMS | AMS | AMS | AMS | Volume |
 
 Mapping of parameters:
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 | 159 | 160 | 161 | 162 | 163 | 164 | 180 |
-| 1 | 222 | 223 | 224 | 225 | 226 | 227 | 180 |
-| 2 | 51/63 | 52/64 | 53/65 | 54/66 | 55/67 | 56/68 | 180 |
-| 3 | 45 | 46 | 47 | 48 | 49 | 50 | 180 |
-| 4 | 57 | 58 | 59 | 60 | 61 | 62 | 180 |
-| 5 | 153 | 151 | 152 | 154 | 149 | 150 | 180 |
+| 0 | 153 | 151 | 152 | 154 | 149 | 150 | 180 |
+| 1 | 57 | 58 | 59 | 60 | 61 | 62 | 180 |
+| 2 | 45 | 46 | 47 | 48 | 49 | 50 | 180 |
+| 3 | 51/63 | 52/64 | 53/65 | 54/66 | 55/67 | 56/68 | 180 |
+| 4 | 222 | 223 | 224 | 225 | 226 | 227 | 180 |
+| 5 | 159 | 160 | 161 | 162 | 163 | 164 | 180 |
 
 Depth and Curve are selected by toggling using the push button
 
 All zeven screens display the value for the current selection
-For the keyboard tracking selection (values 2,3,4) the same screen is shown, with all parameters in one display
+For the keyboard tracking selection (values 1,2,3) the same screen is shown, with all parameters in one display
 
 - AMS means Amplitude Modulation Sensitivity of the LFO to that particular operator
 - PMS means Pitch Modulation Sensitivity of the LFO to that particular operator
@@ -118,26 +118,26 @@ In Oscillator mode, the displays will show the parameter for the particular enco
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 | Attack | Decay-1 | Decay-2 | Sustain | Release-1 | Release-2 | Delay | Rate |
-| 1 | Attack | Decay-1 | Decay-2 |  | Release-1 | Release-2 | Delay |
-| 2 | Phase+sync | Phase+sync | Phase+sync | Phase+sync | Phase+sync | Phase+sync |  |
-| 3 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 |  |
-| 4 | Ratio | Ratio | Ratio | Ratio | Ratio | Ratio |  |
-| 5 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Volume |
+| 0 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Volume |
+| 1 | Ratio | Ratio | Ratio | Ratio | Ratio | Ratio |  |
+| 2 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 |  |
+| 3 | Phase+sync | Phase+sync | Phase+sync | Phase+sync | Phase+sync | Phase+sync |  |
+| 4 | Attack | Decay-1 | Decay-2 |  | Release-1 | Release-2 | Delay |
+| 5 | Attack | Decay-1 | Decay-2 | Sustain | Release-1 | Release-2 | Delay | Rate |
 
 Mapping of parameters:
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 | 205 | 130 | 131 | 132 | 133 | 207 | 146 |
-| 1 | 134 | 135 | 136 | 0 | 137 | 208 | 206 |
-| 2 | 286 | 287 | 288 | 289 | 290 | 291 | 0 |
-| 3 | 268 | 269 | 270 | 271 | 272 | 273 | 0 |
-| 4 | 280 | 281 | 282 | 283 | 284 | 285 | 0 |
-| 5 | 236 | 237 | 238 | 239 | 240 | 241 | 180 |
+| 0 | 236 | 237 | 238 | 239 | 240 | 241 | 180 |
+| 1 | 280 | 281 | 282 | 283 | 284 | 285 | 0 |
+| 2 | 268 | 269 | 270 | 271 | 272 | 273 | 0 |
+| 3 | 286 | 287 | 288 | 289 | 290 | 291 | 0 |
+| 4 | 134 | 135 | 136 | 0 | 137 | 208 | 206 |
+| 5 | 205 | 130 | 131 | 132 | 133 | 207 | 146 |
 
 All zeven screens display the value for the current selection
-For the pitch envelope (values 0,1) the same screen is shown, displaying the envelope graph
+For the pitch envelope (values 4,5) the same screen is shown, displaying the envelope graph
 
 - Attach, Decay-1, Decay-2, Sustain, Release-1, Release-2, Delay are parameters for the envelope
 - Range sets the range of the pitch envelope, in octaves
@@ -161,23 +161,23 @@ In Operators mode, the displays will show the parameter for the particular encod
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 | Attack | Decay-2 | Decay-2 | Sustain | Release-1 | Release-2 | Rate |
-| 1 | Attack | Decay-1 | Decay-2 |  | Release-1 | Release-2 | Delay |
-| 2 | Feedback | Feedback | Feedback | Feedback | Feedback | Feedback |  |
-| 3 | Fine (Mode) | Fine (Mode) | Fine (Mode) | Fine (Mode) | Fine (Mode) | Fine (Mode) |  |
-| 4 | Ratio/R.Fine | Ratio/R.Fine | Ratio/R.Fine | Ratio/R.Fine | Ratio/R.Fine | Ratio/R.Fine |  |
-| 5 | Level | Level | Level | Level | Level | Level | Volume |
+| 0 | Level | Level | Level | Level | Level | Level | Volume |
+| 1 | Ratio/R.Fine | Ratio/R.Fine | Ratio/R.Fine | Ratio/R.Fine | Ratio/R.Fine | Ratio/R.Fine |  |
+| 2 | Fine (Mode) | Fine (Mode) | Fine (Mode) | Fine (Mode) | Fine (Mode) | Fine (Mode) |  |
+| 3 | Feedback | Feedback | Feedback | Feedback | Feedback | Feedback |  |
+| 4 | Attack | Decay-1 | Decay-2 |  | Release-1 | Release-2 | Delay |
+| 5 | Attack | Decay-2 | Decay-2 | Sustain | Release-1 | Release-2 | Rate |
 
 Mapping of parameters:
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 | 181+ | 75+ | 82+ | 89+ | 96+ | 193+ | 140+ |
-| 1 | 103+ | 110+ | 117+ | 0 | 124+ | 199+ | 187+ |
-| 2 | 7 | 8 | 9 | 10 | 11 | 12 | 0 |
-| 3 | 27 (14) | 28 (14) | 29 (14) | 30 (14) | 31 (14) | 32 (14) | 0 |
-| 4 | 15/21 | 16/22 | 17/23 | 18/24 | 19/25 | 20/26 | 0 |
-| 5 | 33 | 34 | 35 | 36 | 37 | 38 | 180 |
+| 0 | 33 | 34 | 35 | 36 | 37 | 38 | 180 |
+| 1 | 15/21 | 16/22 | 17/23 | 18/24 | 19/25 | 20/26 | 0 |
+| 2 | 27 (14) | 28 (14) | 29 (14) | 30 (14) | 31 (14) | 32 (14) | 0 |
+| 3 | 7 | 8 | 9 | 10 | 11 | 12 | 0 |
+| 4 | 103+ | 110+ | 117+ | 0 | 124+ | 199+ | 187+ |
+| 5 | 181+ | 75+ | 82+ | 89+ | 96+ | 193+ | 140+ |
 
 - Level is the level of the particular operator
 - Volume is the output volume of the synth
@@ -201,12 +201,12 @@ In effects mode, the displays will show the parameters for a particular effect. 
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 |  | *AM* Speed | *AM* Depth | *AM* Range |  | *AM* LR Phase |  |
-| 1 | *Delay* Wet | *Delay* Time/Tempo | *Delay* Lo pass | *Delay* Hi pass | *Delay* Feedback | *Delay* Multiplier/Devider | *Delay Dry |
-| 2 | *Phaser* Wet | *Phaser* Speed | *Phaser* Depth | *Phaser* Offset/Stages | *Phaser* Feedback | *Phaser* LR Phase | *Phaser* Dry |
-| 3 | *Reverb* Wet | *Reverb* Decay | *Reverb* Mode | *Reverb* Damp |  |  | *Reverb* Dry |
-| 4 | *Chorus/Flanger* Wet | *Chorus/Flanger* Speed | *Chorus/Flanger* Depth | *Chorus/Flanger* Mode | *Chorus/Flanger* Feedback | *Chorus/Flanger* LR Phase | *Chorus/Flanger* Dry |
-| 5 |   | *Decimator* Depth | *Filter* Lo pass | *Filter* Hi pass | *Bitcrusher* Depth | EFX Routing | Volume |
+| 0 |   | *Decimator* Depth | *Filter* Lo pass | *Filter* Hi pass | *Bitcrusher* Depth | EFX Routing | Volume |
+| 1 | *Chorus/Flanger* Wet | *Chorus/Flanger* Speed | *Chorus/Flanger* Depth | *Chorus/Flanger* Mode | *Chorus/Flanger* Feedback | *Chorus/Flanger* LR Phase | *Chorus/Flanger* Dry |
+| 2 | *Reverb* Wet | *Reverb* Decay | *Reverb* Mode | *Reverb* Damp |  |  | *Reverb* Dry |
+| 3 | *Phaser* Wet | *Phaser* Speed | *Phaser* Depth | *Phaser* Offset/Stages | *Phaser* Feedback | *Phaser* LR Phase | *Phaser* Dry |
+| 4 | *Delay* Wet | *Delay* Time/Tempo | *Delay* Lo pass | *Delay* Hi pass | *Delay* Feedback | *Delay* Multiplier/Devider | *Delay Dry |
+| 5 |  | *AM* Speed | *AM* Depth | *AM* Range |  | *AM* LR Phase |  |
 
 Chorus/Fanger is one effect, this is selected by the Mode parameter
 
@@ -214,12 +214,12 @@ Mapping of parameters:
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 | 0 | 330 | 332 | 331 | 0 | 333 | 0 |
-| 1 | 301 | 303/307 | 305 | 306 | 304 | 308/309 | 300 |
-| 2 | 311 | 314 | 313 | 316/317 | 315 | 318 | 310 |
-| 3 | 391 | 393 | 392 | 394 | 0 | 0 | 390 |
-| 4 | 361 | 363 | 364 | 362 | 365 | 366 | 360 |
-| 5 | 0 | 370 | 320 | 321 | 380 | 410 | 180 |
+| 0 | 0 | 370 | 320 | 321 | 380 | 410 | 180 |
+| 1 | 361 | 363 | 364 | 362 | 365 | 366 | 360 |
+| 2 | 391 | 393 | 392 | 394 | 0 | 0 | 390 |
+| 3 | 311 | 314 | 313 | 316/317 | 315 | 318 | 310 |
+| 4 | 301 | 303/307 | 305 | 306 | 304 | 308/309 | 300 |
+| 5 | 0 | 330 | 332 | 331 | 0 | 333 | 0 |
 
 ## Master (4)
 
@@ -227,22 +227,22 @@ In master mode, the displays will show the master parameters
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 | Vol U1-L/R | Vol U1-L/R | Vol U1-L/R | Vol U1-L/R | Vol U1-L/R | Vol U1-L/R | Vol U1 |
-| 1 | Vol U2-L/R | Vol U2-L/R | Vol U2-L/R | Vol U2-L/R | Vol U2-L/R | Vol U2-L/R | Vol U2 |
-| 2 | Velo sense U1 | Velo sense U1 | Velo sense U1 | Velo sense U1 | Velo sense U1 | Velo sense U1 | Velo offset U1 |
-| 3 | Velo sense U2 | Velo sense U2 | Velo sense U2 | Velo sense U2 | Velo sense U2 | Velo sense U2 | Velo offset U2 |
-| 4 |   |   |   |   |   |   |   |
-| 5 | Pan | Transpose | Mono-Poly | Porta time | Porta mode | Tuning | Output/Gain |
+| 0 | Pan | Transpose | Mono-Poly | Porta time | Porta mode | Tuning | Output/Gain |
+| 1 |   |   |   |   |   |   |   |
+| 2 | Velo sense U2 | Velo sense U2 | Velo sense U2 | Velo sense U2 | Velo sense U2 | Velo sense U2 | Velo offset U2 |
+| 3 | Velo sense U1 | Velo sense U1 | Velo sense U1 | Velo sense U1 | Velo sense U1 | Velo sense U1 | Velo offset U1 |
+| 4 | Vol U2-L/R | Vol U2-L/R | Vol U2-L/R | Vol U2-L/R | Vol U2-L/R | Vol U2-L/R | Vol U2 |
+| 5 | Vol U1-L/R | Vol U1-L/R | Vol U1-L/R | Vol U1-L/R | Vol U1-L/R | Vol U1-L/R | Vol U1 |
 
 Mapping of parameters:
 
 | Value | 0 (Op1) | 1 (Op2) | 2 (Op3) | 3 (Op4) | 4 (Op5) | 5 (Op6) | 6 (Out) |
 |-------|---------|---------|---------|---------|---------|---------|---------|
-| 0 | 256/257 | 258/259 | 260/261 | 262/263 | 264/265 | 266/267 | 180 |
-| 1 | 256/257 | 258/259 | 260/261 | 262/263 | 264/265 | 266/267 | 180 |
+| 0 | 221 | 174 | 228 | 230 | 229 | 251 | 411/412 |
+| 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 2 | 39 | 40 | 41 | 42 | 43 | 44 | 242 |
 | 3 | 39 | 40 | 41 | 42 | 43 | 44 | 242 |
-| 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 5 | 221 | 174 | 228 | 230 | 229 | 251 | 411/412 |
+| 4 | 256/257 | 258/259 | 260/261 | 262/263 | 264/265 | 266/267 | 180 |
+| 5 | 256/257 | 258/259 | 260/261 | 262/263 | 264/265 | 266/267 | 180 |
 
-Options 0-3 target a specific unit, so the parameter values are the same for both units, but the specified unit should be selected.
+Options 2-5 target a specific unit, so the parameter values are the same for both units, but the specified unit should be selected.
