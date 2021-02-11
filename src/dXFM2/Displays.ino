@@ -1,24 +1,24 @@
 /*
-*  Module for the Menus
+*  Module for the Displays
 *
-*  this module contains the code to setup a particular screen
+*  this module contains the code to setup a particular display
 *
 */
-void showMenu(uint8_t op) {
+void showDisplay(uint8_t op) {
   switch (greenSelect) {
-    case 0: showLFOMenu(op); break;
-    case 1: showOSCMenu(op); break;
-    case 2: showOPSMenu(op); break;
-    case 3: showEFXMenu(op); break;
-    case 4: showMasterMenu(op); break;
-    case 5: showEFXMenu(op); break;
-    case 6: showOPSMenu(op); break;
-    case 7: showOSCMenu(op); break;
-    case 8: showLFOMenu(op); break;
+    case 0: showLFODisplay(op); break;
+    case 1: showOSCDisplay(op); break;
+    case 2: showOPSDisplay(op); break;
+    case 3: showEFXDisplay(op); break;
+    case 4: showMasterDisplay(op); break;
+    case 5: showEFXDisplay(op); break;
+    case 6: showOPSDisplay(op); break;
+    case 7: showOSCDisplay(op); break;
+    case 8: showLFODisplay(op); break;
   }
 }
 
-void showLFOMenu(uint8_t op) {
+void showLFODisplay(uint8_t op) {
   switch (blueSelect) {
     case 0: showLFO(op); break;
     case 1: showKeyTracking(op); break;
@@ -29,7 +29,7 @@ void showLFOMenu(uint8_t op) {
   }
 }
 
-void showOSCMenu(uint8_t op) {
+void showOSCDisplay(uint8_t op) {
   switch (blueSelect) {
     case 0: showWave(op,2); break;
     case 1: showOSCRatio(op); break;
@@ -40,7 +40,7 @@ void showOSCMenu(uint8_t op) {
   }
 }
 
-void showOPSMenu(uint8_t op) {
+void showOPSDisplay(uint8_t op) {
   switch (blueSelect) {
     case 0: showLevel(op); break;
     case 1: showRatio(op); break;
@@ -51,8 +51,7 @@ void showOPSMenu(uint8_t op) {
   }
 }
 
-void showEFXMenu(uint8_t op) {
-  //Nothing yet
+void showEFXDisplay(uint8_t op) {
   //Missing: Bitcrusher & Decimator
   //EFX routing could be done via screen swapping
   //Routing is:
@@ -69,7 +68,7 @@ void showEFXMenu(uint8_t op) {
   }
 }
 
-void showMasterMenu(uint8_t op) {
+void showMasterDisplay(uint8_t op) {
   switch (blueSelect) {
     case 0: showMaster(op); break;
     case 1: showReserved(op); break;
