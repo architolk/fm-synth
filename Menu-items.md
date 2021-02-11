@@ -34,38 +34,38 @@ A variable encoderSelected is used to capture which encoder is selected (might c
 
 Any combination of the green menu and the blue menu will change all screens, according to the table below:
 
-| Green | Blue | Screen |
-|-------|------|--------|
-| 0+8 | 0 | LFO |
-| 0+8 | 1 | Key tracking |
-| 0+8 | 2 | Key tracking |
-| 0+8 | 3 | Key tracking |
-| 0+8 | 4 | LFO-PMS |
-| 0+8 | 5 | LFO-AMS |
-| 1+7 | 0 | Wave 1 |
-| 1+7 | 1 | OSC-Ratio |
-| 1+7 | 2 | Wave 2 |
-| 1+7 | 3 | Oscillator phase |
-| 1+7 | 4 | Pitch envelope |
-| 1+7 | 5 | Pitch envelope |
-| 2+6 | 0 | Level |
-| 2+6 | 1 | Ratio |
-| 2+6 | 2 | Pitch |
-| 2+6 | 3 | Feedback |
-| 2+6 | 4 | Amplitude envelope |
-| 2+6 | 5 | Amplitude envelope |
-| 3+5 | 0 | Effects |
-| 3+5 | 1 | Effects |
-| 3+5 | 2 | Effects |
-| 3+5 | 3 | Effects |
-| 3+5 | 4 | Effects |
-| 3+5 | 5 | Effects |
-| 4 | 0 | Master |
-| 4 | 1 | Master |
-| 4 | 2 | Velo sense |
-| 4 | 3 | Velo sense |
-| 4 | 4 | Mixer |
-| 4 | 5 | Mixer |
+| Green | Blue | Screen | Screeen type |
+|-------|------|--------|--------------|
+| 0+8 | 0 | LFO | Multiple |
+| 0+8 | 1 | Key tracking | Curves + Depth + Break point note |
+| 0+8 | 2 | Key tracking | Curves + Depth + Break point note |
+| 0+8 | 3 | Key tracking | Curves + Depth + Break point note |
+| 0+8 | 4 | LFO-PMS | Level |
+| 0+8 | 5 | LFO-AMS | Level |
+| 1+7 | 0 | Wave 1 | Wave |
+| 1+7 | 1 | OSC-Ratio | Frequency ratio |
+| 1+7 | 2 | Wave 2 | Wave |
+| 1+7 | 3 | Oscillator phase | Phase + Sync |
+| 1+7 | 4 | Pitch envelope | Envelope |
+| 1+7 | 5 | Pitch envelope | Envelope |
+| 2+6 | 0 | Level | Level |
+| 2+6 | 1 | Ratio | Course + Fine Ratio |
+| 2+6 | 2 | Pitch | Pitch |
+| 2+6 | 3 | Feedback | Level |
+| 2+6 | 4 | Amplitude envelope | Envelope |
+| 2+6 | 5 | Amplitude envelope | Envelope |
+| 3+5 | 0 | Effects | Multiple |
+| 3+5 | 1 | Effects | Multiple |
+| 3+5 | 2 | Effects | Multiple |
+| 3+5 | 3 | Effects | Multiple |
+| 3+5 | 4 | Effects | Multiple |
+| 3+5 | 5 | Effects | Multiple |
+| 4 | 0 | Master | Multiple |
+| 4 | 1 | Reserved | Non |
+| 4 | 2 | Velo sense | Level |
+| 4 | 3 | Velo sense | Level |
+| 4 | 4 | Mixer | Stereo Level |
+| 4 | 5 | Mixer | Stereo Level |
 
 # Green Menu
 
