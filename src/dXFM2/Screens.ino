@@ -66,6 +66,31 @@ void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.display();
 }
 
+void showRatioOnScreen(uint8_t screen, uint8_t toggle, uint8_t coarse, uint8_t fine) {
+  display.clearDisplay();
+  display.setFont(&Dungeon12pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,20);
+  display.print(F("Ratio"));
+
+  display.setCursor(15,50);
+  display.print(F("1:"));
+  display.print(coarse);
+  display.setFont(&Dungeon9pt7b);
+  display.print(F("."));
+  display.print(fine);
+
+  if (toggle==0) {
+    display.drawLine(15,60,30+getWidth(coarse),60,SSD1306_WHITE);
+  } else {
+    display.drawLine(30+getWidth(coarse),60,40+getWidth(coarse)+getWidth(fine),60,SSD1306_WHITE);
+  }
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 //DEBUG FUNCTION
 //This function (not very memory-friendly) will show some parameter
 void showParamValueOnScreen(const String& param, uint8_t screen, uint16_t value) {
@@ -81,6 +106,111 @@ void showParamValueOnScreen(const String& param, uint8_t screen, uint16_t value)
 
   TCA9548A(SCRMAP[screen]);
   display.display();
+}
+
+void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool activeScreen, uint8_t param) {
+  display.clearDisplay();
+  //env_type env2 = {{100,230,255,255,160,255},{0,255,255,255,0,0}};
+  showEnvelope(env);
+
+  if (activeScreen) {
+    display.setFont(&Dungeon9pt7b);
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0,12);
+    switch (op) {
+      case 0: display.print(F("Attack")); break;
+      case 1: display.print(F("Decay-1")); break;
+      case 2: display.print(F("Decay-2")); break;
+      case 3: break;
+      case 4: display.print(F("Rel-1")); break;
+      case 5: display.print(F("Rel-2")); break;
+      case 6: display.print(F("Delay")); break;
+      case 7: display.print(F("Attack")); break;
+      case 8: display.print(F("Decay-1")); break;
+      case 9: display.print(F("Decay-2")); break;
+      case 10: display.print(F("Sustain")); break;
+      case 11: display.print(F("Rel-1")); break;
+      case 12: display.print(F("Rel-2")); break;
+      case 13: display.print(F("Rate")); break;
+    }
+    if (op!=3) {
+      drawNumber(param,127,12);
+    }
+  }
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showEnvelope(const env_type& env) {
+  float x1,x2,y1,y2,yd,yq,xq,r0,r1,r2,r3,r4,r5,l0,l1,l2,l3,l4,l5;
+  //Getting envelope parameters
+  r0 = env.rate[0];
+  r1 = 255 - env.rate[1];
+  r2 = 255 - env.rate[2];
+  r3 = 255 - env.rate[3];
+  r4 = 255 - env.rate[4];
+  r5 = 255 - env.rate[5];
+  l0 = env.level[0];
+  l1 = env.level[1];
+  l2 = env.level[2];
+  l3 = env.level[3];
+  l4 = env.level[4];
+  l5 = env.level[5];
+  yq = 40.0/255.0; //Quotient bij maximale waarde van 63
+  xq = 127.0 / (255 + (r0>0 ? 255 : 0) + (r1>0 ? 255 : 0) + (r2>0 ? 255 : 0 ) + (r3>0 ? 255 : 0) + (r4>0 ? 255 : 0) + (r5>0 ? 255 : 0));
+  yd = 20.0;
+  x1 = 0.0;
+  x2 = x1 + xq*r0; //Delay
+  y1 = yq*(255 - l0)+yd;
+  y2 = yq*(255 - l0)+yd;
+  display.drawLine(x1,y1,x2,y2,SSD1306_WHITE);
+  x1 = x2;
+  y1 = y2;
+  x2 = x1 + xq*r1; //Attack
+  y2 = yq*(255 - l1)+yd;
+  display.drawLine(x1,y1,x2,y2,SSD1306_WHITE);
+  x1 = x2;
+  y1 = y2;
+  x2 = x1 + xq*r2; //Decay-1
+  y2 = yq*(255 - l2)+yd;
+  display.drawLine(x1,y1,x2,y2,SSD1306_WHITE);
+  x1 = x2;
+  y1 = y2;
+  x2 = x1 + xq*r3; //Decay-2
+  y2 = yq*(255 - l3)+yd;
+  display.drawLine(x1,y1,x2,y2,SSD1306_WHITE);
+  x1 = x2;
+  y1 = y2;
+  x2 = x1 + 127 - xq*(r0 + r1 + r2 + r3 + r4 + r5); //Sustain
+  y2 = yq*(255 - l3)+yd;
+  display.drawLine(x1,y1-1,x2,y2-1,SSD1306_WHITE);
+  display.drawLine(x1,y1,x2,y2,SSD1306_WHITE);
+  display.drawLine(x1,y1+1,x2,y2+1,SSD1306_WHITE);
+  x1 = x2;
+  y1 = y2;
+  x2 = x1 + xq*r4; //Release-1
+  y2 = yq*(255 - l4)+yd;
+  display.drawLine(x1,y1,x2,y2,SSD1306_WHITE);
+  x1 = x2;
+  y1 = y2;
+  x2 = x1 + xq*r5; //Release-2
+  y2 = yq*(255 - l5)+yd;
+  display.drawLine(x1,y1,x2,y2,SSD1306_WHITE);
+}
+
+void drawNumber(uint8_t number, uint8_t x, uint8_t y)
+{
+  display.setCursor(x - getWidth(number),y);
+  display.print(number);
+}
+
+uint16_t getWidth(uint8_t number) {
+  int16_t x1, y1;
+  uint16_t w, h;
+  display.getTextBounds(number, 0, 20, &x1, &y1, &w, &h); //calc width of new string
+  return w;
 }
 
 void drawPercentbar(int x,int y, int width,int height, uint8_t progress) {

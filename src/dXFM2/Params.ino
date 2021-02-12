@@ -23,7 +23,7 @@ const uint16_t PARAMMAP[5][6][7] PROGMEM = {
   },
   {  //2 & 6, Operators
     {33,34,35,36,37,38,180},
-    {1012,1013,1014,1015,1016,1017,0},
+    {1012,1013,1014,1015,1016,1017,180},
     {2006,2007,2008,2009,2010,2011,0},
     {7,8,9,10,11,12,0},
     {3103,3110,3117,0,3124,3199,3187},
@@ -60,21 +60,57 @@ uint8_t paramValue[2][500];
 void setupParams() {
   for (uint8_t unit=0; unit<2; unit++) {
     for (uint16_t param=0; param<500; param++) {
-      paramValue[unit][param] = 5;
+      paramValue[unit][param] = 0;
     }
   }
+  //Setting some particular parameter values for testing:
+  //Level and volume
+  paramValue[0][33] = 255;
+  paramValue[0][34] = 220;
+  paramValue[0][35] = 255;
+  paramValue[0][36] = 180;
+  paramValue[0][37] = 220;
+  paramValue[0][38] = 255;
+  paramValue[0][180] = 200;
+  //Ratio
+  paramValue[0][15] = 1;
+  paramValue[0][16] = 1;
+  paramValue[0][17] = 1;
+  paramValue[0][18] = 1;
+  paramValue[0][19] = 1;
+  paramValue[0][20] = 1;
+  //Ratio fine
+  paramValue[0][21] = 9;
+  paramValue[0][22] = 9;
+  paramValue[0][23] = 9;
+  paramValue[0][24] = 9;
+  paramValue[0][25] = 9;
+  paramValue[0][26] = 9;
+  //Envelope level and rate for operator 0
+  paramValue[0][181] = 0;
+  paramValue[0][75] = 255;
+  paramValue[0][82] = 255;
+  paramValue[0][89] = 255;
+  paramValue[0][96] = 0;
+  paramValue[0][193] = 0;
+  paramValue[0][187] = 0;
+  paramValue[0][103] = 230;
+  paramValue[0][110] = 255;
+  paramValue[0][117] = 255;
+  paramValue[0][124] = 160;
+  paramValue[0][199] = 255;
 }
 
-param_type getParam(uint8_t green, uint8_t blue, uint8_t op, uint8_t toggle) {
+param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
   uint8_t menu = green;
   uint8_t unit = 0;
   if (greenSelect>4) {
     menu = 8-green;
     unit = 1;
   }
-  uint16_t val = PARAMMAP[menu][blue][op];
+  uint16_t val = PARAMMAP[menu][blue][usedOp];
   if (val>3000) {
-    return {unit,val-3000+op};
+    return {unit,val-3000+selOp};
   } else {
     if (val>1999) {
       return {unit,PARAMEXMAP[val-2000][toggle]};
@@ -88,12 +124,35 @@ param_type getParam(uint8_t green, uint8_t blue, uint8_t op, uint8_t toggle) {
   }
 }
 
-uint8_t getParamValue(uint8_t green, uint8_t blue, uint8_t op, uint8_t toggle) {
-  param_type param = getParam(green,blue,op,toggle);
+uint8_t getParamType(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
+  uint8_t menu = green;
+  uint8_t unit = 0;
+  if (greenSelect>4) {
+    menu = 8-green;
+    unit = 1;
+  }
+  uint16_t val = PARAMMAP[menu][blue][usedOp];
+  if (val>3000) {
+    return 3;
+  } else {
+    if (val>1999) {
+      return 2;
+    } else {
+      if (val>999) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  }
+}
+
+uint8_t getParamValue(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
+  param_type param = getParam(green,blue,selOp,usedOp,toggle);
   return paramValue[param.unit][param.param];
 }
 
-void setParamValue(uint8_t green, uint8_t blue, uint8_t op, uint8_t toggle, uint8_t value) {
-  param_type param = getParam(green,blue,op,toggle);
+void setParamValue(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle, uint8_t value) {
+  param_type param = getParam(green,blue,selOp,usedOp,toggle);
   paramValue[param.unit][param.param] = value;
 }
