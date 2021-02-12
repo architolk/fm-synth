@@ -66,25 +66,51 @@ void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.display();
 }
 
-void showRatioOnScreen(uint8_t screen, uint8_t toggle, uint8_t coarse, uint8_t fine) {
+void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coarse, uint8_t fine, uint8_t pitch) {
   display.clearDisplay();
   display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0,20);
-  display.print(F("Ratio"));
+  if (isPitch) {
+    display.print(F("Pitch"));
+  } else {
+    display.print(F("Ratio"));
+  }
 
   display.setCursor(15,50);
   display.print(F("1:"));
   display.print(coarse);
+  uint16_t cw = getWidth(coarse);
+  
   display.setFont(&Dungeon9pt7b);
   display.print(F("."));
   display.print(fine);
+  uint16_t fw = getWidth(fine);
 
-  if (toggle==0) {
-    display.drawLine(15,60,30+getWidth(coarse),60,SSD1306_WHITE);
+  float pitchperc = pitch;
+  pitchperc = (pitchperc-128)*100/127;
+  if (pitch<128 && pitchperc>-1) {
+    pitchperc = -1;
+  }
+  if (pitch>128 && pitchperc<1) {
+    pitchperc = 1;
+  }
+  drawNumber(pitchperc,104,50);
+  uint16_t pw = getWidth(pitchperc);
+  display.print(F("%"));
+
+  if (toggle==2) { 
+    display.drawLine(104-pw,60,120,60,SSD1306_WHITE);
+    display.drawLine(104-pw,61,120,61,SSD1306_WHITE);
   } else {
-    display.drawLine(30+getWidth(coarse),60,40+getWidth(coarse)+getWidth(fine),60,SSD1306_WHITE);
+    if (toggle==0) {
+      display.drawLine(15,60,31+cw,60,SSD1306_WHITE);
+      display.drawLine(15,61,31+cw,61,SSD1306_WHITE);
+    } else {
+      display.drawLine(31+cw,60,36+cw+fw,60,SSD1306_WHITE);
+      display.drawLine(31+cw,61,36+cw+fw,61,SSD1306_WHITE);
+    }
   }
 
   TCA9548A(SCRMAP[screen]);
@@ -103,6 +129,20 @@ void showParamValueOnScreen(const String& param, uint8_t screen, uint16_t value)
   display.setFont(&Dungeon12pt7b);
   display.setCursor(5,50);
   display.print(value);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showOperator(uint8_t screen, uint8_t op) {
+  display.clearDisplay();
+  
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(30,40);
+  display.print(F("#"));
+  display.print(op+1);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
@@ -200,13 +240,13 @@ void showEnvelope(const env_type& env) {
   display.drawLine(x1,y1,x2,y2,SSD1306_WHITE);
 }
 
-void drawNumber(uint8_t number, uint8_t x, uint8_t y)
+void drawNumber(int16_t number, uint8_t x, uint8_t y)
 {
   display.setCursor(x - getWidth(number),y);
   display.print(number);
 }
 
-uint16_t getWidth(uint8_t number) {
+uint16_t getWidth(int16_t number) {
   int16_t x1, y1;
   uint16_t w, h;
   display.getTextBounds(number, 0, 20, &x1, &y1, &w, &h); //calc width of new string

@@ -24,8 +24,8 @@ const uint16_t PARAMMAP[5][6][7] PROGMEM = {
   {  //2 & 6, Operators
     {33,34,35,36,37,38,180},
     {1012,1013,1014,1015,1016,1017,180},
-    {2006,2007,2008,2009,2010,2011,0},
-    {7,8,9,10,11,12,0},
+    {2006,2007,2008,2009,2010,2011,180},
+    {7,8,9,10,11,12,180},
     {3103,3110,3117,0,3124,3199,3187},
     {3181,3075,3082,3089,3096,3193,3140}
   },
@@ -80,12 +80,19 @@ void setupParams() {
   paramValue[0][19] = 1;
   paramValue[0][20] = 1;
   //Ratio fine
-  paramValue[0][21] = 9;
-  paramValue[0][22] = 9;
-  paramValue[0][23] = 9;
-  paramValue[0][24] = 9;
-  paramValue[0][25] = 9;
-  paramValue[0][26] = 9;
+  paramValue[0][21] = 0;
+  paramValue[0][22] = 0;
+  paramValue[0][23] = 0;
+  paramValue[0][24] = 0;
+  paramValue[0][25] = 0;
+  paramValue[0][26] = 0;
+  //Fine
+  paramValue[0][27] = 128;
+  paramValue[0][28] = 128;
+  paramValue[0][29] = 128;
+  paramValue[0][30] = 128;
+  paramValue[0][31] = 128;
+  paramValue[0][32] = 128;
   //Envelope level and rate for operator 0
   paramValue[0][181] = 0;
   paramValue[0][75] = 255;
@@ -155,4 +162,13 @@ uint8_t getParamValue(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp
 void setParamValue(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle, uint8_t value) {
   param_type param = getParam(green,blue,selOp,usedOp,toggle);
   paramValue[param.unit][param.param] = value;
+}
+
+void toggleParamValueBit(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle, uint8_t bitnr) {
+  param_type param = getParam(green,blue,selOp,usedOp,toggle);
+  if (bitRead(paramValue[param.unit][param.param],bitnr)==0) {
+    bitWrite(paramValue[param.unit][param.param],bitnr,1);
+  } else {
+    bitWrite(paramValue[param.unit][param.param],bitnr,0);
+  }
 }

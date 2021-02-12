@@ -124,9 +124,21 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
       }
     } else {
-      operatorUsed = encoder;
-      operatorSelect = encoder;
-      setParamValue(greenSelect,blueSelect,operatorSelect,encoder,toggleMode,value);
+      if (paramType==2) {
+        if (clicked) {
+          operatorUsed = encoder;
+          operatorSelect = encoder;
+          toggleParamValueBit(greenSelect,blueSelect,operatorSelect,encoder,1,encoder);
+        } else {
+          operatorUsed = encoder;
+          operatorSelect = encoder;
+          setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
+        }
+      } else {
+        operatorUsed = encoder;
+        operatorSelect = encoder;
+        setParamValue(greenSelect,blueSelect,operatorSelect,encoder,toggleMode,value);
+      }
     }
     showDisplay(operatorSelect);
   }

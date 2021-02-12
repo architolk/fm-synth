@@ -43,8 +43,8 @@ void showOSCDisplay(uint8_t op) {
 void showOPSDisplay(uint8_t op) {
   switch (blueSelect) {
     case 0: showLevel(op); break;
-    case 1: showRatio(op); break;
-    case 2: showPitch(op); break;
+    case 1: showRatioPitch(op); break;
+    case 2: showRatioPitch(op); break;
     case 3: showFeedback(op); break;
     case 4: showAmplitudeEnvelope(op); break;
     case 5: showAmplitudeEnvelope(op); break;
@@ -145,9 +145,10 @@ void showOSCRatio(uint8_t op) {
 // Operator submenu
 //
 void showAmplitudeEnvelope(uint8_t op) {
-  if (op==6) {
-    showValueOnScreen(F("NOP"),6,getParamValue(greenSelect,blueSelect,6,0,0));
-  } else {
+  if (op==operatorSelect) {
+    showOperator(6,operatorSelect);
+  }
+  if (op<6) {
     env_type env;
     env.level[0] = getParamValue(greenSelect,5,op,0,0); //Start level
     env.level[1] = getParamValue(greenSelect,5,op,1,0); //Level at end of attack phase
@@ -169,25 +170,17 @@ void showAmplitudeEnvelope(uint8_t op) {
 
 void showFeedback(uint8_t op) {
   if (op==6) {
-    showValueOnScreen(F("NOP"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     showValueOnScreen(F("Feedback"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
   }
 }
 
-void showPitch(uint8_t op) {
-  if (op==6) {
-    showValueOnScreen(F("NOP"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
-  } else {
-    showValueOnScreen(F("Pitch"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
-  }
-}
-
-void showRatio(uint8_t op) {
+void showRatioPitch(uint8_t op) {
   if (op==6) {
     showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
-    showRatioOnScreen(op,toggleMode,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,blueSelect,operatorSelect,op,1));
+    showRatioOnScreen(op,bitRead(getParamValue(greenSelect,2,operatorSelect,op,1),op)==1,(blueSelect==2 ? 2 : toggleMode),getParamValue(greenSelect,1,operatorSelect,op,0),getParamValue(greenSelect,1,operatorSelect,op,1),getParamValue(greenSelect,2,operatorSelect,op,0));
   }
 }
 
