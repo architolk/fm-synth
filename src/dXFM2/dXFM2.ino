@@ -136,6 +136,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
       } else {
         operatorUsed = encoder;
         setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
+        activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
       }
     } else {
       if (paramType==2) {
@@ -143,19 +144,29 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
           operatorUsed = encoder;
           operatorSelect = encoder;
           toggleParamValueBit(greenSelect,blueSelect,operatorSelect,encoder,1,encoder);
+          activateChange(greenSelect,blueSelect,operatorSelect,encoder,1);
         } else {
           operatorUsed = encoder;
           operatorSelect = encoder;
           setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
+          activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
         }
       } else {
         operatorUsed = encoder;
         operatorSelect = encoder;
         setParamValue(greenSelect,blueSelect,operatorSelect,encoder,toggleMode,value);
+        activateChange(greenSelect,blueSelect,operatorSelect,encoder,toggleMode);
       }
     }
     showDisplay(operatorSelect);
   }
+}
+
+//Starts the serial communication to activate a change
+//Maybe this can be part of setParamValue and toggleParamValueBit, but for now...
+void activateChange(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
+  param_type param = getParam(green,blue,selOp,usedOp,toggle);
+  xfm2SetParameter(param.param,paramValue[param.unit][param.param]);
 }
 
 // Menu change, all screens are affected!

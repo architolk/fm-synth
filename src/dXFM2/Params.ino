@@ -55,7 +55,7 @@ const uint16_t PARAMEXMAP[28][2] = {
   {411,412} //MASTER 1027
 };
 
-uint8_t paramValue[2][500];
+uint8_t paramValue[2][512];
 
 void setupParams() {
   for (uint8_t unit=0; unit<2; unit++) {
