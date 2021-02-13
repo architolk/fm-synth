@@ -52,6 +52,28 @@ void initScreens() {
   //Nothing to do: initialization of screens is nothing at the moment
 }
 
+//Shows an errorcode in the master screen (bottom)
+void showError(uint8_t err) {
+  display.clearDisplay();
+  display.setFont(&Dungeon12pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,30);
+  display.print(F("ERROR"));
+
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setCursor(0,60);
+  switch(err) {
+    case ERR_UNIT: display.print(F("Set unit")); break;
+    case ERR_DUMP: display.print(F("Dump wrong")); break;
+    default display.print(F("Unknown"));
+  }
+
+  TCA9548A(SCRMAP[6]);
+  display.display();
+}
+
 //Shows the value of some parameter (fixed to "Volume" at this moment)
 void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.clearDisplay();
@@ -82,7 +104,7 @@ void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coa
   display.print(F("1:"));
   display.print(coarse);
   uint16_t cw = getWidth(coarse);
-  
+
   display.setFont(&Dungeon9pt7b);
   display.print(F("."));
   display.print(fine);
@@ -100,7 +122,7 @@ void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coa
   uint16_t pw = getWidth(pitchperc);
   display.print(F("%"));
 
-  if (toggle==2) { 
+  if (toggle==2) {
     display.drawLine(104-pw,60,120,60,SSD1306_WHITE);
     display.drawLine(104-pw,61,120,61,SSD1306_WHITE);
   } else {
@@ -136,7 +158,7 @@ void showParamValueOnScreen(const String& param, uint8_t screen, uint16_t value)
 
 void showOperator(uint8_t screen, uint8_t op) {
   display.clearDisplay();
-  
+
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);

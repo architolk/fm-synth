@@ -13,6 +13,11 @@
 #include <Fonts/Dungeon9pt7b.h>
 #include <Fonts/Dungeon12pt7b.h>
 
+//Set this to the targetted serial interface
+//Serial = USB serial, for debugging
+//Serial1 = XFM2 serial, for real-live purpose
+#define HWSERIAL Serial
+
 //Need to put the typedef here, for function's sake...
 typedef struct {
   uint8_t unit; //the unit that is selected
@@ -63,7 +68,16 @@ void setup() {
   setupScreens();
   splashScreens();
 
+  //Start serial interface
+  HWSERIAL.begin(500000);
+
   delay(1000); //two seconds splash screen
+
+  uint8_t errorCode = initXFM2();
+  if (errorCode>0) {
+    showError(errorCode);
+    delay(5000);
+  }
 
   initLEDs(); //Initialize LEDs to startup position
   initScreens(); //Initialize OLED screens to startup position
