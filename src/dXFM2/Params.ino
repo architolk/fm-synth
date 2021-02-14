@@ -4,7 +4,7 @@
 *  this module contains all parameters for the XFM2 synth
 *
 */
-const uint16_t PARAMMAP[5][6][7] PROGMEM = {
+const uint16_t PARAMMAP[6][6][7] PROGMEM = {
   { //0 & 8, LFO
     {153,151,152,154,149,150,180},
     {57,58,59,60,61,62,180},
@@ -44,6 +44,14 @@ const uint16_t PARAMMAP[5][6][7] PROGMEM = {
     {39,40,41,42,43,44,242},
     {1021,1022,1023,1024,1025,1026,180},
     {1021,1022,1023,1024,1025,1026,180}
+  },
+  { //5, LEDs
+    {1,2,3,4,5,6},
+    {1,2,3,4,5,6},
+    {1,2,3,4,5,6},
+    {1,2,3,4,5,6},
+    {1,2,3,4,5,6},
+    {1,2,3,4,5,6}
   }
 };
 const uint16_t PARAMEXMAP[28][2] = {
@@ -159,6 +167,10 @@ uint8_t getParamValue(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp
   return paramValue[param.unit][param.param];
 }
 
+uint8_t getParamValueQuick(param_type param) {
+  return paramValue[param.unit][param.param];
+}
+
 void setParamValue(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle, uint8_t value) {
   param_type param = getParam(green,blue,selOp,usedOp,toggle);
   paramValue[param.unit][param.param] = value;
@@ -174,6 +186,10 @@ void toggleParamValueBit(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t use
 }
 
 void toggleLEDParamValueBit(uint8_t menu, uint8_t btn) {
-  //Debug
-  showParamValueOnScreen(F("LED:"), 6, uint16_t btn);
+  //TODO: Serial communication to XFM2 for this...
+  if (menu==6) {
+    toggleParamValueBit(5,0,0,btn,0,0);
+  } else {
+    toggleParamValueBit(5,0,0,menu,0,btn+1);
+  }
 }

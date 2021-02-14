@@ -13,6 +13,10 @@
 #include <Fonts/Dungeon9pt7b.h>
 #include <Fonts/Dungeon12pt7b.h>
 
+#define NO_ERROR 0
+#define ERR_UNIT 1
+#define ERR_DUMP 2
+
 //Set this to the targetted serial interface
 //Serial = USB serial, for debugging
 //Serial1 = XFM2 serial, for real-live purpose
@@ -167,7 +171,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
 //Maybe this can be part of setParamValue and toggleParamValueBit, but for now...
 void activateChange(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
   param_type param = getParam(green,blue,selOp,usedOp,toggle);
-  xfm2SetParameter(param.param,paramValue[param.unit][param.param]);
+  xfm2SetParameter(param.param,getParamValueQuick(param));
 }
 
 // Menu change, all screens are affected!

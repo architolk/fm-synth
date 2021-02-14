@@ -67,7 +67,7 @@ void showError(uint8_t err) {
   switch(err) {
     case ERR_UNIT: display.print(F("Set unit")); break;
     case ERR_DUMP: display.print(F("Dump wrong")); break;
-    default display.print(F("Unknown"));
+    default: display.print(F("Unknown"));
   }
 
   TCA9548A(SCRMAP[6]);

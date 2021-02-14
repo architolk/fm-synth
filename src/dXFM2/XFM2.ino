@@ -5,9 +5,6 @@
 *  via the serial communication bus
 *
 */
-#define NO_ERROR 0
-#define ERR_UNIT 1
-#define ERR_DUMP 2
 
 //Sets the unit that is active
 //All communication that follows will be for this unit
@@ -46,7 +43,7 @@ bool xfm2GetActiveProgram() {
   HWSERIAL.write('d'); // 'd' = Displays all parameter values for active program
 
   if (HWSERIAL.available() == 512) {
-    for (uint16_t param=0; param++; param<512) {
+    for (uint16_t param=0; param<512; param++) {
       paramValue[0][param] = HWSERIAL.read();
     }
     return true;
