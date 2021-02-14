@@ -34,6 +34,21 @@ const map_type BTNMAP[6][9] PROGMEM = {
   ,{{5,2,8,0},{5,0,8,1},{5,4,8,2},{5,6,8,3},{5,1,8,4},{7,6,9,3},{7,4,9,2},{7,0,9,1},{7,2,9,0}}
 };
 
+// Mapping from menu back to buttons
+typedef struct {
+  uint8_t row; //row of the LED
+  uint8_t col; //col of the LED
+} menumap_type;
+const menumap_type BTNMENUMAP[7][6] PROGMEM = {
+  {{0,0},{6,0},{6,2},{6,4},{6,1},{6,6}}, //{0,0} means: no led for this combination
+  {{0,0},{0,0},{3,2},{3,4},{3,1},{3,6}},
+  {{0,0},{0,0},{0,0},{4,4},{4,0},{4,5}},
+  {{0,0},{0,0},{0,0},{0,0},{4,2},{4,1}},
+  {{0,0},{0,0},{0,0},{0,0},{0,0},{4,6}},
+  {{1,2},{1,0},{1,1},{1,6},{1,5},{0,0}},
+  {{2,5},{2,6},{2,1},{2,4},{2,2},{2,0}}
+}
+
 // Current value of a panel's analog output
 uint8_t panelvalue[6] = {0,0,0,0,0,0};
 
@@ -91,6 +106,12 @@ void scanLEDButtons() {
       panelvalue[panel]=p[panel];
     }
   }
+}
+
+//Second toggle function, but without need to pass row and col
+void toggleLED2(uint8_t menu, uint8_t btn) {
+  buttons[menu][btn] = !buttons[menu][btn];
+  setLED(BTNMENUMAP[menu][btn].row,BTNMENUMAP[menu][btn].col,buttons[menu][btn]);
 }
 
 //Function to toggle one particular LED (all other LEDs remain the same state)
