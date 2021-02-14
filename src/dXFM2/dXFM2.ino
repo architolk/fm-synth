@@ -116,6 +116,7 @@ void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
     } else {
       //Operator matrix set/unset
       toggleLED(row,col,menu,btn);
+      toggleLEDParamValueBit(menu,btn);
     }
   }
 }

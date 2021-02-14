@@ -172,3 +172,8 @@ void toggleParamValueBit(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t use
     bitWrite(paramValue[param.unit][param.param],bitnr,0);
   }
 }
+
+void toggleLEDParamValueBit(uint8_t menu, uint8_t btn) {
+  //Debug
+  showParamValueOnScreen(F("LED:"), 6, uint16_t btn);
+}
