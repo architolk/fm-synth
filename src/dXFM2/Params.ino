@@ -73,12 +73,15 @@ void setupParams() {
   }
   //Setting some particular parameter values for testing:
   //Algo & feedback
+  /*
   paramValue[0][1] = 5; //Operator 1 is carrier and modulated by operator 2
   paramValue[0][2] = 0; //Operator 2 is modulator
   paramValue[0][3] = 17;//Operator 3 is carrier and modulated by operator 4
   paramValue[0][4] = 0; //Operator 4 is modulator
   paramValue[0][5] = 33;//Operator 5 is carrier and modulated by itself (feedback)
   paramValue[0][6] = 0; //Operator 6 is modulator (but doesn't modulates anything)
+  */
+  paramValue[0][5] = 33;//Operator 5 is carrier and modulated by itself (feedback)
   paramValue[0][11] = 250; //Feedback of operator 5 (other operators don't have feedback)
   //Level and volume
   paramValue[0][33] = 255;
@@ -122,6 +125,9 @@ void setupParams() {
   paramValue[0][117] = 255;
   paramValue[0][124] = 160;
   paramValue[0][199] = 255;
+  //Master levels
+  paramValue[0][411] = 200;
+  paramValue[0][412] = 2;
 }
 
 param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
@@ -204,5 +210,5 @@ void toggleLEDParamValueBit(uint8_t menu, uint8_t btn) {
 
 bool getParamValueBit(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle, uint8_t bitnr) {
   param_type param = getParam(green,blue,selOp,usedOp,toggle);
-  return (bitRead(paramValue[param.unit][param.param],bitnr)==1)
+  return (bitRead(paramValue[param.unit][param.param],bitnr)==1);
 }

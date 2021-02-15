@@ -88,6 +88,44 @@ void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.display();
 }
 
+void showFeedbackOnScreen(uint8_t screen, uint8_t value, bool feedbackOn) {
+  display.clearDisplay();
+  if (feedbackOn) {
+    display.setFont(&Dungeon12pt7b);
+  } else {
+    display.setFont(&Dungeon9pt7b);
+  }
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,20);
+  if (feedbackOn) {
+    display.print(F("Feedback"));
+  } else {
+    display.print(F("No feedback"));
+  }
+  drawPercentbar( 0, 30, 128, 30,value);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showOutputGainOnScreen(uint8_t screen, uint8_t outputval, uint8_t gainval) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,20);
+  display.print(F("Output"));
+  drawPercentbar( 0, 30, 128, 30,outputval);
+
+  display.setCursor(100,20);
+  display.print(F("+"));
+  drawNumber(gainval*6,127,20);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coarse, uint8_t fine, uint8_t pitch) {
   display.clearDisplay();
   display.setFont(&Dungeon12pt7b);

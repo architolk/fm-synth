@@ -172,7 +172,7 @@ void showFeedback(uint8_t op) {
   if (op==6) {
     showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
-    showValueOnScreen(F("Feedback"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+    showFeedbackOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValueBit(5,0,0,op,0,op+1));
   }
 }
 
@@ -219,6 +219,6 @@ void showMaster(uint8_t op) {
     case 3: showParamValueOnScreen(F("Porta time"),3,getParam(greenSelect,blueSelect,operatorSelect,3,0).param); break;
     case 4: showParamValueOnScreen(F("Porta mode"),4,getParam(greenSelect,blueSelect,operatorSelect,4,0).param); break;
     case 5: showParamValueOnScreen(F("Tuning"),5,getParam(greenSelect,blueSelect,operatorSelect,5,0).param); break;
-    case 6: showParamValueOnScreen(F("Output/Gain"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param); break;
+    case 6: showOutputGainOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0),getParamValue(greenSelect,blueSelect,operatorSelect,6,1)); break;
   }
 }

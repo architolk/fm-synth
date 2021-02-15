@@ -47,7 +47,7 @@ const menumap_type BTNMENUMAP[7][6] PROGMEM = {
   {{0,0},{0,0},{0,0},{0,0},{0,0},{4,6}},
   {{1,2},{1,0},{1,1},{1,6},{1,5},{0,0}},
   {{2,5},{2,6},{2,1},{2,4},{2,2},{2,0}}
-}
+};
 
 // Current value of a panel's analog output
 uint8_t panelvalue[6] = {0,0,0,0,0,0};
@@ -91,13 +91,13 @@ void initLEDs() {
   for (uint8_t opc=0; opc<6; opc++) {
     for (uint8_t opm=0; opm<6; opm++) {
       //Modulator LEDs
-      if (getParamValueBit(5,0,0,opm,0,0)) {
+      if (getParamValueBit(5,0,0,opc,0,opm+1)) {
         toggleLEDFromMenu(opc,opm);
       }
     }
     //Carrier LEDs
-    if (getParamValueBit(5,0,0,opc,0,opm+1)) {
-      toggleLEDFromMenu(6,opm);
+    if (getParamValueBit(5,0,0,opc,0,0)) {
+      toggleLEDFromMenu(6,opc);
     }
   }
 }
