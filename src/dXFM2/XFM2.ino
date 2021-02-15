@@ -48,7 +48,6 @@ bool xfm2GetActiveProgram(uint8_t unit) {
 
   char serialBuffer[512];
   int count = HWSERIAL.readBytes(serialBuffer,512);
-  showDebug(count);
 
   if (count==512) {
     for (uint16_t param=0; param<512; param++) {

@@ -75,8 +75,9 @@ void setup() {
   //Start serial interface
   HWSERIAL.begin(500000);
 
-  delay(1000); //two seconds splash screen
+  delay(1000); //one seconds splash screen
 
+  //Start communication with the XFM2
   uint8_t errorCode = initXFM2();
   if (errorCode>0) {
     showError(errorCode);
@@ -121,6 +122,13 @@ void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
       //Operator matrix set/unset
       toggleLED(row,col,menu,btn);
       toggleLEDParamValueBit(menu,btn);
+      if (menu==6) {
+        //Do change for carriers
+        activateChange(5,0,0,btn,0);
+      } else {
+        //Do change for modulators
+        activateChange(5,0,0,menu,0);
+      }
     }
   }
 }
@@ -171,6 +179,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
 //Maybe this can be part of setParamValue and toggleParamValueBit, but for now...
 void activateChange(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
   param_type param = getParam(green,blue,selOp,usedOp,toggle);
+  //showDebug(param.param);
   xfm2SetParameter(param.param,getParamValueQuick(param));
 }
 
