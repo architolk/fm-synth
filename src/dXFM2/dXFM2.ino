@@ -20,7 +20,7 @@
 //Set this to the targetted serial interface
 //Serial = USB serial, for debugging
 //Serial1 = XFM2 serial, for real-live purpose
-#define HWSERIAL Serial
+#define HWSERIAL Serial1
 
 //Need to put the typedef here, for function's sake...
 typedef struct {

@@ -63,11 +63,11 @@ const uint16_t PARAMEXMAP[28][2] PROGMEM = {
   {411,412} //MASTER 1027
 };
 
-uint8_t paramValue[2][513]; //Parameter 0 doesn't exists, but nr 512 does, so we need an array of 513 items
+uint8_t paramValue[2][512]; //Parameter 0 doesn't exists, but nr 512 does, so we need an array of 513 items
 
 void setupParams() {
   for (uint8_t unit=0; unit<2; unit++) {
-    for (uint16_t param=0; param<513; param++) {
+    for (uint16_t param=0; param<512; param++) {
       paramValue[unit][param] = 0;
     }
   }

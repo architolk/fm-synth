@@ -74,6 +74,25 @@ void showError(uint8_t err) {
   display.display();
 }
 
+//Debug printing
+void showDebug(uint16_t debug) {
+  display.clearDisplay();
+  display.setFont(&Dungeon12pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,30);
+  display.print(F("DEBUG"));
+
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setCursor(0,60);
+  display.print(debug);
+
+  TCA9548A(SCRMAP[6]);
+  display.display();
+  delay(2000); //Make sure the debug message is visible for two seconds
+}
+
 //Shows the value of some parameter (fixed to "Volume" at this moment)
 void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.clearDisplay();

@@ -13,6 +13,7 @@
 bool xfm2SetUnit( uint8_t unit ) {
     // Default to unit 1
     HWSERIAL.write( unit == 1 ? '2' : '1' );
+    delay(50); //Give the XFM2 time to respond
     if (HWSERIAL.available() == 1) {
       uint8_t result = HWSERIAL.read();
       return true;
@@ -45,16 +46,31 @@ void xfm2SetParameter( uint16_t param, uint8_t value ) {
 bool xfm2GetActiveProgram(uint8_t unit) {
   HWSERIAL.write('d'); // 'd' = Displays all parameter values for active program
 
-  paramValue[unit][0] = 0; //Parameter 0 doesn't exist, set to zero
-  if (HWSERIAL.available() == 512) {
-    for (uint16_t param=1; param<513; param++) {
-      paramValue[unit][param] = HWSERIAL.read();
+  char serialBuffer[512];
+  int count = HWSERIAL.readBytes(serialBuffer,512);
+  showDebug(count);
+
+  if (count==512) {
+    for (uint16_t param=0; param<512; param++) {
+      paramValue[0][param] = serialBuffer[param];
     }
     return true;
   } else {
-    //Something went wrong: result of dump operation should be 512 bytes response
     return false;
   }
+
+  /*
+  paramValue[unit][0] = 0; //Parameter 0 doesn't exist, set to zero
+  uint16_t param = 1;
+  while (HWSERIAL.available()>0 && param<513) {
+    paramValue[unit][param] = HWSERIAL.read();
+    param++;
+    delay(20); //Give the XFM2 some time
+  }
+  showDebug(param);
+  //Something went wrong if param is not 513: result of dump operation should be 512 bytes response
+  return (param==513);
+  */
 }
 
 uint8_t initXFM2() {
