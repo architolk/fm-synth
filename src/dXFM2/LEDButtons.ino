@@ -80,12 +80,26 @@ void splashLEDs() {
 }
 
 void initLEDs() {
+  //Precondition: all LEDs are off (so a toggle turns them on)
+  //LEDs for menu
   toggleLEDRow(0,1,7,0); //Volume button selected
   toggleLEDRow(5,4,8,2); //Operator of synth A selected
-/*
-  doLEDButtonPressed(0,1,7,0); //Volume button selected
-  doLEDButtonPressed(5,4,8,2); //Operator of synth A selected
-*/
+
+  //LEDs from parameters
+  //opc = Carrier Operator, corresponds to a "menu"
+  //opm = Modulator Operator, corresponds to a "btn"
+  for (uint8_t opc=0; opc<6; opc++) {
+    for (uint8_t opm=0; opm<6; opm++) {
+      //Modulator LEDs
+      if (getParamValueBit(5,0,0,opm,0,0)) {
+        toggleLEDFromMenu(opc,opm);
+      }
+    }
+    //Carrier LEDs
+    if (getParamValueBit(5,0,0,opc,0,opm+1)) {
+      toggleLEDFromMenu(6,opm);
+    }
+  }
 }
 
 void scanLEDButtons() {
@@ -109,9 +123,14 @@ void scanLEDButtons() {
 }
 
 //Second toggle function, but without need to pass row and col
-void toggleLED2(uint8_t menu, uint8_t btn) {
+void toggleLEDFromMenu(uint8_t menu, uint8_t btn) {
   buttons[menu][btn] = !buttons[menu][btn];
-  setLED(BTNMENUMAP[menu][btn].row,BTNMENUMAP[menu][btn].col,buttons[menu][btn]);
+  uint8_t row = BTNMENUMAP[menu][btn].row;
+  uint8_t col = BTNMENUMAP[menu][btn].col;
+  if ((row!=0) || (col!=0)) {
+    //Don't set a LED when col=row=0, because we don't have a LED for that combination!
+    setLED(row,col,buttons[menu][btn]);
+  }
 }
 
 //Function to toggle one particular LED (all other LEDs remain the same state)

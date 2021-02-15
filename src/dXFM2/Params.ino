@@ -193,3 +193,8 @@ void toggleLEDParamValueBit(uint8_t menu, uint8_t btn) {
     toggleParamValueBit(5,0,0,menu,0,btn+1);
   }
 }
+
+bool getParamValueBit(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle, uint8_t bitnr) {
+  param_type param = getParam(green,blue,selOp,usedOp,toggle);
+  return (bitRead(paramValue[param.unit][param.param],bitnr)==1)
+}
