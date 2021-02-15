@@ -54,7 +54,7 @@ const uint16_t PARAMMAP[6][6][7] PROGMEM = {
     {1,2,3,4,5,6}
   }
 };
-const uint16_t PARAMEXMAP[28][2] = {
+const uint16_t PARAMEXMAP[28][2] PROGMEM = {
   {51,63},{52,64},{53,65},{54,66},{55,67},{56,68}, //LFO 1000-1005
   {27,14},{28,14},{29,14},{30,14},{31,14},{32,14}, //OPS 2006-2011
   {15,21},{16,22},{17,23},{18,24},{19,25},{20,26}, //OPS 1012-1017
@@ -63,15 +63,23 @@ const uint16_t PARAMEXMAP[28][2] = {
   {411,412} //MASTER 1027
 };
 
-uint8_t paramValue[2][512];
+uint8_t paramValue[2][513]; //Parameter 0 doesn't exists, but nr 512 does, so we need an array of 513 items
 
 void setupParams() {
   for (uint8_t unit=0; unit<2; unit++) {
-    for (uint16_t param=0; param<500; param++) {
+    for (uint16_t param=0; param<513; param++) {
       paramValue[unit][param] = 0;
     }
   }
   //Setting some particular parameter values for testing:
+  //Algo & feedback
+  paramValue[0][1] = 5; //Operator 1 is carrier and modulated by operator 2
+  paramValue[0][2] = 0; //Operator 2 is modulator
+  paramValue[0][3] = 17;//Operator 3 is carrier and modulated by operator 4
+  paramValue[0][4] = 0; //Operator 4 is modulator
+  paramValue[0][5] = 33;//Operator 5 is carrier and modulated by itself (feedback)
+  paramValue[0][6] = 0; //Operator 6 is modulator (but doesn't modulates anything)
+  paramValue[0][11] = 250; //Feedback of operator 5 (other operators don't have feedback)
   //Level and volume
   paramValue[0][33] = 255;
   paramValue[0][34] = 220;
@@ -84,7 +92,7 @@ void setupParams() {
   paramValue[0][15] = 1;
   paramValue[0][16] = 1;
   paramValue[0][17] = 1;
-  paramValue[0][18] = 1;
+  paramValue[0][18] = 16;
   paramValue[0][19] = 1;
   paramValue[0][20] = 1;
   //Ratio fine

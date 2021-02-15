@@ -9,9 +9,10 @@
 //Sets the unit that is active
 //All communication that follows will be for this unit
 //A call to this function is only necessary when you switch between units
-bool xfm2SetUnit( int unit ) {
+//XFM2 expects "1" or "2", we use 0 and 1 for units, so 0=>"1" and 1=>"2"
+bool xfm2SetUnit( uint8_t unit ) {
     // Default to unit 1
-    HWSERIAL.write( unit == 2 ? '2' : '1' );
+    HWSERIAL.write( unit == 1 ? '2' : '1' );
     if (HWSERIAL.available() == 1) {
       uint8_t result = HWSERIAL.read();
       return true;
@@ -39,12 +40,15 @@ void xfm2SetParameter( uint16_t param, uint8_t value ) {
 }
 
 //Retrieves the active program and stores it in the param storage
-bool xfm2GetActiveProgram() {
+//This function DOESN'T set the active unit for the XFM2
+//So make sure that the active unit is actually corresponding to requested unit
+bool xfm2GetActiveProgram(uint8_t unit) {
   HWSERIAL.write('d'); // 'd' = Displays all parameter values for active program
 
+  paramValue[unit][0] = 0; //Parameter 0 doesn't exist, set to zero
   if (HWSERIAL.available() == 512) {
-    for (uint16_t param=0; param<512; param++) {
-      paramValue[0][param] = HWSERIAL.read();
+    for (uint16_t param=1; param<513; param++) {
+      paramValue[unit][param] = HWSERIAL.read();
     }
     return true;
   } else {
@@ -54,8 +58,8 @@ bool xfm2GetActiveProgram() {
 }
 
 uint8_t initXFM2() {
-  if (xfm2SetUnit(1)) {
-    if (xfm2GetActiveProgram()) {
+  if (xfm2SetUnit(0)) {
+    if (xfm2GetActiveProgram(0)) {
       return NO_ERROR;
     } else {
       return ERR_DUMP;
