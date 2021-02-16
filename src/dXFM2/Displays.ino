@@ -129,7 +129,8 @@ void showWave(uint8_t op, uint8_t widx) {
       showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param);
     }
   } else {
-    showParamValueOnScreen(F("Wave"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
+    displayWave();
+    //showParamValueOnScreen(F("Wave"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
   }
 }
 
@@ -162,7 +163,7 @@ void showAmplitudeEnvelope(uint8_t op) {
     env.rate[3] = getParamValue(greenSelect,4,op,2,0); //Rate of decay-2 phase
     env.rate[4] = getParamValue(greenSelect,4,op,4,0); //Rate of releease-1 phase
     env.rate[5] = getParamValue(greenSelect,4,op,5,0); //Rate of releease-2 phase
-    
+
     showEnvelopeOnScreen(op,(blueSelect-4)*7+operatorUsed,env,(op==operatorSelect),getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0));
     //showValueOnScreen(F("Envelope"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
   }
