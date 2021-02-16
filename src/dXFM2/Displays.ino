@@ -129,7 +129,7 @@ void showWave(uint8_t op, uint8_t widx) {
       showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param);
     }
   } else {
-    displayWave();
+    displayWave(op);
     //showParamValueOnScreen(F("Wave"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
   }
 }

@@ -107,10 +107,10 @@ void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.display();
 }
 
-void showWave(const int8_t wave[114], uint8_t screen) {
+void showWaveOnScreen(const int8_t wave[114], uint8_t screen) {
   display.clearDisplay();
-  for (uint8_t i=0; i<114 i++) {
-    display.drawPixel(i+5,32+wave[i]/4,SSD1306_WHITE);
+  for (uint8_t i=0; i<228; i++) {
+    display.drawPixel(5+i/2,32+wave[i]/4,SSD1306_WHITE);
   }
 
   TCA9548A(SCRMAP[screen]);
