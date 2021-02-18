@@ -93,6 +93,24 @@ void showDebug(uint16_t debug) {
   delay(2000); //Make sure the debug message is visible for two seconds
 }
 
+void showPatchMenu(uint8_t patch) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,20);
+  display.print(F("Active patch: "));
+  display.print(patchSelect);
+
+  display.setFont(&Dungeon12pt7b);
+  display.setCursor(0,50);
+  display.print(F("Patch: "));
+  display.print(patch);
+
+  TCA9548A(SCRMAP[6]);
+  display.display();
+}
+
 //Shows the value of some parameter (fixed to "Volume" at this moment)
 void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.clearDisplay();

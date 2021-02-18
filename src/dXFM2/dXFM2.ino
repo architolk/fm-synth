@@ -54,6 +54,7 @@ uint8_t blueSelect = 0;
 uint8_t operatorSelect = 0; //Selected operator, often the same as operator used, except for envelopes
 uint8_t operatorUsed = 0; //Operator actually used
 uint8_t toggleMode = 0; //Sets the toggle mode
+uint8_t patchSelect = 0; //The active patch
 
 void setup() {
   setupParams();
@@ -172,6 +173,15 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
       }
     }
     showDisplay(operatorSelect);
+  } else {
+    if (encoder==9) {
+      if (clicked) {
+        //Laden van een programma
+        patchSelect = encoder % 128; //Encoder range is 0-255, patch range is 0-127
+      } else {
+        //Toggle door de programma's heen
+      }
+    }
   }
 }
 

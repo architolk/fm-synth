@@ -83,3 +83,17 @@ uint8_t initXFM2() {
     return ERR_UNIT;
   }
 }
+
+//Loads a program from EEPROM
+bool xfm2LoadPatch( uint8_t patch ) {
+    HWSERIAL.write('r'); // 'd' = Displays all parameter values for active program
+    HWSERIAL.write(patch);
+    delay(50); //Give the XFM2 time to respond
+    if (HWSERIAL.available() == 1) {
+      uint8_t result = HWSERIAL.read();
+      return true;
+    } else {
+      //Something went wrong: result of setting the unit should be 0
+      return false;
+    }
+}
