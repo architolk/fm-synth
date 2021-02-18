@@ -99,12 +99,12 @@ void showPatchMenu(uint8_t patch) {
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0,20);
-  display.print(F("Active patch: "));
+  display.print(F("Active: "));
   display.print(patchSelect);
 
-  display.setFont(&Dungeon12pt7b);
   display.setCursor(0,50);
   display.print(F("Patch: "));
+  display.setFont(&Dungeon12pt7b);
   display.print(patch);
 
   TCA9548A(SCRMAP[6]);

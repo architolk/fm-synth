@@ -177,9 +177,16 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
     if (encoder==9) {
       if (clicked) {
         //Laden van een programma
-        patchSelect = encoder % 128; //Encoder range is 0-255, patch range is 0-127
+        patchSelect = value % 128; //Encoder range is 0-255, patch range is 0-127
+        if (xfm2LoadPatch(patchSelect)) {
+          if (xfm2GetActiveProgram(0)) {
+            updateLEDs();
+            doMenuChange();
+          }
+        }
       } else {
         //Toggle door de programma's heen
+        showPatchMenu(value % 128);
       }
     }
   }

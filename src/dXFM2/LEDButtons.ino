@@ -85,17 +85,29 @@ void initLEDs() {
   toggleLEDRow(0,1,7,0); //Volume button selected
   toggleLEDRow(5,4,8,2); //Operator of synth A selected
 
+  updateLEDs();
+}
+
+void updateLEDs() {
+  //First, set all LEDs to zero
+  clearLEDRow(1);
+  clearLEDRow(2);
+  clearLEDRow(3);
+  clearLEDRow(4);
+  clearLEDRow(6);
   //LEDs from parameters
   //opc = Carrier Operator, corresponds to a "menu"
   //opm = Modulator Operator, corresponds to a "btn"
   for (uint8_t opc=0; opc<6; opc++) {
     for (uint8_t opm=0; opm<6; opm++) {
+      buttons[opc][opm] = false;
       //Modulator LEDs
       if (getParamValueBit(5,0,0,opc,0,opm+1)) {
         toggleLEDFromMenu(opc,opm);
       }
     }
     //Carrier LEDs
+    buttons[6][opc] = false;
     if (getParamValueBit(5,0,0,opc,0,0)) {
       toggleLEDFromMenu(6,opc);
     }
