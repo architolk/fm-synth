@@ -177,7 +177,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
     if (encoder==9) {
       if (clicked) {
         //Laden van een programma
-        patchSelect = value % 128; //Encoder range is 0-255, patch range is 0-127
+        patchSelect = value;
         if (xfm2LoadPatch(patchSelect)) {
           if (xfm2GetActiveProgram(0)) {
             updateLEDs();
@@ -186,7 +186,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         }
       } else {
         //Toggle door de programma's heen
-        showPatchMenu(value % 128);
+        showPatchMenu(value);
       }
     }
   }
@@ -206,6 +206,7 @@ void doMenuChange() {
   for (uint8_t op=0; op<7; op++) {
     //Set encoder to the correct value for that operator
     setEncoderValue(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,toggleMode));
+    setEncoderMax(op,getParamMax(greenSelect,blueSelect,operatorSelect,op,toggleMode));
     showDisplay(op);
   }
 }

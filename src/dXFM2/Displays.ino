@@ -96,7 +96,7 @@ void showKeyTracking(uint8_t op) {
 
 void showLFO(uint8_t op) {
   switch (op) {
-    case 0: showParamValueOnScreen(F("LFO Wave"),0,getParam(greenSelect,blueSelect,operatorSelect,0,0).param); break;
+    case 0: displayLFOWave(0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
     case 1: showParamValueOnScreen(F("LFO Speed"),1,getParam(greenSelect,blueSelect,operatorSelect,1,0).param); break;
     case 2: showParamValueOnScreen(F("LFO Sync"),2,getParam(greenSelect,blueSelect,operatorSelect,2,0).param); break;
     case 3: showParamValueOnScreen(F("LFO Fade"),3,getParam(greenSelect,blueSelect,operatorSelect,3,0).param); break;
@@ -129,7 +129,7 @@ void showWave(uint8_t op, uint8_t widx) {
       showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param);
     }
   } else {
-    displayWave(op);
+    displayWave(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
     //showParamValueOnScreen(F("Wave"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
   }
 }

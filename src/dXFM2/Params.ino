@@ -63,6 +63,116 @@ const uint16_t PARAMEXMAP[28][2] PROGMEM = {
   {411,412} //MASTER 1027
 };
 
+//Maximum values for every parameter
+const uint8_t PARAMMAX[512] PROGMEM = {
+  0,0,0,0,0,0,0, //Param zero and algorithms
+  255,255,255,255,255,255, //Feedback
+  0,0, //Oscillator sync and mode
+  255,255,255,255,255,255, //Ratio
+  255,255,255,255,255,255, //Ratio fine
+  255,255,255,255,255,255, //Fine
+  255,255,255,255,255,255, //Level
+  255,255,255,255,255,255, //Velo sensitivity
+  255,255,255,255,255,255, //Key Breakpoint
+  255,255,255,255,255,255, //Key left depth
+  255,255,255,255,255,255, //Key right depth
+  3,3,3,3,3,3, //Key left curve
+  3,3,3,3,3,3, //Key right curve
+  255,255,255,255,255,255,0, //Envelope L1
+  255,255,255,255,255,255,0, //Envelope L2
+  255,255,255,255,255,255,0, //Envelope L3
+  255,255,255,255,255,255,0, //Envelope L4
+  255,255,255,255,255,255,0, //Envelope R1
+  255,255,255,255,255,255,0, //Envelope R2
+  255,255,255,255,255,255,0, //Envelope R3
+  255,255,255,255,255,255, //Envelope R4
+  255,255,255,255, //Pitch envelope L1,L2,L3,L4
+  255,255,255,255, //Pitch envelope R1,R2,R3,R4
+  255,255, //Pitch envelope range and velocity (in octaves, so 255 is probably a bit to much?)
+  255,255,255,255,255,255, //Envelope rate
+  255,0,0, //Pitch envelope rate
+  255, //LFO Pitch depth
+  255, //LFO Amplitude depth
+  255, //LFO Speed
+  3, //LFO Sync
+  5, //LFO Wave
+  255, //LFO Fade
+  255,255,255,255, //LFO Wheels
+  255,255,255,255,255,255, //LFO AMS
+  0,0,0,0,0,0,0,255,255, //LFO Bend
+  255, //Transpose. Center is 24, so probably 48 max?
+  0,0,0,0,0,255, //Volume
+  255,255,255,255,255,255, //Envelope L0
+  255,255,255,255,255,255, //Envelope R0
+  255,255,255,255,255,255, //Envelope L5
+  255,255,255,255,255,255, //Envelope R5
+  255,255,255,255, //Pitch envelope L0, R0, L5, R5
+  255,255,255,255, //LFO Wheels
+  255,255,255,255, //Volume Wheels
+  255,255,255,255, //Pitch Wheels
+  255, //Pan
+  255,255,255,255,255,255, //LFO PMS
+  1, //Legato
+  2, //Portamento mode
+  255, //Portamento time
+  0,0,0,0,0, //NOP
+  7,7,7,7,7,7, //Wave forms oscillator #1
+  255, //Velocity offset
+  0, //Velocity curve (not specified in the documentation)
+  0,0,0, //EG Loop, loop_seg and restart
+  0,0,0,0,255,0,0,0,0, //Tuning
+  255,255,255,255,255,255,255,255,255,255,255,255, //Levels left & right
+  7,7,7,7,7,7, //Wave forms oscillator #2
+  1,1,1,1,1,1, //Wave mode
+  255,255,255,255,255,255, //Wave ratio
+  3,3,3,3,3,3, //Oscillator phase
+  0,0,0,0,0,0,0,0, //NOP
+  255,255, //Delay dry & wet
+  2, //Delay mode
+  255,255,255,255, //Delay time, feedback, lo, hi
+  255, //Delay tempo (minimum value = 50!)
+  255,255, //Delay multiplier and divider
+  255,255, //Phaser wet & dry
+  2, //Phaser mode
+  255,255,255,255, //Phaser depth, speed, feedback, offset
+  12, //Phaser stages (minimum value = 4!)
+  255, //Phaser LR phase
+  0, //Phaser waveform (not specified in the documentation)
+  255,255,0,0,0,0,0,0,0,0, //Filter LO & HI
+  255,255,255,255,0,0,0,0,0,0, //Amplitude modulation
+  0,0,0,0,0,0,0,0,0,0, //FIR (not specified in the documentation)
+  0,0,0,0,0,0,0,0,0,0, //Waveshaper (not specified in the documentation)
+  255,255, //Chorus wet & dry
+  3, //Chorus mode
+  255,255,255,255,0,0,0, //Chorus speed, depth, feedback, phase
+  255,0,0,0,0,0,0,0,0,0, //Decimator depth
+  255,0,0,0,0,0,0,0,0,0, //Bitcrusher depth
+  255,255, //Reverb wet & dry
+  1, //Reverb mode
+  255,255, //Reverb decay, damp
+  0,0,0, //Reverb D0,D1,D2 (not specified in the documentation)
+  0,0, //Reverb NOP
+  0,0,0,0,0,0,0,0,0,0, //NOP 400-409
+  1, //EFX Routing
+  255, //Output
+  3, //Gain
+  0,0,0,0,0,0,0, //NOP
+  255,255,255,255,255,255,255,255,0,0, //Performance controls min & max
+  0,0,0,0,0,0,0,0,0,0, //NOP 430-439
+  0,0,0,0,0,0,0,0,0,0, //NOP 440-449
+  5, //ARP mode
+  255, //ARP tempo (minimum value = 50!)
+  255, //ARP tempo fine (not specified in the documentation)
+  255, //ARP tempo multiplicator
+  255, //ARP octaves
+  0,0,0,0,0, //ARP NOP
+  0,0,0,0,0,0,0,0,0,0, //NOP 460-469
+  0,0,0,0,0,0,0,0,0,0, //NOP 470-479
+  0,0,0,0,0,0,0,0,0,0, //NOP 480-489
+  0,0,0,0,0,0,0,0,0,0, //NOP 490-499
+  0,0,0,0,0,0,0,0,0,0,0,0 //NOP 500-511
+};
+
 uint8_t paramValue[2][512]; //Parameter 0 doesn't exists, but nr 512 does, so we need an array of 513 items
 
 void setupParams() {
@@ -174,6 +284,11 @@ uint8_t getParamType(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp,
       }
     }
   }
+}
+
+uint8_t getParamMax(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
+  param_type param = getParam(green,blue,selOp,usedOp,toggle);
+  return PARAMMAX[param.param];
 }
 
 uint8_t getParamValue(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {

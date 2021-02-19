@@ -70,6 +70,8 @@ encoder_type encoders[10]; //Encoder values 0-9
 
 bool encoderALastValue[10];
 
+uint8_t encoderMax[10] = {255,255,255,255,255,255,255,255,255,127}; //Default maximum values for an encoder
+
 void setupEncoders() {
   //Initialize values
   for (int i=0; i<10; i++) {
@@ -136,10 +138,10 @@ void scanEncoder(uint8_t portOffset) {
           encoders[encoder].lastUse = millis();
         }
       } else {
-        if (encoders[encoder].value<255) { //Don't go above 255
+        if (encoders[encoder].value<encoderMax[encoder]) { //Don't go above maximum value (almost always 255)
           somethingHappened = true;
-          if (encoders[encoder].value > 255 - turnspeed) {
-            encoders[encoder].value = 255; //Don't go above 255, but do go to 255
+          if (encoders[encoder].value > encoderMax[encoder] - turnspeed) {
+            encoders[encoder].value = encoderMax[encoder]; //Don't go above maximum value, but do go to maximum value
           } else {
             encoders[encoder].value = encoders[encoder].value + turnspeed;
           }
@@ -219,4 +221,8 @@ void readRegister(uint8_t reg, uint8_t portOffset) {
 
 void setEncoderValue(uint8_t index, uint8_t value) {
   encoders[index].value = value;
+}
+
+void setEncoderMax(uint8_t index, uint8_t value) {
+  encoderMax[index] = value;
 }
