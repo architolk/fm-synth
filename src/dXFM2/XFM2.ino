@@ -88,7 +88,7 @@ uint8_t initXFM2() {
 bool xfm2LoadPatch( uint8_t patch ) {
     HWSERIAL.write('r'); // 'd' = Displays all parameter values for active program
     HWSERIAL.write(patch);
-    delay(50); //Give the XFM2 time to respond
+    delay(100); //Give the XFM2 time to respond
     if (HWSERIAL.available() == 1) {
       uint8_t result = HWSERIAL.read();
       return true;

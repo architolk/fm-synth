@@ -83,11 +83,19 @@ void showMasterDisplay(uint8_t op) {
 // LFO submenu
 //
 void showAMS(uint8_t op) {
-  showParamValueOnScreen(F("AMS"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
+  if (op==6) {
+    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+  } else {
+    showValueOnScreen(F("AMS"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+  }
 }
 
 void showPMS(uint8_t op) {
-  showParamValueOnScreen(F("PMS"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
+  if (op==6) {
+    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+  } else {
+    showValueOnScreen(F("PMS"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+  }
 }
 
 void showKeyTracking(uint8_t op) {
@@ -97,12 +105,12 @@ void showKeyTracking(uint8_t op) {
 void showLFO(uint8_t op) {
   switch (op) {
     case 0: displayLFOWave(0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
-    case 1: showParamValueOnScreen(F("LFO Speed"),1,getParam(greenSelect,blueSelect,operatorSelect,1,0).param); break;
-    case 2: showParamValueOnScreen(F("LFO Sync"),2,getParam(greenSelect,blueSelect,operatorSelect,2,0).param); break;
-    case 3: showParamValueOnScreen(F("LFO Fade"),3,getParam(greenSelect,blueSelect,operatorSelect,3,0).param); break;
-    case 4: showParamValueOnScreen(F("LFO P.Depth"),4,getParam(greenSelect,blueSelect,operatorSelect,4,0).param); break;
-    case 5: showParamValueOnScreen(F("LFO A.Depth"),5,getParam(greenSelect,blueSelect,operatorSelect,5,0).param); break;
-    case 6: showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param); break;
+    case 1: showValueOnScreen(F("LFO Speed"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
+    case 2: showLFOSyncOnScreen(2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
+    case 3: showValueOnScreen(F("LFO Fade"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
+    case 4: showValueOnScreen(F("Pitch Depth"),4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
+    case 5: showValueOnScreen(F("Ampl Depth"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
+    case 6: showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0)); break;
   }
 }
 
@@ -115,7 +123,7 @@ void showPitchEnvelope(uint8_t op) {
 
 void showPhase(uint8_t op) {
   if (op==6) {
-    showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param);
+    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     showParamValueOnScreen(F("Phase"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
   }
@@ -123,22 +131,17 @@ void showPhase(uint8_t op) {
 
 void showWave(uint8_t op, uint8_t widx) {
   if (op==6) {
-    if (widx==1) {
-      showParamValueOnScreen(F("Volume"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param);
-    } else {
-      showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param);
-    }
+    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     displayWave(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
-    //showParamValueOnScreen(F("Wave"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
   }
 }
 
 void showOSCRatio(uint8_t op) {
   if (op==6) {
-    showParamValueOnScreen(F("NOP"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param);
+    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
-    showParamValueOnScreen(F("OSC Ratio"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
+    showOSCRatioOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,blueSelect,operatorSelect,op,1));
   }
 }
 
@@ -165,7 +168,6 @@ void showAmplitudeEnvelope(uint8_t op) {
     env.rate[5] = getParamValue(greenSelect,4,op,5,0); //Rate of releease-2 phase
 
     showEnvelopeOnScreen(op,(blueSelect-4)*7+operatorUsed,env,(op==operatorSelect),getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0));
-    //showValueOnScreen(F("Envelope"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
   }
 }
 

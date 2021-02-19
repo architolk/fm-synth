@@ -16,6 +16,7 @@
 #define NO_ERROR 0
 #define ERR_UNIT 1
 #define ERR_DUMP 2
+#define ERR_LOAD 3
 
 //Set this to the targetted serial interface
 //Serial = USB serial, for debugging
@@ -82,7 +83,7 @@ void setup() {
   uint8_t errorCode = initXFM2();
   if (errorCode>0) {
     showError(errorCode);
-    delay(5000);
+    delay(2000);
   }
 
   initLEDs(); //Initialize LEDs to startup position
@@ -182,7 +183,11 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
           if (xfm2GetActiveProgram(0)) {
             updateLEDs();
             doMenuChange();
+          } else {
+            showError(ERR_DUMP);
           }
+        } else {
+          showError(ERR_LOAD);
         }
       } else {
         //Toggle door de programma's heen
@@ -202,7 +207,7 @@ void activateChange(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, 
 
 // Menu change, all screens are affected!
 void doMenuChange() {
-  operatorUsed = 3; //Reset operator used
+  operatorUsed = 0; //Reset operator used
   for (uint8_t op=0; op<7; op++) {
     //Set encoder to the correct value for that operator
     setEncoderValue(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,toggleMode));

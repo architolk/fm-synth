@@ -67,6 +67,7 @@ void showError(uint8_t err) {
   switch(err) {
     case ERR_UNIT: display.print(F("Set unit")); break;
     case ERR_DUMP: display.print(F("Dump wrong")); break;
+    case ERR_LOAD: display.print(F("Load error")); break;
     default: display.print(F("Unknown"));
   }
 
@@ -114,7 +115,11 @@ void showPatchMenu(uint8_t patch) {
 //Shows the value of some parameter (fixed to "Volume" at this moment)
 void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.clearDisplay();
-  display.setFont(&Dungeon12pt7b);
+  if (param.length()>7) {
+    display.setFont(&Dungeon9pt7b);
+  } else {
+    display.setFont(&Dungeon12pt7b);
+  }
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0,20);
@@ -156,6 +161,28 @@ void showFeedbackOnScreen(uint8_t screen, uint8_t value, bool feedbackOn) {
   display.display();
 }
 
+void showLFOSyncOnScreen(uint8_t screen, uint8_t value) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,25);
+  if (value<2) {
+    display.print(F("Single LFO"));
+  } else {
+    display.print(F("Multi LFO"));
+  }
+  display.setCursor(0,55);
+  if ((value%2)==0) {
+    display.print(F("Free running"));
+  } else {
+    display.print(F("Key sync"));
+  }
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 void showOutputGainOnScreen(uint8_t screen, uint8_t outputval, uint8_t gainval) {
   display.clearDisplay();
   display.setFont(&Dungeon9pt7b);
@@ -168,6 +195,40 @@ void showOutputGainOnScreen(uint8_t screen, uint8_t outputval, uint8_t gainval) 
   display.setCursor(100,20);
   display.print(F("+"));
   drawNumber(gainval*6,127,20);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showOSCRatioOnScreen(uint8_t screen, uint8_t ratio, uint8_t mode) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.drawRect(0,10,50,50,SSD1306_WHITE);
+  display.setCursor(15,28);
+  display.print(F("#1"));
+  display.fillRect(2,12,46,20,SSD1306_INVERSE);
+  display.drawLine(0,33,49,33,SSD1306_WHITE);
+
+  display.drawRect(70,10,50,50,SSD1306_WHITE);
+  display.setCursor(80,28);
+  display.print(F("#2"));
+  if (mode==1) {
+    display.fillRect(72,12,46,20,SSD1306_INVERSE);
+  }
+  display.drawLine(70,33,119,33,SSD1306_WHITE);
+
+  display.setFont(&Dungeon9pt7b);
+  display.setCursor(58,50);
+  display.print(F(":"));
+
+  display.setCursor(30,50);
+  display.print(F("1"));
+
+  display.setCursor(75,50);
+  display.print(ratio);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
