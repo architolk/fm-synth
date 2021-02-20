@@ -120,7 +120,7 @@ const uint8_t PARAMMAX[512] PROGMEM = {
   7,7,7,7,7,7, //Wave forms oscillator #1
   255, //Velocity offset
   0, //Velocity curve (not specified in the documentation)
-  0,0,0, //EG Loop, loop_seg and restart
+  0,0,0, //EG Loop, loop_seg and restart (restart is not specified in the documention, but is available in the spreadsheet)
   0,0,0,0,255,0,0,0,0, //Tuning
   255,255,255,255,255,255,255,255,255,255,255,255, //Levels left & right
   7,7,7,7,7,7, //Wave forms oscillator #2
@@ -133,7 +133,7 @@ const uint8_t PARAMMAX[512] PROGMEM = {
   255,255,255,255, //Delay time, feedback, lo, hi
   255, //Delay tempo (minimum value = 50!)
   255,255, //Delay multiplier and divider
-  255,255, //Phaser wet & dry
+  255,255, //Phaser dry & wet
   2, //Phaser mode
   255,255,255,255, //Phaser depth, speed, feedback, offset
   12, //Phaser stages (minimum value = 4!)
@@ -174,74 +174,124 @@ const uint8_t PARAMMAX[512] PROGMEM = {
   0,0,0,0,0,0,0,0,0,0,0,0 //NOP 500-511
 };
 
+//Default values for every parameter
+const uint8_t PARAMDEFAULT[512] PROGMEM = {
+  0,1,0,0,0,0,0, //Operator 1 is carrier. All other operators are off and no modulation. No self-modulation (feedback)
+  0,0,0,0,0,0, //Feedback levels all zero
+  0,0, //Oscillator sync and mode
+  1,1,1,1,1,1, //Ratio, all default to 1:1
+  0,0,0,0,0,0, //Ratio fine
+  128,128,128,128,128,128, //Percentage operator ajustment (128 = 0%)
+  200,200,200,200,200,200, //Level
+  200,200,200,200,200,200, //Velo sensitivity
+  60,60,60,60,60,60, //Key Breakpoint (60 = C4 = middle C)
+  0,0,0,0,0,0, //Key left depth
+  0,0,0,0,0,0, //Key right depth
+  0,0,0,0,0,0, //Key left curve
+  0,0,0,0,0,0, //Key right curve
+  255,255,255,255,255,255,0, //Envelope L1 (end of attack)
+  255,255,255,255,255,255,0, //Envelope L2 (end of decay-1)
+  255,255,255,255,255,255,0, //Envelope L3 (sustain level)
+  0,0,0,0,0,0,0, //Envelope L4 (end of release-1)
+  255,255,255,255,255,255,0, //Envelope R1 (attack rate, very fast)
+  255,255,255,255,255,255,0, //Envelope R2 (decay-1 rate, very fast - doesn't do anything: L2=L1)
+  255,255,255,255,255,255,0, //Envelope R3 (decay-2 rate, very fast - doesn't do anything: L3=L2=L1)
+  255,255,255,255,255,255, //Envelope R4 (release-1 rate, very fast)
+  128,128,128,128, //Pitch envelope L1,L2,L3,L4 (-127 to 127 levels, 128 is zero pitch change)
+  255,255,255,255, //Pitch envelope R1,R2,R3,R4 (very fast rates)
+  0,0, //Pitch envelope range and velocity set to zero
+  0,0,0,0,0,0, //Envelope rate set to zero for all operators
+  0,0,0, //Pitch envelope rate set to zero
+  30, //LFO Pitch depth (global)
+  0, //LFO Amplitude depth
+  100, //LFO Speed
+  0, //LFO Sync
+  0, //LFO Wave
+  255, //LFO Fade
+  30,0,30,255, //LFO Wheels
+  255,255,255,255,255,255, //LFO AMS per operator (see also global setting)
+  0,0,0,0,0,0,0,2,2, //LFO Bend
+  12, //Transpose. Center is 24, so probably 48 max? (huh? so it is actually transposed 12 down???)
+  0,0,0,0,0,200, //Volume
+  0,0,0,0,0,0, //Envelope L0 (start of envelope)
+  0,0,0,0,0,0, //Envelope R0 (delay)
+  0,0,0,0,0,0, //Envelope L5 (end of envelope)
+  255,255,255,255,255,255, //Envelope R5 (release-2 rate, very fast)
+  128,0,128,255, //Pitch envelope L0, R0, L5, R5 (start level, delay, end level, release-2 rate: level 128 is zero pitch change)
+  255,255,255,255, //LFO Wheels
+  255,255,255,255, //Volume Wheels
+  255,255,255,255, //Pitch Wheels
+  128, //Pan (-127 to 127, 128 = pan to centre)
+  0,0,0,0,0,0, //LFO PMS per operator (see also global setting)
+  0, //Legato (default polyphonic)
+  0, //Portamento mode (default off)
+  0, //Portamento time
+  0,0,0,0,0, //NOP
+  0,0,0,0,0,0, //Wave forms oscillator #1 (set to sine wave)
+  20, //Velocity offset
+  0, //Velocity curve (not specified in the documentation)
+  0,0,255, //EG Loop, loop_seg and restart
+  0,0,0,0,0,0,0,0,0, //Tuning (defaults to chromatic)
+  255,255,255,255,255,255,255,255,255,255,255,255, //Levels left & right
+  0,0,0,0,0,0, //Wave forms oscillator #2 (set to sine wave)
+  0,0,0,0,0,0, //Wave mode (only wave #1 active)
+  1,1,1,1,1,1, //Wave ratio (all set to 1:1)
+  0,0,0,0,0,0, //Oscillator phase (0 degree)
+  0,0,0,0,0,0,0,0, //NOP
+  255,0, //Delay dry & wet (no delay audiable)
+  0, //Delay mode (default stereo)
+  128,150,255,0, //Delay time, feedback, lo, hi
+  50, //Delay tempo (minimum value = 50!) [weird: in the excel this is set to 0?]
+  0,0, //Delay multiplier and divider
+  255,0, //Phaser dry & wet (no phaser audiable)
+  1, //Phaser mode (default stereo)
+  30,30,0,128, //Phaser depth, speed, feedback, offset (offset probably -127 to 127??)
+  4, //Phaser stages (minimum value = 4!)
+  120, //Phaser LR phase
+  0, //Phaser waveform (not specified in the documentation)
+  255,0,0,0,0,0,0,0,0,0, //Filter LO & HI (lo pass cuttoff = 255, so nothing to cut, hi pass cuttoff = 0, so nothing to cut)
+  10,0,0,120,0,0,0,0,0,0, //Amplitude speed, range, depth, LR phase (depth = 0, so no effect)
+  0,0,0,0,0,0,0,0,0,0, //FIR (not specified in the documentation)
+  0,0,0,0,0,0,0,0,0,0, //Waveshaper (not specified in the documentation)
+  255,0, //Chorus dry & wet (no chorus audiable)
+  0, //Chorus mode (long)
+  50,30,0,128,0,0,0, //Chorus speed, depth, feedback, phase
+  0,0,0,0,0,0,0,0,0,0, //Decimator depth (set to zero)
+  0,0,0,0,0,0,0,0,0,0, //Bitcrusher depth (set to zero)
+  255,0, //Reverb dry & wet (no reverb audiable)
+  0, //Reverb mode (default plate)
+  250,0, //Reverb decay, damp
+  0,0,0, //Reverb D0,D1,D2 (not specified in the documentation)
+  0,0, //Reverb NOP
+  0,0,0,0,0,0,0,0,0,0, //NOP 400-409
+  0, //EFX Routing
+  200, //Output
+  2, //Gain
+  0,0,0,0,0,0,0, //NOP
+  2,74,2,76,2,74,2,75,0,0, //Performance controls min & max
+  0,0,0,0,0,0,0,0,0,0, //NOP 430-439
+  0,0,0,0,0,0,0,0,0,0, //NOP 440-449
+  0, //ARP mode
+  50, //ARP tempo (minimum value = 50!)
+  0, //ARP tempo fine (not specified in the documentation)
+  0, //ARP tempo multiplicator
+  0, //ARP octaves
+  0,0,0,0,0, //ARP NOP
+  0,0,0,0,0,0,0,0,0,0, //NOP 460-469
+  0,0,0,0,0,0,0,0,0,0, //NOP 470-479
+  0,0,0,0,0,0,0,0,0,0, //NOP 480-489
+  0,0,0,0,0,0,0,0,0,0, //NOP 490-499
+  0,0,0,0,0,0,0,0,0,0,0,0 //NOP 500-511
+};
+
 uint8_t paramValue[2][512]; //Parameter 0 doesn't exists, but nr 512 does, so we need an array of 513 items
 
 void setupParams() {
   for (uint8_t unit=0; unit<2; unit++) {
     for (uint16_t param=0; param<512; param++) {
-      paramValue[unit][param] = 0;
+      paramValue[unit][param] = PARAMDEFAULT[param];
     }
   }
-  //Setting some particular parameter values for testing:
-  //Algo & feedback
-  /*
-  paramValue[0][1] = 5; //Operator 1 is carrier and modulated by operator 2
-  paramValue[0][2] = 0; //Operator 2 is modulator
-  paramValue[0][3] = 17;//Operator 3 is carrier and modulated by operator 4
-  paramValue[0][4] = 0; //Operator 4 is modulator
-  paramValue[0][5] = 33;//Operator 5 is carrier and modulated by itself (feedback)
-  paramValue[0][6] = 0; //Operator 6 is modulator (but doesn't modulates anything)
-  */
-  paramValue[0][5] = 33;//Operator 5 is carrier and modulated by itself (feedback)
-  paramValue[0][11] = 250; //Feedback of operator 5 (other operators don't have feedback)
-  //Level and volume
-  paramValue[0][33] = 255;
-  paramValue[0][34] = 220;
-  paramValue[0][35] = 255;
-  paramValue[0][36] = 180;
-  paramValue[0][37] = 220;
-  paramValue[0][38] = 255;
-  paramValue[0][180] = 200;
-  //Ratio
-  paramValue[0][15] = 1;
-  paramValue[0][16] = 1;
-  paramValue[0][17] = 1;
-  paramValue[0][18] = 16;
-  paramValue[0][19] = 1;
-  paramValue[0][20] = 1;
-  //Ratio fine
-  paramValue[0][21] = 0;
-  paramValue[0][22] = 0;
-  paramValue[0][23] = 0;
-  paramValue[0][24] = 0;
-  paramValue[0][25] = 0;
-  paramValue[0][26] = 0;
-  //Fine
-  paramValue[0][27] = 128;
-  paramValue[0][28] = 128;
-  paramValue[0][29] = 128;
-  paramValue[0][30] = 128;
-  paramValue[0][31] = 128;
-  paramValue[0][32] = 128;
-  //Envelope level and rate for operator 0
-  paramValue[0][181] = 0;
-  paramValue[0][75] = 255;
-  paramValue[0][82] = 255;
-  paramValue[0][89] = 255;
-  paramValue[0][96] = 0;
-  paramValue[0][193] = 0;
-  paramValue[0][187] = 0;
-  paramValue[0][103] = 230;
-  paramValue[0][110] = 255;
-  paramValue[0][117] = 255;
-  paramValue[0][124] = 160;
-  paramValue[0][199] = 255;
-  //Master levels
-  paramValue[0][411] = 200;
-  paramValue[0][412] = 2;
-  //Ratio and mode
-  paramValue[0][280] = 2;
-  paramValue[0][274] = 1;
 }
 
 param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
