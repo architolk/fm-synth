@@ -351,6 +351,15 @@ void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool 
   display.display();
 }
 
+//Shows a rectangle at the screen's border
+void showScreenBorder(uint8_t screen) {
+  display.clearDisplay();
+  display.drawRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,SSD1306_WHITE);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 void showEnvelope(const env_type& env) {
   float x1,x2,y1,y2,yd,yq,xq,r0,r1,r2,r3,r4,r5,l0,l1,l2,l3,l4,l5;
   //Getting envelope parameters
@@ -431,11 +440,6 @@ void drawPercentbar(int x,int y, int width,int height, uint8_t progress) {
   display.print(progress);
   // Bar, inverse: switch colors at text position
   display.fillRect(x+2, y+2, bar , height-4, SSD1306_INVERSE);
-}
-
-//Shows a rectangle at the screen's border
-void showScreenBorder() {
-  display.drawRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,SSD1306_WHITE);
 }
 
 //Low-level function for TCA9548A multiplex switch

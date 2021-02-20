@@ -193,6 +193,13 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         //Toggle door de programma's heen
         showPatchMenu(value);
       }
+    } else {
+      if (encoder==8) {
+        if (clicked) {
+          //Debug demo
+          startDemo();
+        }
+      }
     }
   }
 }
@@ -213,5 +220,11 @@ void doMenuChange() {
     setEncoderValue(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,toggleMode));
     setEncoderMax(op,getParamMax(greenSelect,blueSelect,operatorSelect,op,toggleMode));
     showDisplay(op);
+  }
+}
+
+void startDemo() {
+  for (uint8_t screen=0; screen<7; screen++) {
+    showScreenBorder(screen);
   }
 }
