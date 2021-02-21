@@ -86,7 +86,7 @@ void showAMS(uint8_t op) {
   if (op==6) {
     showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
-    showValueOnScreen(F("AMS"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+    showValueOnScreen(F("Ampl Depth"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
   }
 }
 
@@ -94,7 +94,7 @@ void showPMS(uint8_t op) {
   if (op==6) {
     showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
-    showValueOnScreen(F("PMS"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+    showValueOnScreen(F("Pitch Depth"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
   }
 }
 
