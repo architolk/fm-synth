@@ -148,7 +148,7 @@ void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relati
   display.display();
 }
 
-void showMonoPolyOnScreen(uit8_t screen, uint8_t value) {
+void showMonoPolyOnScreen(uint8_t screen, uint8_t value) {
   display.clearDisplay();
 
   display.setFont(&Dungeon12pt7b);
@@ -165,7 +165,7 @@ void showMonoPolyOnScreen(uit8_t screen, uint8_t value) {
   display.display();
 }
 
-void showPortaModeOnScreen(uit8_t screen, uint8_t value) {
+void showPortaModeOnScreen(uint8_t screen, uint8_t value) {
   display.clearDisplay();
 
   display.setFont(&Dungeon9pt7b);
@@ -183,7 +183,7 @@ void showPortaModeOnScreen(uit8_t screen, uint8_t value) {
   display.display();
 }
 
-void showTuningOnScreen(uit8_t screen, uint8_t value) {
+void showTuningOnScreen(uint8_t screen, uint8_t value) {
   display.clearDisplay();
 
   display.setFont(&Dungeon9pt7b);
