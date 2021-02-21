@@ -96,11 +96,13 @@ void setupEncoders() {
 
 //Interrupt routine for chip A
 void doInterruptA() {
+  rotating = true;
   scanEncoder(0);
 }
 
 //Interrupt routine for chip B
 void doInterruptB() {
+  rotating = true;
   scanEncoder(1);
 }
 

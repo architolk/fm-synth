@@ -119,25 +119,32 @@ void showPatchMenu(uint8_t patch) {
 void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relative) {
   display.clearDisplay();
 
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(5,14);
+  display.print(F("Transpose")); //This is not only transpose, but for now...
+
   uint16_t pos = value;
   pos = (pos*63/offset)+1;
-  display.drawLine(0,20,127,20,SSD1306_WHITE);
-  display.drawLine(0,21,127,21,SSD1306_WHITE);
-  display.drawLine(pos,10,pos,30,SSD1306_WHITE);
+  display.drawLine(0,30,127,30,SSD1306_WHITE);
+  display.drawLine(0,31,127,31,SSD1306_WHITE);
+  display.drawLine(pos,25,pos,35,SSD1306_WHITE);
 
   display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(60,50);
+  display.setCursor(62-getStringWidth(NOTES[value%12])/2,60);
   display.print(NOTES[value%12]);
   if (relative) {
+    display.setFont(&Dungeon9pt7b);
     if (value<offset) {
-      display.setCursor(10,50);
+      display.setCursor(0,60);
       display.print(F("-"));
       display.print(offset-value);
     }
     if (value>offset) {
-      display.setCursor(80,50);
+      display.setCursor(100,60);
       display.print(value-offset);
     }
   } else {
@@ -154,10 +161,11 @@ void showMonoPolyOnScreen(uint8_t screen, uint8_t value) {
   display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(60,40);
-  if (value==0) {
+  if (value==1) {
+    display.setCursor(25,40);
     display.print("Mono");
   } else {
+    display.setCursor(30,40);
     display.print("Poly");
   }
 
@@ -171,11 +179,10 @@ void showPortaModeOnScreen(uint8_t screen, uint8_t value) {
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(60,20);
   switch (value) {
-    case 0: display.print(F("Glide off")); break;
-    case 1: display.print(F("Glide")); break;
-    case 2: display.print(F("Legato glide")); break;
+    case 0: display.setCursor(20,30); display.print(F("Glide off")); break;
+    case 1: display.setCursor(30,30); display.print(F("Glide")); break;
+    case 2: display.setCursor(25,20); display.print(F("Legato")); display.setCursor(25,40); display.print(F("Glide")); break;
     default: display.print(F("Unknown glide")); break;
   }
 
@@ -189,11 +196,14 @@ void showTuningOnScreen(uint8_t screen, uint8_t value) {
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(60,20);
   if (value==0) {
-    display.print(F("Normal tuning"));
+    display.setCursor(25,30);
+    display.print(F("Normal"));
+    display.setCursor(25,50);
+    display.print(F("tuning"));
   } else {
-    display.print(F("Tuning #"));
+    display.setCursor(5,40);
+    display.print(F("Tuning  #"));
     display.print(value);
   }
 
@@ -204,27 +214,41 @@ void showTuningOnScreen(uint8_t screen, uint8_t value) {
 void showPanOnScreen(uint8_t screen, uint8_t value) {
   display.clearDisplay();
 
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(5,14);
+  display.print(F("Pan"));
+
   uint16_t pos = value;
   pos = (pos*63/128)+1;
-  display.drawLine(0,20,127,20,SSD1306_WHITE);
-  display.drawLine(0,21,127,21,SSD1306_WHITE);
-  display.drawLine(pos,10,pos,30,SSD1306_WHITE);
+  display.drawLine(0,30,127,30,SSD1306_WHITE);
+  display.drawLine(0,31,127,31,SSD1306_WHITE);
+  display.drawLine(pos,25,pos,35,SSD1306_WHITE);
 
   display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(60,50);
-  if (value=128) {
+  display.setCursor(58,60);
+  if (value==128) {
     display.print(F("C"));
   } else {
     if (value<128) {
-      display.print(F("L"));
-      if (value!=0) {
+      if (value==0) {
+        display.print(F("L"));
+      } else {
+        display.setFont(&Dungeon9pt7b);
+        display.setCursor(58-getNumberWidth(128-value)/2,60);
+        display.print(F("L"));
         display.print(128-value);
       }
     } else {
-      display.print(F("R"));
-      if (value!=255) {
+      if (value==255) {
+        display.print(F("R"));
+      } else {
+        display.setFont(&Dungeon9pt7b);
+        display.setCursor(58-getNumberWidth(value-128)/2,60);
+        display.print(F("R"));
         display.print(value-128);
       }
     }
@@ -239,12 +263,15 @@ void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.clearDisplay();
   if (param.length()>7) {
     display.setFont(&Dungeon9pt7b);
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0,15);
   } else {
     display.setFont(&Dungeon12pt7b);
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0,20);
   }
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0,20);
   display.print(param);
   drawPercentbar( 0, 30, 128, 30,value);
 
@@ -254,8 +281,22 @@ void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
 
 void showVolumeOnScreen(uint8_t screen, uint8_t value) {
   if (overviewMode) {
-    //TODO: this is a debug test, to see if the overview mode works
-    showValueOnScreen(F("Volume overview"),screen,value);
+    display.clearDisplay();
+
+    display.setFont(&Dungeon9pt7b);
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0,14);
+    display.print(F("Patch: "));
+    display.print(patchSelect);
+    if (patchChanged) {
+      display.print(F("*"));
+    }
+
+    drawPercentbar( 0, 30, 128, 30,value);
+
+    TCA9548A(SCRMAP[screen]);
+    display.display();
   } else {
     showValueOnScreen(F("Volume"),screen,value);
   }
@@ -380,12 +421,12 @@ void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coa
   display.setCursor(15,50);
   display.print(F("1:"));
   display.print(coarse);
-  uint16_t cw = getWidth(coarse);
+  uint16_t cw = getNumberWidth(coarse);
 
   display.setFont(&Dungeon9pt7b);
   display.print(F("."));
   display.print(fine);
-  uint16_t fw = getWidth(fine);
+  uint16_t fw = getNumberWidth(fine);
 
   float pitchperc = pitch;
   pitchperc = (pitchperc-128)*100/127;
@@ -396,7 +437,7 @@ void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coa
     pitchperc = 1;
   }
   drawNumber(pitchperc,104,50);
-  uint16_t pw = getWidth(pitchperc);
+  uint16_t pw = getNumberWidth(pitchperc);
   display.print(F("%"));
 
   if (toggle==2) {
@@ -550,14 +591,21 @@ void showEnvelope(const env_type& env) {
 
 void drawNumber(int16_t number, uint8_t x, uint8_t y)
 {
-  display.setCursor(x - getWidth(number),y);
+  display.setCursor(x - getNumberWidth(number),y);
   display.print(number);
 }
 
-uint16_t getWidth(int16_t number) {
+uint16_t getNumberWidth(int16_t number) {
   int16_t x1, y1;
   uint16_t w, h;
   display.getTextBounds(number, 0, 20, &x1, &y1, &w, &h); //calc width of new string
+  return w;
+}
+
+uint16_t getStringWidth(const String& str) {
+  int16_t x1, y1;
+  uint16_t w, h;
+  display.getTextBounds(str, 0, 20, &x1, &y1, &w, &h); //calc width of new string
   return w;
 }
 
@@ -566,6 +614,7 @@ void drawPercentbar(int x,int y, int width,int height, uint8_t progress) {
 
   display.drawRect(x, y, width, height, WHITE);
   // Display progress text
+  display.setFont(&Dungeon12pt7b);
   display.setCursor((width/2) -16, y+21 );
   display.setTextColor(WHITE);
   display.print(progress);

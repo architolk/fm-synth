@@ -59,9 +59,13 @@ uint8_t operatorSelect = 0; //Selected operator, often the same as operator used
 uint8_t operatorUsed = 0; //Operator actually used
 uint8_t toggleMode = 0; //Sets the toggle mode
 uint8_t patchSelect = 0; //The active patch
+bool patchChanged = false; //True if the patch is changed without saving it
 
 bool overviewMode = true; //Sets the overview mode (extra information, is temporarilly set to false whenever you hit a button)
 unsigned long lastChange = 0; //Sets the time when you last hit a button
+
+//Set to true when an interrupt arrives: don't do anything till the interrupt is processed (or bad things will happen due to concurrency!!!)
+bool rotating = false;
 
 void setup() {
   setupParams();
@@ -99,14 +103,20 @@ void setup() {
 }
 
 void loop() {
+  rotating = false;
   scanLEDButtons();
   delay(50); //Some delay to mitigate bouncing, should be done with timer and not a delay - whatever for now!
-  if (millis() - lastChange > DISPLAYPERIOD) {
-    //Some time has past
-    if (!overviewMode) {
-      //overviewMode wasn't active, so make it active and show the new screens (if any)
-      overviewMode = true;
-      doMenuChange();
+  if (!rotating) {
+    //Only check this when not rotating!
+    if (millis() - lastChange > DISPLAYPERIOD) {
+      //Some time has past
+      if (!overviewMode) {
+        //overviewMode wasn't active, so make it active and show the new screens (if any)
+        noInterrupts(); //Can't have interrupts now!
+        overviewMode = true;
+        doMenuChange();
+        interrupts();
+      }
     }
   }
 }
@@ -115,6 +125,7 @@ void loop() {
 void resetLastChange() {
   overviewMode = false;
   lastChange = millis();
+  patchChanged = true; //You changed something!
 }
 
 //A LED button was pressed, respond!
@@ -204,6 +215,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         if (xfm2LoadPatch(patchSelect)) {
           if (xfm2GetActiveProgram(0)) {
             updateLEDs();
+            patchChanged = false;
             doMenuChange();
           } else {
             showError(ERR_DUMP);
