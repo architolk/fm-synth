@@ -252,6 +252,15 @@ void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.display();
 }
 
+void showVolumeOnScreen(uint8_t screen, uint8_t value) {
+  if (overviewMode) {
+    //TODO: this is a debug test, to see if the overview mode works
+    showValueOnScreen(F("Volume overview"),screen,value);
+  } else {
+    showValueOnScreen(F("Volume"),screen,value);
+  }
+}
+
 void showWaveOnScreen(const int8_t wave[122], uint8_t screen) {
   display.clearDisplay();
   for (uint8_t i=1; i<122; i++) {

@@ -84,7 +84,7 @@ void showMasterDisplay(uint8_t op) {
 //
 void showAMS(uint8_t op) {
   if (op==6) {
-    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+    showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     showValueOnScreen(F("Ampl Depth"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
   }
@@ -92,7 +92,7 @@ void showAMS(uint8_t op) {
 
 void showPMS(uint8_t op) {
   if (op==6) {
-    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+    showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     showValueOnScreen(F("Pitch Depth"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
   }
@@ -111,7 +111,7 @@ void showLFO(uint8_t op) {
     case 3: showValueOnScreen(F("LFO Fade"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
     case 4: showValueOnScreen(F("Pitch Depth"),4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
     case 5: showValueOnScreen(F("Ampl Depth"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
-    case 6: showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0)); break;
+    case 6: showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0)); break;
   }
 }
 
@@ -124,7 +124,7 @@ void showPitchEnvelope(uint8_t op) {
 
 void showPhase(uint8_t op) {
   if (op==6) {
-    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+    showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     showParamValueOnScreen(F("Phase"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
   }
@@ -132,7 +132,7 @@ void showPhase(uint8_t op) {
 
 void showWave(uint8_t op, uint8_t widx) {
   if (op==6) {
-    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+    showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     displayWave(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
   }
@@ -140,7 +140,7 @@ void showWave(uint8_t op, uint8_t widx) {
 
 void showOSCRatio(uint8_t op) {
   if (op==6) {
-    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+    showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     showOSCRatioOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,blueSelect,operatorSelect,op,1));
   }
@@ -174,7 +174,7 @@ void showAmplitudeEnvelope(uint8_t op) {
 
 void showFeedback(uint8_t op) {
   if (op==6) {
-    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+    showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     showFeedbackOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValueBit(5,0,0,op,0,op+1));
   }
@@ -182,7 +182,7 @@ void showFeedback(uint8_t op) {
 
 void showRatioPitch(uint8_t op) {
   if (op==6) {
-    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+    showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     showRatioOnScreen(op,bitRead(getParamValue(greenSelect,2,operatorSelect,op,1),op)==1,(blueSelect==2 ? 2 : toggleMode),getParamValue(greenSelect,1,operatorSelect,op,0),getParamValue(greenSelect,1,operatorSelect,op,1),getParamValue(greenSelect,2,operatorSelect,op,0));
   }
@@ -190,7 +190,7 @@ void showRatioPitch(uint8_t op) {
 
 void showLevel(uint8_t op) {
   if (op==6) {
-    showValueOnScreen(F("Volume"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+    showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     showValueOnScreen(F("Level"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
   }
