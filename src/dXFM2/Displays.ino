@@ -99,7 +99,8 @@ void showPMS(uint8_t op) {
 }
 
 void showKeyTracking(uint8_t op) {
-  showParamValueOnScreen(F("Tracking"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
+  //TODO: this is not really correct: keytrack is BP and curve, showNoteOnScreen is only BP!
+  showNoteOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),60,false);
 }
 
 void showLFO(uint8_t op) {
@@ -216,12 +217,12 @@ void showReserved(uint8_t op) {
 
 void showMaster(uint8_t op) {
   switch (op) {
-    case 0: showParamValueOnScreen(F("Pan"),0,getParam(greenSelect,blueSelect,operatorSelect,0,0).param); break;
-    case 1: showParamValueOnScreen(F("Transpose"),1,getParam(greenSelect,blueSelect,operatorSelect,1,0).param); break;
-    case 2: showParamValueOnScreen(F("Mono-Poly"),2,getParam(greenSelect,blueSelect,operatorSelect,2,0).param); break;
-    case 3: showParamValueOnScreen(F("Porta time"),3,getParam(greenSelect,blueSelect,operatorSelect,3,0).param); break;
-    case 4: showParamValueOnScreen(F("Porta mode"),4,getParam(greenSelect,blueSelect,operatorSelect,4,0).param); break;
-    case 5: showParamValueOnScreen(F("Tuning"),5,getParam(greenSelect,blueSelect,operatorSelect,5,0).param); break;
+    case 0: showPanOnScreen(0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 1: showNoteOnScreen(1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0),24,true); break;
+    case 2: showMonoPolyOnScreen(2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
+    case 3: showValueOnScreen(F("Porta time"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
+    case 4: showPortaModeOnScreen(4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
+    case 5: showTuningOnScreen(5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
     case 6: showOutputGainOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0),getParamValue(greenSelect,blueSelect,operatorSelect,6,1)); break;
   }
 }

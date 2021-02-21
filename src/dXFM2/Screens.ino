@@ -8,6 +8,9 @@
 //Mapping from logical screens to fysical OLEDs
 const uint8_t SCRMAP[7] = {5,7,2,4,0,1,6};
 
+//Note names
+const String NOTES[12] = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"};
+
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 #define OLED_RESET -1 //Share reset with Arduino reset pin
@@ -109,6 +112,125 @@ void showPatchMenu(uint8_t patch) {
   display.print(patch);
 
   TCA9548A(SCRMAP[6]);
+  display.display();
+}
+
+//Shows a note on the screen, with respect to a certain offset
+void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relative) {
+  display.clearDisplay();
+
+  uint16_t pos = value;
+  pos = (pos*63/offset)+1;
+  display.drawLine(0,20,127,20,SSD1306_WHITE);
+  display.drawLine(0,21,127,21,SSD1306_WHITE);
+  display.drawLine(pos,10,pos,30,SSD1306_WHITE);
+
+  display.setFont(&Dungeon12pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(60,50);
+  display.print(NOTES[value%12]);
+  if (relative) {
+    if (value<offset) {
+      display.setCursor(10,50);
+      display.print(F("-"));
+      display.print(offset-value);
+    }
+    if (value>offset) {
+      display.setCursor(80,50);
+      display.print(value-offset);
+    }
+  } else {
+    display.print(value/12);
+  }
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showMonoPolyOnScreen(uit8_t screen, uint8_t value) {
+  display.clearDisplay();
+
+  display.setFont(&Dungeon12pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(60,40);
+  if (value==0) {
+    display.print("Mono");
+  } else {
+    display.print("Poly");
+  }
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showPortaModeOnScreen(uit8_t screen, uint8_t value) {
+  display.clearDisplay();
+
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(60,20);
+  switch (value) {
+    case 0: display.print(F("Glide off")); break;
+    case 1: display.print(F("Glide")); break;
+    case 2: display.print(F("Legato glide")); break;
+    default: display.print(F("Unknown glide")); break;
+  }
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showTuningOnScreen(uit8_t screen, uint8_t value) {
+  display.clearDisplay();
+
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(60,20);
+  if (value==0) {
+    display.print(F("Normal tuning"));
+  } else {
+    display.print(F("Tuning #"));
+    display.print(value);
+  }
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showPanOnScreen(uint8_t screen, uint8_t value) {
+  display.clearDisplay();
+
+  uint16_t pos = value;
+  pos = (pos*63/128)+1;
+  display.drawLine(0,20,127,20,SSD1306_WHITE);
+  display.drawLine(0,21,127,21,SSD1306_WHITE);
+  display.drawLine(pos,10,pos,30,SSD1306_WHITE);
+
+  display.setFont(&Dungeon12pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(60,50);
+  if (value=128) {
+    display.print(F("C"));
+  } else {
+    if (value<128) {
+      display.print(F("L"));
+      if (value!=0) {
+        display.print(128-value);
+      }
+    } else {
+      display.print(F("R"));
+      if (value!=255) {
+        display.print(value-128);
+      }
+    }
+  }
+
+  TCA9548A(SCRMAP[screen]);
   display.display();
 }
 
