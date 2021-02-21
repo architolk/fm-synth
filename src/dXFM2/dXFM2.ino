@@ -18,6 +18,9 @@
 #define ERR_DUMP 2
 #define ERR_LOAD 3
 
+//Go back to the overview display after 2 seconds
+#define DISPLAYPERIOD 2000
+
 //Set this to the targetted serial interface
 //Serial = USB serial, for debugging
 //Serial1 = XFM2 serial, for real-live purpose
@@ -57,6 +60,9 @@ uint8_t operatorUsed = 0; //Operator actually used
 uint8_t toggleMode = 0; //Sets the toggle mode
 uint8_t patchSelect = 0; //The active patch
 
+bool overviewMode = true; //Sets the overview mode (extra information, is temporarilly set to false whenever you hit a button)
+unsigned long lastChange = 0; //Sets the time when you last hit a button
+
 void setup() {
   setupParams();
 
@@ -95,10 +101,25 @@ void setup() {
 void loop() {
   scanLEDButtons();
   delay(50); //Some delay to mitigate bouncing, should be done with timer and not a delay - whatever for now!
+  if (millis() - lastChange > DISPLAYPERIOD) {
+    //Some time has past
+    if (!overviewMode) {
+      //overviewMode wasn't active, so make it active and show the new screens (if any)
+      overviewMode = true;
+      doMenuChange();
+    }
+  }
+}
+
+//Reset the last change, so the overviewmode will be disabled for the DISPLAYPERIOD
+void resetLastChange() {
+  overviewMode = false;
+  lastChange = millis();
 }
 
 //A LED button was pressed, respond!
 void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
+  resetLastChange();
   if (menu==7) {
     //Blue menu toggle
     toggleLEDRow(row,col,menu,btn);
@@ -137,6 +158,7 @@ void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
 
 //An encoder was used, respond!
 void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
+  resetLastChange();
   if (encoder<7) {
     uint8_t paramType = getParamType(greenSelect,blueSelect,operatorSelect,encoder,0);
     if (paramType==3) {
