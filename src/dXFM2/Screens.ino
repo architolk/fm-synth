@@ -302,6 +302,19 @@ void showVolumeOnScreen(uint8_t screen, uint8_t value) {
   }
 }
 
+void showOperatorOverviewOnScreen(uint8_t screen, uit8_t value) {
+  display.clearDisplay();
+
+  display.setFont(&Dungeon12pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,20);
+  display.print(value);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 void showWaveOnScreen(const int8_t wave[122], uint8_t screen) {
   display.clearDisplay();
   for (uint8_t i=1; i<122; i++) {

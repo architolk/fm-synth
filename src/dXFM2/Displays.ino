@@ -192,7 +192,11 @@ void showLevel(uint8_t op) {
   if (op==6) {
     showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
-    showValueOnScreen(F("Level"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+    if (overviewMode) {
+      showOperatorOverviewOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+    } else {
+      showValueOnScreen(F("Level"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+    }
   }
 }
 
