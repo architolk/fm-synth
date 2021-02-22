@@ -193,7 +193,20 @@ void showLevel(uint8_t op) {
     showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
     if (overviewMode) {
-      showOperatorOverviewOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+      env_type env;
+      env.level[0] = getParamValue(greenSelect,5,op,0,0); //Start level
+      env.level[1] = getParamValue(greenSelect,5,op,1,0); //Level at end of attack phase
+      env.level[2] = getParamValue(greenSelect,5,op,2,0); //Level at end of decay-1 phase
+      env.level[3] = getParamValue(greenSelect,5,op,3,0); //Level at end of decay-2 phase (= sustain level)
+      env.level[4] = getParamValue(greenSelect,5,op,4,0); //Level at end of release-1 phase
+      env.level[5] = getParamValue(greenSelect,5,op,5,0); //Level at end of release-2 phase (= end level)
+      env.rate[0] = getParamValue(greenSelect,4,op,6,0); //Delay
+      env.rate[1] = getParamValue(greenSelect,4,op,0,0); //Rate of attack phase
+      env.rate[2] = getParamValue(greenSelect,4,op,1,0); //Rate of decay-1 phase
+      env.rate[3] = getParamValue(greenSelect,4,op,2,0); //Rate of decay-2 phase
+      env.rate[4] = getParamValue(greenSelect,4,op,4,0); //Rate of releease-1 phase
+      env.rate[5] = getParamValue(greenSelect,4,op,5,0); //Rate of releease-2 phase
+      showOperatorOverviewOnScreen(op,env,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,1,operatorSelect,op,0),getParamValue(greenSelect,1,operatorSelect,op,1),getParamValueBit(5,0,0,op,0,op+1));
     } else {
       showValueOnScreen(F("Level"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
     }

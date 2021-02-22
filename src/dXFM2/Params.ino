@@ -25,9 +25,9 @@ const uint16_t PARAMMAP[6][6][7] PROGMEM = {
     {33,34,35,36,37,38,180},
     {1012,1013,1014,1015,1016,1017,180},
     {2006,2007,2008,2009,2010,2011,180},
-    {7,8,9,10,11,12,180},
-    {3103,3110,3117,0,3124,3199,3187},
-    {3181,3075,3082,3089,3096,3193,3140}
+    {3034,3035,3036,3037,3038,3039,180},
+    {4103,4110,4117,0,4124,4199,4187},
+    {4181,4075,4082,4089,4096,4193,4140}
   },
   { //3 & 5, Effects
     {0,330,332,331,0,333,0},
@@ -54,7 +54,7 @@ const uint16_t PARAMMAP[6][6][7] PROGMEM = {
     {1,2,3,4,5,6}
   }
 };
-const uint16_t PARAMEXMAP[34][2] PROGMEM = {
+const uint16_t PARAMEXMAP[40][2] PROGMEM = {
   {51,63},{52,64},{53,65},{54,66},{55,67},{56,68}, //LFO 1000-1005
   {27,14},{28,14},{29,14},{30,14},{31,14},{32,14}, //OPS 2006-2011
   {15,21},{16,22},{17,23},{18,24},{19,25},{20,26}, //OPS 1012-1017
@@ -62,6 +62,7 @@ const uint16_t PARAMEXMAP[34][2] PROGMEM = {
   {256,257},{258,259},{260,261},{262,263},{264,265},{266,267}, //MASTER 1021-1026
   {411,412}, //MASTER 1027
   {280,274},{281,275},{282,276},{283,277},{284,278},{285,279}, //OSC 1028-1033
+  {7,1},{8,2},{9,3},{10,4},{11,5},{12,6}, //OPS 3034-3039
 };
 
 //Maximum values for every parameter
@@ -302,16 +303,20 @@ param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, 
     unit = 1;
   }
   uint16_t val = PARAMMAP[menu][blue][usedOp];
-  if (val>3000) {
-    return {unit,val-3000+selOp};
+  if (val>4000) {
+    return {unit,val-4000+selOp};
   } else {
-    if (val>1999) {
-      return {unit,PARAMEXMAP[val-2000][toggle]};
+    if (val>2999) {
+      return {unit,PARAMEXMAP[val-3000][toggle]};
     } else {
-      if (val>999) {
-        return {unit,PARAMEXMAP[val-1000][toggle]};
+      if (val>1999) {
+        return {unit,PARAMEXMAP[val-2000][toggle]};
       } else {
-        return {unit,val};
+        if (val>999) {
+          return {unit,PARAMEXMAP[val-1000][toggle]};
+        } else {
+          return {unit,val};
+        }
       }
     }
   }
@@ -325,16 +330,20 @@ uint8_t getParamType(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp,
     unit = 1;
   }
   uint16_t val = PARAMMAP[menu][blue][usedOp];
-  if (val>3000) {
-    return 3;
+  if (val>4000) {
+    return 4;
   } else {
-    if (val>1999) {
-      return 2;
+    if (val>2999) {
+      return 3;
     } else {
-      if (val>999) {
-        return 1;
+      if (val>1999) {
+        return 2;
       } else {
-        return 0;
+        if (val>999) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
     }
   }

@@ -302,14 +302,33 @@ void showVolumeOnScreen(uint8_t screen, uint8_t value) {
   }
 }
 
-void showOperatorOverviewOnScreen(uint8_t screen, uit8_t value) {
+void showOperatorOverviewOnScreen(uint8_t screen, env_type env, uint8_t level, uint8_t ratio, uint8_t rfine, bool feedbackOn) {
   display.clearDisplay();
 
   display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0,20);
-  display.print(value);
+  display.setCursor(0,17);
+  display.print(level);
+  uint16_t lw = getNumberWidth(level);
+  if (feedbackOn) {
+    display.fillRect(0, 0, 2+lw , 20, SSD1306_INVERSE);
+  }
+
+  uint16_t rw = getNumberWidth(ratio);
+  display.setFont(&Dungeon9pt7b);
+  rw = rw + getNumberWidth(rfine);
+  display.setFont(&Dungeon12pt7b);
+
+  display.setCursor(105-rw,17);
+  display.print(F("1:"));
+  display.print(ratio);
+
+  display.setFont(&Dungeon9pt7b);
+  display.print(F("."));
+  display.print(rfine);
+
+  showEnvelope(35,28,env);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
@@ -503,8 +522,7 @@ void showOperator(uint8_t screen, uint8_t op) {
 
 void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool activeScreen, uint8_t param) {
   display.clearDisplay();
-  //env_type env2 = {{100,230,255,255,160,255},{0,255,255,255,0,0}};
-  showEnvelope(env);
+  showEnvelope(40,20,env);
 
   if (activeScreen) {
     display.setFont(&Dungeon9pt7b);
@@ -545,7 +563,7 @@ void showScreenBorder(uint8_t screen) {
   display.display();
 }
 
-void showEnvelope(const env_type& env) {
+void showEnvelope(uint8_t envheight, uint8_t envpos, const env_type& env) {
   float x1,x2,y1,y2,yd,yq,xq,r0,r1,r2,r3,r4,r5,l0,l1,l2,l3,l4,l5;
   //Getting envelope parameters
   r0 = env.rate[0];
@@ -560,9 +578,9 @@ void showEnvelope(const env_type& env) {
   l3 = env.level[3];
   l4 = env.level[4];
   l5 = env.level[5];
-  yq = 40.0/255.0; //Quotient bij maximale waarde van 63
+  yq = envheight/255.0; //Quotient bij maximale waarde van 63
   xq = 127.0 / (255 + (r0>0 ? 255 : 0) + (r1>0 ? 255 : 0) + (r2>0 ? 255 : 0 ) + (r3>0 ? 255 : 0) + (r4>0 ? 255 : 0) + (r5>0 ? 255 : 0));
-  yd = 20.0;
+  yd = envpos;
   x1 = 0.0;
   x2 = x1 + xq*r0; //Delay
   y1 = yq*(255 - l0)+yd;

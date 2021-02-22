@@ -106,7 +106,7 @@ void loop() {
   rotating = false;
   scanLEDButtons();
   delay(50); //Some delay to mitigate bouncing, should be done with timer and not a delay - whatever for now!
-  if (!rotating) {
+  if (!rotating && blueSelect==0) {
     //Only check this when not rotating!
     if (millis() - lastChange > DISPLAYPERIOD) {
       //Some time has past
@@ -172,7 +172,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
   resetLastChange();
   if (encoder<7) {
     uint8_t paramType = getParamType(greenSelect,blueSelect,operatorSelect,encoder,0);
-    if (paramType==3) {
+    if (paramType==4) {
       if (clicked) {
         uint8_t oldSelected = operatorSelect;
         operatorSelect = encoder;
@@ -187,11 +187,11 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
       }
     } else {
-      if (paramType==2) {
+      if (paramType==3) {
         if (clicked) {
           operatorUsed = encoder;
           operatorSelect = encoder;
-          toggleParamValueBit(greenSelect,blueSelect,operatorSelect,encoder,1,encoder);
+          toggleParamValueBit(greenSelect,blueSelect,operatorSelect,encoder,1,encoder+1); //Operator 1 = bit 1
           activateChange(greenSelect,blueSelect,operatorSelect,encoder,1);
         } else {
           operatorUsed = encoder;
@@ -200,10 +200,24 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
           activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
         }
       } else {
-        operatorUsed = encoder;
-        operatorSelect = encoder;
-        setParamValue(greenSelect,blueSelect,operatorSelect,encoder,toggleMode,value);
-        activateChange(greenSelect,blueSelect,operatorSelect,encoder,toggleMode);
+        if (paramType==2) {
+          if (clicked) {
+            operatorUsed = encoder;
+            operatorSelect = encoder;
+            toggleParamValueBit(greenSelect,blueSelect,operatorSelect,encoder,1,encoder); //Operator 1 = bit 0
+            activateChange(greenSelect,blueSelect,operatorSelect,encoder,1);
+          } else {
+            operatorUsed = encoder;
+            operatorSelect = encoder;
+            setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
+            activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
+          }
+        } else {
+          operatorUsed = encoder;
+          operatorSelect = encoder;
+          setParamValue(greenSelect,blueSelect,operatorSelect,encoder,toggleMode,value);
+          activateChange(greenSelect,blueSelect,operatorSelect,encoder,toggleMode);
+        }
       }
     }
     showDisplay(operatorSelect);
