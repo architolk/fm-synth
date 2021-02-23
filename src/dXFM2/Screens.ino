@@ -258,6 +258,20 @@ void showPanOnScreen(uint8_t screen, uint8_t value) {
   display.display();
 }
 
+void showParamMenuOnScreen(uint8_t value, const String& param, uint8_t screen) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,15);
+  display.print(value);
+  display.print(F(" "));
+  display.print(param);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 //Shows the value of some parameter (fixed to "Volume" at this moment)
 void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.clearDisplay();

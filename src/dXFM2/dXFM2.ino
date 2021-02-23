@@ -143,7 +143,6 @@ void loop() {
 void resetLastChange() {
   overviewMode = false;
   lastChange = millis();
-  patchChanged = true; //You changed something!
 }
 
 //A LED button was pressed, respond!
@@ -260,10 +259,14 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         showPatchMenu(value);
       }
     } else {
-      if (encoder==8) {
-        if (clicked) {
-          //Debug demo
-          startDemo();
+      if (encoder==7) {
+        showParamMenu(value);
+      } else {
+        if (encoder==8) {
+          if (clicked) {
+            //Debug demo
+            startDemo();
+          }
         }
       }
     }
@@ -274,7 +277,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
 //Maybe this can be part of setParamValue and toggleParamValueBit, but for now...
 void activateChange(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
   param_type param = getParam(green,blue,selOp,usedOp,toggle);
-  //showDebug(param.param);
+  patchChanged = true; //You changed something!!
   xfm2SetParameter(param.param,getParamValueQuick(param));
 }
 

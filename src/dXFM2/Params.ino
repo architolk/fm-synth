@@ -297,6 +297,7 @@ void setupParams() {
 
 param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
   uint8_t menu = green;
+  uint8_t bmenu = blue;
   uint8_t unit = 0;
   if (green>4) {
     menu = 8-green;
@@ -304,8 +305,9 @@ param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, 
   }
   if (blue==BLUE_LEDS) {
     menu = 5;
+    bmenu = 0;
   }
-  uint16_t val = PARAMMAP[menu][blue][usedOp];
+  uint16_t val = PARAMMAP[menu][bmenu][usedOp];
   if (val>4000) {
     return {unit,val-4000+selOp};
   } else {
@@ -327,6 +329,7 @@ param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, 
 
 uint8_t getParamType(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
   uint8_t menu = green;
+  uint8_t bmenu = blue;
   uint8_t unit = 0;
   if (green>4) {
     menu = 8-green;
@@ -334,8 +337,9 @@ uint8_t getParamType(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp,
   }
   if (blue==BLUE_LEDS) {
     menu = 5;
+    bmenu = 0;
   }
-  uint16_t val = PARAMMAP[menu][blue][usedOp];
+  uint16_t val = PARAMMAP[menu][bmenu][usedOp];
   if (val>4000) {
     return 4;
   } else {
