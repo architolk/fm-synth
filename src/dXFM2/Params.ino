@@ -298,9 +298,12 @@ void setupParams() {
 param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
   uint8_t menu = green;
   uint8_t unit = 0;
-  if (greenSelect>4) {
+  if (green>4) {
     menu = 8-green;
     unit = 1;
+  }
+  if (blue==BLUE_LEDS) {
+    menu = 5;
   }
   uint16_t val = PARAMMAP[menu][blue][usedOp];
   if (val>4000) {
@@ -325,9 +328,12 @@ param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, 
 uint8_t getParamType(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, uint8_t toggle) {
   uint8_t menu = green;
   uint8_t unit = 0;
-  if (greenSelect>4) {
+  if (green>4) {
     menu = 8-green;
     unit = 1;
+  }
+  if (blue==BLUE_LEDS) {
+    menu = 5;
   }
   uint16_t val = PARAMMAP[menu][blue][usedOp];
   if (val>4000) {
@@ -378,11 +384,10 @@ void toggleParamValueBit(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t use
 }
 
 void toggleLEDParamValueBit(uint8_t menu, uint8_t btn) {
-  //TODO: Serial communication to XFM2 for this...
   if (menu==6) {
-    toggleParamValueBit(5,0,0,btn,0,0);
+    toggleParamValueBit(greenSelect,BLUE_LEDS,0,btn,0,0);
   } else {
-    toggleParamValueBit(5,0,0,menu,0,btn+1);
+    toggleParamValueBit(greenSelect,BLUE_LEDS,0,menu,0,btn+1);
   }
 }
 

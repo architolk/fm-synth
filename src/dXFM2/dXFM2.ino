@@ -18,6 +18,24 @@
 #define ERR_DUMP 2
 #define ERR_LOAD 3
 
+#define BLUE_VOLUME 0
+#define BLUE_RATIO 1
+#define BLUE_PITCH 2
+#define BLUE_FEEDBACK 3
+#define BLUE_DURATION 4
+#define BLUE_LEVEL 5
+#define BLUE_LEDS 6
+
+#define GREEN_LFO_UNIT1 0
+#define GREEN_OSC_UNIT1 1
+#define GREEN_OPS_UNIT1 2
+#define GREEN_EFX_UNIT1 3
+#define GREEN_MASTER 4
+#define GREEN_LFO_UNIT2 5
+#define GREEN_OSC_UNIT2 6
+#define GREEN_OPS_UNIT2 7
+#define GREEN_EFX_UNIT2 8
+
 //Go back to the overview display after 2 seconds
 #define DISPLAYPERIOD 2000
 
@@ -158,10 +176,10 @@ void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
       toggleLEDParamValueBit(menu,btn);
       if (menu==6) {
         //Do change for carriers
-        activateChange(5,0,0,btn,0);
+        activateChange(greenSelect,BLUE_LEDS,0,btn,0);
       } else {
         //Do change for modulators
-        activateChange(5,0,0,menu,0);
+        activateChange(greenSelect,BLUE_LEDS,0,menu,0);
       }
     }
   }

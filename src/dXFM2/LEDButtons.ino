@@ -102,13 +102,13 @@ void updateLEDs() {
     for (uint8_t opm=0; opm<6; opm++) {
       buttons[opc][opm] = false;
       //Modulator LEDs
-      if (getParamValueBit(5,0,0,opc,0,opm+1)) {
+      if (getParamValueBit(greenSelect,BLUE_LEDS,0,opc,0,opm+1)) {
         toggleLEDFromMenu(opc,opm);
       }
     }
     //Carrier LEDs
     buttons[6][opc] = false;
-    if (getParamValueBit(5,0,0,opc,0,0)) {
+    if (getParamValueBit(greenSelect,BLUE_LEDS,0,opc,0,0)) {
       toggleLEDFromMenu(6,opc);
     }
   }
