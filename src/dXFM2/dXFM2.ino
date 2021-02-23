@@ -26,15 +26,19 @@
 #define BLUE_LEVEL 5
 #define BLUE_LEDS 6
 
-#define GREEN_LFO_UNIT1 0
-#define GREEN_OSC_UNIT1 1
-#define GREEN_OPS_UNIT1 2
-#define GREEN_EFX_UNIT1 3
+#define GREEN_LFO 0
+#define GREEN_OSC 1
+#define GREEN_OPS 2
+#define GREEN_EFX 3
 #define GREEN_MASTER 4
 #define GREEN_LFO_UNIT2 5
 #define GREEN_OSC_UNIT2 6
 #define GREEN_OPS_UNIT2 7
 #define GREEN_EFX_UNIT2 8
+
+#define DISPLAY_NORMAL 0
+#define DISPLAY_OVERVIEW 1
+#define DISPLAY_MENU 2
 
 //Go back to the overview display after 2 seconds
 #define DISPLAYPERIOD 2000
@@ -79,7 +83,7 @@ uint8_t toggleMode = 0; //Sets the toggle mode
 uint8_t patchSelect = 0; //The active patch
 bool patchChanged = false; //True if the patch is changed without saving it
 
-bool overviewMode = true; //Sets the overview mode (extra information, is temporarilly set to false whenever you hit a button)
+uint8_t displayMode = DISPLAY_OVERVIEW; //Sets the overview mode (extra information, is temporarilly set to DISPLAY_NORMAL whenever you hit a button)
 unsigned long lastChange = 0; //Sets the time when you last hit a button
 
 //Set to true when an interrupt arrives: don't do anything till the interrupt is processed (or bad things will happen due to concurrency!!!)
@@ -128,10 +132,10 @@ void loop() {
     //Only check this when not rotating!
     if (millis() - lastChange > DISPLAYPERIOD) {
       //Some time has past
-      if (!overviewMode) {
-        //overviewMode wasn't active, so make it active and show the new screens (if any)
+      if (displayMode!=DISPLAY_OVERVIEW) {
+        //displaymode wasn't overview, so make it active and show the new screens (if any)
         noInterrupts(); //Can't have interrupts now!
-        overviewMode = true;
+        displayMode = DISPLAY_OVERVIEW;
         doMenuChange();
         interrupts();
       }
@@ -139,9 +143,9 @@ void loop() {
   }
 }
 
-//Reset the last change, so the overviewmode will be disabled for the DISPLAYPERIOD
+//Reset the last change, so the displaymode will be set to DISPLAY_NORMAL for the DISPLAYPERIOD
 void resetLastChange() {
-  overviewMode = false;
+  displayMode = DISPLAY_NORMAL;
   lastChange = millis();
 }
 
@@ -186,8 +190,8 @@ void doLEDButtonPressed(uint8_t row, uint8_t col, uint8_t menu, uint8_t btn) {
 
 //An encoder was used, respond!
 void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
-  resetLastChange();
   if (encoder<7) {
+    resetLastChange();
     uint8_t paramType = getParamType(greenSelect,blueSelect,operatorSelect,encoder,0);
     if (paramType==4) {
       if (clicked) {
@@ -237,9 +241,15 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         }
       }
     }
-    showDisplay(operatorSelect);
+    //A bit of a hack, better if this is done via paramType
+    if (greenSelect==GREEN_OSC && blueSelect>3) {
+      showDisplay(6);
+    } else {
+      showDisplay(operatorSelect);
+    }
   } else {
     if (encoder==9) {
+      resetLastChange();
       if (clicked) {
         //Laden van een programma
         patchSelect = value;
@@ -260,12 +270,22 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
       }
     } else {
       if (encoder==7) {
+        resetLastChange();
+        displayMode = DISPLAY_MENU;
         showParamMenu(value);
       } else {
         if (encoder==8) {
           if (clicked) {
-            //Debug demo
-            startDemo();
+            if (displayMode==DISPLAY_MENU) {
+              resetLastChange();
+              displayMode = DISPLAY_MENU;
+              executeParamMenu(getEncoderValue(7),value);
+            } else {
+              //Show param menu, we want to change something!
+              resetLastChange();
+              displayMode = DISPLAY_MENU;
+              showParamMenu(getEncoderValue(7));
+            }
           }
         }
       }

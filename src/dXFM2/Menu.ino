@@ -5,6 +5,20 @@
 *
 */
 
+#define MENUCOUNT 5
+const String MENUNAMES[5] = {
+  "Initialize",
+  "Algorithm",
+  "MIDI",
+  "Param",
+  "LEDs"
+};
+
 void showParamMenu(uint8_t param) {
-  showParamMenuOnScreen(param,F("Initialize"),6);
+  showParamMenuOnScreen(param % MENUCOUNT,MENUNAMES[param % MENUCOUNT],6);
+}
+
+void executeParamMenu(uint8_t param, uint8_t value) {
+  //Debug
+  showValueOnScreen(F("MENU"),6,value);
 }

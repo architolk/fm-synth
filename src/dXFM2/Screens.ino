@@ -294,7 +294,7 @@ void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
 }
 
 void showVolumeOnScreen(uint8_t screen, uint8_t value) {
-  if (overviewMode) {
+  if (displayMode==DISPLAY_OVERVIEW) {
     display.clearDisplay();
 
     display.setFont(&Dungeon9pt7b);
@@ -534,7 +534,7 @@ void showOperator(uint8_t screen, uint8_t op) {
   display.display();
 }
 
-void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool activeScreen, uint8_t param) {
+void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool activeScreen, uint8_t param, bool balanced) {
   display.clearDisplay();
   showEnvelope(40,20,env);
 
@@ -560,7 +560,11 @@ void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool 
       case 13: display.print(F("Rate")); break;
     }
     if (op!=3) {
-      drawNumber(param,127,12);
+      if (balanced) {
+        drawNumber(param-128,127,12);
+      } else {
+        drawNumber(param,127,12);
+      }
     }
   }
 

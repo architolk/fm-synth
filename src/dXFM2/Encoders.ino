@@ -221,6 +221,10 @@ void readRegister(uint8_t reg, uint8_t portOffset) {
   }
 }
 
+uint8_t getEncoderValue(uint8_t index) {
+  return encoders[index].value;
+}
+
 void setEncoderValue(uint8_t index, uint8_t value) {
   encoders[index].value = value;
 }
