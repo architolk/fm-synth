@@ -199,7 +199,7 @@ void showPhase(uint8_t op) {
   if (op==6) {
     showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
-    showPhaseOnScreen(op),getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,blueSelect,operatorSelect,op,1));
+    showPhaseOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,blueSelect,operatorSelect,op,1));
   }
 }
 

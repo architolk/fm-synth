@@ -11,10 +11,9 @@ const uint8_t SCRMAP[7] = {5,7,2,4,0,1,6};
 //Note names
 const String NOTES[12] = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"};
 
-//Pie chart constants for radius 20 (piesize = 2 x pieradius - 1)
+//Pie chart constants for radius 20
 #define PIERADIUS 20
-#define PIESIZE 39
-const uint8_t PIEPOS[PIERADIUS] = {0,6,9,11,12,13,14,15,16,17,17,18,18,19,19,19,20,20,20,20};
+const uint8_t PIEPOS[PIERADIUS] = {4,8,9,11,12,13,14,15,16,17,17,18,18,19,19,19,20,20,20,20};
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -570,12 +569,12 @@ void drawPie(uint8_t cx, uint8_t cy, uint8_t phase) {
     if (phase>0) {
       x = PIEPOS[y];
     }
-    drawLine(cx,cx+x,cy+y,SSD1306_WHITE);
+    display.drawLine(cx,cy+y-PIERADIUS,cx+x,cy+y-PIERADIUS,SSD1306_WHITE);
     if (phase>1) {
       if (phase==3) {
-        drawLine(cx-x,cx+x,cy+PIESIZE-y,SSD1306_WHITE);
+        display.drawLine(cx-x,cy+PIERADIUS-y-1,cx+x,cy+PIERADIUS-y-1,SSD1306_WHITE);
       } else {
-        drawLine(cx,cx+x,cy+PIESIZE-y,SSD1306_WHITE);
+        display.drawLine(cx,cy+PIERADIUS-y-1,cx+x,cy+PIERADIUS-y-1,SSD1306_WHITE);
       }
     }
   }
