@@ -256,7 +256,14 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
     if (greenSelect==GREEN_OSC && blueSelect>3) {
       showDisplay(6);
     } else {
-      showDisplay(operatorSelect);
+      if (greenSelect==GREEN_EFX) {
+        showDisplay(5-blueSelect);
+        if (blueSelect==5) {
+          showDisplay(6);
+        }
+      } else {
+        showDisplay(operatorSelect);
+      }
     }
   } else {
     if (encoder==9) {

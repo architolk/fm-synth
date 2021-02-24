@@ -545,8 +545,28 @@ void showChorusOnScreen(uint8_t screen, const efx_type& efx) {
   display.setTextColor(SSD1306_WHITE);
 
   display.setCursor(0,12);
-  display.print(F("D"));
+  display.print(F("d"));
   display.print(efx.dry);
+
+  display.setCursor(100,12);
+  display.print(F("w"));
+  drawNumber(efx.wet,127,12);
+
+  display.setCursor(20,30);
+  switch (efx.mode) {
+    case 0: display.print(F("Chorus long"));
+    case 1: display.print(F("Chorus short"));
+    case 2: display.print(F("Flanger long"));
+    case 3: display.print(F("Flanger short"));
+  }
+
+  display.setCursor(0,62);
+  display.print(F("s"));
+  display.print(efx.speed);
+
+  display.setCursor(100,12);
+  display.print(F("d"));
+  drawNumber(efx.depth,127,12);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
@@ -557,6 +577,19 @@ void showPhaseOnScreen(uint8_t screen, uint8_t phase, uint8_t sync) {
 
   display.drawCircle(31,31,PIERADIUS,SSD1306_WHITE);
   drawPie(31,31,phase);
+
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(50,15);
+  display.print(90*sync);
+
+  display.setCursor(80,35);
+  if (sync==0) {
+    display.print(F("sync"));
+  } else {
+    display.print(F("free"));
+  }
 
   TCA9548A(SCRMAP[screen]);
   display.display();

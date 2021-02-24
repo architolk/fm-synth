@@ -80,22 +80,22 @@ void showEFXDisplay(uint8_t op) {
 
 void showAMDisplay(uint8_t op) {
   //Depth, speed, range, LR Phase
-  showValueOnScreen(F("AM"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0));
+  showValueOnScreen(F("AM"),0,getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,0,0));
 }
 
 void showDelayDisplay(uint8_t op) {
   //Dry, Wet, Mode, Time, Feedback, Lo, Hi, Tempo, Mul, Div
-  showValueOnScreen(F("Delay"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0));
+  showValueOnScreen(F("Delay"),1,getParamValue(greenSelect,BLUE_DURATION,operatorSelect,1,0));
 }
 
 void showPhaserDisplay(uint8_t op) {
   //Dry, Wet, Mode, Speed, Depth, Feedback, Offset, stages, LR Phase
-  showValueOnScreen(F("Phaser"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0));
+  showValueOnScreen(F("Phaser"),2,getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,2,0));
 }
 
 void showReverbDisplay(uint8_t op) {
   //Dry, wet, Mode, Decay, Damp
-  showValueOnScreen(F("Reverb"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0));
+  showValueOnScreen(F("Reverb"),3,getParamValue(greenSelect,BLUE_PITCH,operatorSelect,3,0));
 }
 
 void showChorusDisplay(uint8_t op) {
@@ -119,12 +119,12 @@ void showChorusDisplay(uint8_t op) {
 
 void showEffectsDisplay(uint8_t op) {
   //BLUE_VOLUME 1: Decimator depth, 4: Bitcrusher depth, 5: FX Routing
-  showValueOnScreen(F("Effects"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0));
+  showValueOnScreen(F("Effects"),5,getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,5,0));
 }
 
 void showFilterDisplay(uint8_t op) {
   //BLUE_VOLUME 2: Lo pass, 3: Hi Pass
-  showValueOnScreen(F("Filter"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+  showValueOnScreen(F("Filter"),6,getParamValue(greenSelect,BLUE_OUTPUT,operatorSelect,6,0));
 }
 
 void showMasterDisplay(uint8_t op) {
@@ -209,7 +209,7 @@ void showPhase(uint8_t op) {
   if (op==6) {
     showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
   } else {
-    showPhaseOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,blueSelect,operatorSelect,op,1));
+    showPhaseOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValueBit(greenSelect,blueSelect,operatorSelect,op,1,op));
   }
 }
 
