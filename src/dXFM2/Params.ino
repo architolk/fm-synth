@@ -285,7 +285,7 @@ const uint8_t PARAMDEFAULT[512] PROGMEM = {
   0,0,0,0,0,0,0,0,0,0,0,0 //NOP 500-511
 };
 
-uint8_t paramValue[2][512]; //Parameter 0 doesn't exists, but nr 512 does, so we need an array of 513 items
+uint8_t paramValue[2][512];
 
 void setupParams() {
   for (uint8_t unit=0; unit<2; unit++) {
