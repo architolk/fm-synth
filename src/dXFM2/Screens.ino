@@ -534,7 +534,21 @@ void showOperator(uint8_t screen, uint8_t op) {
   display.display();
 }
 
-void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool activeScreen, uint8_t param, bool balanced) {
+void showChorusOnScreen(uint8_t screen, const efx_type& efx) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0,12);
+  display.print(F("D"));
+  display.print(efx.dry);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool activeScreen, uint8_t param, bool balanced, uint8_t range) {
   display.clearDisplay();
   showEnvelope(40,20,env);
 
@@ -558,6 +572,7 @@ void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool 
       case 11: display.print(F("Rel-1")); break;
       case 12: display.print(F("Rel-2")); break;
       case 13: display.print(F("Rate")); break;
+      case 14: display.print(F("Range")); break;
     }
     if (op!=3) {
       if (balanced) {
@@ -567,6 +582,8 @@ void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool 
       }
     }
   }
+
+  drawNumber(range,127,24); //Test: might do this differently...
 
   TCA9548A(SCRMAP[screen]);
   display.display();

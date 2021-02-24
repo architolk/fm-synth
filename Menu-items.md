@@ -123,7 +123,7 @@ In Oscillator mode, the displays will show the parameter for the particular enco
 | 2 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 | Wave 1 |  |
 | 3 | Phase+sync | Phase+sync | Phase+sync | Phase+sync | Phase+sync | Phase+sync |  |
 | 4 | Attack | Decay-1 | Decay-2 |  | Release-1 | Release-2 | Delay |
-| 5 | Attack | Decay-1 | Decay-2 | Sustain | Release-1 | Release-2 | Delay | Rate |
+| 5 | Attack | Decay-1 | Decay-2 | Sustain | Release-1 | Release-2 | Range |
 
 Mapping of parameters:
 
@@ -134,7 +134,7 @@ Mapping of parameters:
 | 2 | 268 | 269 | 270 | 271 | 272 | 273 | 0 |
 | 3 | 286 | 287 | 288 | 289 | 290 | 291 | 0 |
 | 4 | 134 | 135 | 136 | 0 | 137 | 208 | 206 |
-| 5 | 205 | 130 | 131 | 132 | 133 | 207 | 146 |
+| 5 | 205 | 130 | 131 | 132 | 133 | 207 | 138 |
 
 All zeven screens display the value for the current selection
 For the pitch envelope (values 4,5) the same screen is shown, displaying the envelope graph

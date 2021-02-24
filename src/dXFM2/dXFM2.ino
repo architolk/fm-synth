@@ -72,6 +72,17 @@ typedef struct {
   uint8_t level[6]; //l0, l1, l2, l3, l4, l5
 } env_type;
 
+//Typedef for efx
+typedef struct {
+  uint8_t dry;
+  uint8_t wet;
+  uint8_t depth;
+  uint8_t mode;
+  uint8_t speed;
+  uint8_t lrphase;
+  uint8_t feedback;
+} efx_type;
+
 const uint8_t MAXPIN_LOAD = 10; //LOAD pin for Teensy of the MAX7219CNG chip
 
 //Default menu: OSC of unit 1, Volume
