@@ -81,6 +81,8 @@ typedef struct {
   uint8_t speed;
   uint8_t lrphase;
   uint8_t feedback;
+  uint8_t decay;
+  uint8_t damp;
 } efx_type;
 
 const uint8_t MAXPIN_LOAD = 10; //LOAD pin for Teensy of the MAX7219CNG chip
@@ -258,7 +260,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
     } else {
       if (greenSelect==GREEN_EFX) {
         showDisplay(5-blueSelect);
-        if (blueSelect==5) {
+        if (blueSelect==0) {
           showDisplay(6);
         }
       } else {

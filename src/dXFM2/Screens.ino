@@ -325,8 +325,8 @@ void showVolumeUnitOnScreen(uint8_t screen, uint8_t value, uint8_t unit) {
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0,14);
-  display.print(F("Vol.Unit "));
-  display.print(unit);
+  display.print(F("Volume U"));
+  display.print(unit+1);
 
   drawPercentbar( 0, 30, 128, 30,value);
 
@@ -558,6 +558,137 @@ void showOperator(uint8_t screen, uint8_t op) {
   display.display();
 }
 
+void showEffectsOnScreen(uint8_t screen, uint8_t routing, uint8_t bcdepth, uint8_t dedepth) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0,12);
+  if (routing==0) {
+    display.print("C>P>A>D");
+  } else {
+    display.print("D>C>P>A");
+  }
+
+  display.setCursor(0,39);
+  display.print("Bitcrush");
+  drawNumber(bcdepth,127,39);
+  
+  display.setCursor(0,63);
+  display.print("Decimat");
+  drawNumber(dedepth,127,63);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showFilterOnScreen(uint8_t screen, uint8_t lopass, uint8_t hipass) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0,12);
+  display.print(hipass);
+  drawNumber(lopass,127,12);
+
+  //TODO: Show filter graph, calculated from hi & lo pass
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showDelayOnScreen(uint8_t screen, const efx_type& efx) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0,12);
+  display.print(F("d"));
+  display.print(efx.dry);
+
+  display.setCursor(70,12);
+  display.print(F("w"));
+  drawNumber(efx.wet,127,12);
+
+  display.setCursor(15,32);
+  switch (efx.mode) {
+    case 0: display.print(F("Stereo")); break;
+    case 1: display.print(F("Cross")); break;
+    case 2: display.print(F("Bounce")); break;
+  }
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showReverbOnScreen(uint8_t screen, const efx_type& efx) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0,12);
+  display.print(F("d"));
+  display.print(efx.dry);
+
+  display.setCursor(70,12);
+  display.print(F("w"));
+  drawNumber(efx.wet,127,12);
+
+  display.setCursor(15,32);
+  switch (efx.mode) {
+    case 0: display.print(F("Plate")); break;
+    case 1: display.print(F("Hall")); break;
+  }
+
+  display.setCursor(0,62);
+  display.print(F("d"));
+  display.print(efx.decay);
+
+  display.setCursor(70,62);
+  display.print(F("d"));
+  drawNumber(efx.damp,127,62);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showPhaserOnScreen(uint8_t screen, const efx_type& efx) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0,12);
+  display.print(F("d"));
+  display.print(efx.dry);
+
+  display.setCursor(70,12);
+  display.print(F("w"));
+  drawNumber(efx.wet,127,12);
+
+  display.setCursor(15,32);
+  switch (efx.mode) {
+    case 0: display.print(F("Mono")); break;
+    case 1: display.print(F("Stereo")); break;
+    case 2: display.print(F("Cross")); break;
+  }
+
+  display.setCursor(0,62);
+  display.print(F("s"));
+  display.print(efx.speed);
+
+  display.setCursor(70,62);
+  display.print(F("d"));
+  drawNumber(efx.depth,127,62);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 void showChorusOnScreen(uint8_t screen, const efx_type& efx) {
   display.clearDisplay();
   display.setFont(&Dungeon9pt7b);
@@ -568,25 +699,43 @@ void showChorusOnScreen(uint8_t screen, const efx_type& efx) {
   display.print(F("d"));
   display.print(efx.dry);
 
-  display.setCursor(100,12);
+  display.setCursor(70,12);
   display.print(F("w"));
   drawNumber(efx.wet,127,12);
 
-  display.setCursor(20,30);
+  display.setCursor(15,32);
   switch (efx.mode) {
-    case 0: display.print(F("Chorus long"));
-    case 1: display.print(F("Chorus short"));
-    case 2: display.print(F("Flanger long"));
-    case 3: display.print(F("Flanger short"));
+    case 0: display.print(F("Chorus L")); break;
+    case 1: display.print(F("Chorus S")); break;
+    case 2: display.print(F("Flanger L")); break;
+    case 3: display.print(F("Flanger S")); break;
   }
 
   display.setCursor(0,62);
   display.print(F("s"));
   display.print(efx.speed);
 
-  display.setCursor(100,12);
+  display.setCursor(70,62);
   display.print(F("d"));
-  drawNumber(efx.depth,127,12);
+  drawNumber(efx.depth,127,62);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void showAMOnScreen(uint8_t screen, const efx_type& efx) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0,62);
+  display.print(F("s"));
+  display.print(efx.speed);
+
+  display.setCursor(70,62);
+  display.print(F("d"));
+  drawNumber(efx.depth,127,62);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
@@ -601,10 +750,10 @@ void showPhaseOnScreen(uint8_t screen, uint8_t phase, uint8_t sync) {
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(50,15);
-  display.print(90*sync);
+  display.setCursor(55,15);
+  display.print(90*phase);
 
-  display.setCursor(80,35);
+  display.setCursor(70,45);
   if (sync==0) {
     display.print(F("sync"));
   } else {
@@ -668,7 +817,13 @@ void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool 
     }
   }
 
-  drawNumber(range,127,24); //Test: might do this differently...
+  if (env.level[3]<130) {
+    display.setCursor(50,30);
+  } else {
+    display.setCursor(50,63);
+  }
+  display.print(F("+"));
+  display.print(range);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
