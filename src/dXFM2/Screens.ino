@@ -285,16 +285,16 @@ void showMixerOnScreen(uint8_t screen, uint8_t left, uint8_t right, uint8_t unit
   display.print(F("Unit "));
   display.print(unit+1);
 
-  display.setFont(&Dungeon12pt7b);
-  display.setCursor(0,32);
+  display.setCursor(0,36);
   display.print(F("L"));
-  drawPercentbar( 30, 17, 128, 25,left);
+  drawPercentbar( 20, 20, 108, 20,left);
 
-  display.setFont(&Dungeon12pt7b);
-  display.setCursor(0,62);
+  display.setCursor(0,60);
   display.print(F("R"));
-  drawPercentbar( 30, 47, 128, 25,right);
+  drawPercentbar( 20, 44, 108, 20,right);
 
+  TCA9548A(SCRMAP[screen]);
+  display.display();
 }
 
 //Shows the value of some parameter (fixed to "Volume" at this moment)
@@ -749,8 +749,13 @@ void drawPercentbar(int x,int y, int width,int height, uint8_t progress) {
 
   display.drawRect(x, y, width, height, WHITE);
   // Display progress text
-  display.setFont(&Dungeon12pt7b);
-  display.setCursor((width/2) -16, y+21 );
+  if (height>25) {
+    display.setFont(&Dungeon12pt7b);
+    display.setCursor((width/2) -24, y+21 );
+  } else {
+    display.setFont(&Dungeon9pt7b);
+    display.setCursor((width/2) -8, y+15 );
+  }
   display.setTextColor(WHITE);
   display.print(progress);
   // Bar, inverse: switch colors at text position

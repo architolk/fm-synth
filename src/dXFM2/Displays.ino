@@ -109,7 +109,7 @@ void showEffectsDisplay(uint8_t op) {
 
 void showFilterDisplay(uint8_t op) {
   //BLUE_VOLUME 2: Lo pass, 3: Hi Pass
-  showValueOnScreen(F("Filter"),6,getParamValue(greenSelect,BLUE_OUTPUT,operatorSelect,6,0));
+  showValueOnScreen(F("Filter"),6,getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,6,0));
 }
 
 void showMasterDisplay(uint8_t op) {
