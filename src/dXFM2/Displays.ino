@@ -52,21 +52,6 @@ void showOPSDisplay(uint8_t op) {
 }
 
 void showEFXDisplay(uint8_t op) {
-  //Missing: Bitcrusher & Decimator
-  //EFX routing could be done via screen swapping
-  //Routing is:
-  //Bitcrusher->Decimator->Filter->Chorus->Phaser->AM->Delay
-  //Bitcrusher->Decimator->Filter->Delay->Chorus->Phaser->AM
-  /*
-  switch (op) {
-    case 0: showParamValueOnScreen(F("AM"),0,getParam(greenSelect,blueSelect,operatorSelect,0,0).param); break;
-    case 1: showParamValueOnScreen(F("Delay"),1,getParam(greenSelect,blueSelect,operatorSelect,1,0).param); break;
-    case 2: showParamValueOnScreen(F("Phaser"),2,getParam(greenSelect,blueSelect,operatorSelect,2,0).param); break;
-    case 3: showParamValueOnScreen(F("Reverb"),3,getParam(greenSelect,blueSelect,operatorSelect,3,0).param); break;
-    case 4: showParamValueOnScreen(F("Chorus"),4,getParam(greenSelect,blueSelect,operatorSelect,4,0).param); break;
-    case 5: showParamValueOnScreen(F("Effects"),5,getParam(greenSelect,blueSelect,operatorSelect,5,0).param); break;
-    case 6: showParamValueOnScreen(F("Filter"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param); break;
-  }*/
   switch (op) {
     case 0: showAMDisplay(op); break;
     case 1: showDelayDisplay(op); break;
@@ -308,15 +293,15 @@ void showOverview(uint8_t op) {
 // Master submenu
 //
 void showMixer(uint8_t op, uint8_t unit) {
-  showParamValueOnScreen(F("Mixer"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
+  showMixerOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,blueSelect,operatorSelect,op,1),unit);
 }
 
 void showVeloSense(uint8_t op, uint8_t unit) {
-  showParamValueOnScreen(F("Velo sense"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
+  showValueOnScreen(F("Velo sense"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
 }
 
 void showReserved(uint8_t op) {
-  showParamValueOnScreen(F("Reserved"),op,getParam(greenSelect,blueSelect,operatorSelect,op,0).param);
+  showValueOnScreen(F("Reserved"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
 }
 
 void showMaster(uint8_t op) {

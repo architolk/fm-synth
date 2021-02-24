@@ -97,3 +97,17 @@ bool xfm2LoadPatch( uint8_t patch ) {
       return false;
     }
 }
+
+//Initialize active program
+//Not actually sure what this does: maybe set the active program to some default values???
+bool xfm2InitPatch() {
+    HWSERIAL.write('i'); // 'i' = Initialize active program
+    delay(100); //Give the XFM2 time to respond
+    if (HWSERIAL.available() == 1) {
+      uint8_t result = HWSERIAL.read();
+      return true;
+    } else {
+      //Something went wrong: result of setting the unit should be 0
+      return false;
+    }
+}

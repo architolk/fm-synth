@@ -276,6 +276,27 @@ void showParamMenuOnScreen(uint8_t value, const String& param, uint8_t screen) {
   display.display();
 }
 
+void showMixerOnScreen(uint8_t screen, uint8_t left, uint8_t right, uint8_t unit) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,12);
+  display.print(F("Unit "));
+  display.print(unit+1);
+
+  display.setFont(&Dungeon12pt7b);
+  display.setCursor(0,32);
+  display.print(F("L"));
+  drawPercentbar( 30, 17, 128, 25,left);
+
+  display.setFont(&Dungeon12pt7b);
+  display.setCursor(0,62);
+  display.print(F("R"));
+  drawPercentbar( 30, 47, 128, 25,right);
+
+}
+
 //Shows the value of some parameter (fixed to "Volume" at this moment)
 void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.clearDisplay();
@@ -502,23 +523,6 @@ void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coa
       display.drawLine(31+cw,61,36+cw+fw,61,SSD1306_WHITE);
     }
   }
-
-  TCA9548A(SCRMAP[screen]);
-  display.display();
-}
-
-//DEBUG FUNCTION
-//This function (not very memory-friendly) will show some parameter
-void showParamValueOnScreen(const String& param, uint8_t screen, uint16_t value) {
-  display.clearDisplay();
-  display.setFont(&Dungeon9pt7b);
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(5,20);
-  display.print(param);
-  display.setFont(&Dungeon12pt7b);
-  display.setCursor(5,50);
-  display.print(value);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
