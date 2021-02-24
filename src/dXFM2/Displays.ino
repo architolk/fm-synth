@@ -57,6 +57,7 @@ void showEFXDisplay(uint8_t op) {
   //Routing is:
   //Bitcrusher->Decimator->Filter->Chorus->Phaser->AM->Delay
   //Bitcrusher->Decimator->Filter->Delay->Chorus->Phaser->AM
+  /*
   switch (op) {
     case 0: showParamValueOnScreen(F("AM"),0,getParam(greenSelect,blueSelect,operatorSelect,0,0).param); break;
     case 1: showParamValueOnScreen(F("Delay"),1,getParam(greenSelect,blueSelect,operatorSelect,1,0).param); break;
@@ -65,6 +66,15 @@ void showEFXDisplay(uint8_t op) {
     case 4: showParamValueOnScreen(F("Chorus"),4,getParam(greenSelect,blueSelect,operatorSelect,4,0).param); break;
     case 5: showParamValueOnScreen(F("Effects"),5,getParam(greenSelect,blueSelect,operatorSelect,5,0).param); break;
     case 6: showParamValueOnScreen(F("Filter"),6,getParam(greenSelect,blueSelect,operatorSelect,6,0).param); break;
+  }*/
+  switch (op) {
+    case 0: showAMDisplay(op); break;
+    case 1: showDelayDisplay(op); break;
+    case 2: showPhaserDisplay(op); break;
+    case 3: showReverbDisplay(op); break;
+    case 4: showChorusDisplay(op); break;
+    case 5: showEffectsDisplay(op); break;
+    case 6: showFilterDisplay(op); break;
   }
 }
 
