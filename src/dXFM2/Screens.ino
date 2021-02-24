@@ -318,6 +318,22 @@ void showValueOnScreen(const String& param, uint8_t screen, uint8_t value) {
   display.display();
 }
 
+void showVolumeUnitOnScreen(uint8_t screen, uint8_t value, uint8_t unit) {
+  display.clearDisplay();
+
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,14);
+  display.print(F("Vol.Unit "));
+  display.print(unit);
+
+  drawPercentbar( 0, 30, 128, 30,value);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 void showVolumeOnScreen(uint8_t screen, uint8_t value) {
   if (displayMode==DISPLAY_OVERVIEW) {
     display.clearDisplay();

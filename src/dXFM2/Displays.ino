@@ -293,11 +293,19 @@ void showOverview(uint8_t op) {
 // Master submenu
 //
 void showMixer(uint8_t op, uint8_t unit) {
-  showMixerOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,blueSelect,operatorSelect,op,1),unit);
+  if (op==6) {
+    showVolumeUnitOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0),unit);
+  } else {
+    showMixerOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),getParamValue(greenSelect,blueSelect,operatorSelect,op,1),unit);
+  }
 }
 
 void showVeloSense(uint8_t op, uint8_t unit) {
-  showValueOnScreen(F("Velo sense"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+  if (op==6) {
+    showValueOnScreen(F("Velo offset"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+  } else {
+    showValueOnScreen(F("Velo sense"),op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+  }
 }
 
 void showReserved(uint8_t op) {
