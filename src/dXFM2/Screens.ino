@@ -11,6 +11,11 @@ const uint8_t SCRMAP[7] = {5,7,2,4,0,1,6};
 //Note names
 const String NOTES[12] = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"};
 
+//Pie chart constants for radius 20 (piesize = 2 x pieradius - 1)
+#define PIERADIUS 20
+#define PIESIZE 39
+const uint8_t PIEPOS[PIERADIUS] = {0,6,9,11,12,13,14,15,16,17,17,18,18,19,19,19,20,20,20,20};
+
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 #define OLED_RESET -1 //Share reset with Arduino reset pin
@@ -546,6 +551,34 @@ void showChorusOnScreen(uint8_t screen, const efx_type& efx) {
 
   TCA9548A(SCRMAP[screen]);
   display.display();
+}
+
+void showPhaseOnScreen(uint8_t screen, uint8_t phase, uint8_t sync) {
+  display.clearDisplay();
+
+  display.drawCircle(31,31,PIERADIUS,SSD1306_WHITE);
+  drawPie(31,31,phase);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+//Draws a filled pie with radius 20 for phases 0, 1 (=90), 2 (=180) or 3 (=270)
+void drawPie(uint8_t cx, uint8_t cy, uint8_t phase) {
+  for (uint8_t y = 0; y<PIERADIUS; y++) {
+    uint8_t x = 0;
+    if (phase>0) {
+      x = PIEPOS[y];
+    }
+    drawLine(cx,cx+x,cy+y,SSD1306_WHITE);
+    if (phase>1) {
+      if (phase==3) {
+        drawLine(cx-x,cx+x,cy+PIESIZE-y,SSD1306_WHITE);
+      } else {
+        drawLine(cx,cx+x,cy+PIESIZE-y,SSD1306_WHITE);
+      }
+    }
+  }
 }
 
 void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool activeScreen, uint8_t param, bool balanced, uint8_t range) {
