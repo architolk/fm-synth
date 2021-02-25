@@ -17,6 +17,7 @@
 #define ERR_UNIT 1
 #define ERR_DUMP 2
 #define ERR_LOAD 3
+#define ERR_INIT 4
 
 #define BLUE_VOLUME 0
 #define BLUE_RATIO 1

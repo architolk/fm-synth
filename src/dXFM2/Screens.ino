@@ -16,8 +16,8 @@ const String NOTES[12] = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"};
 const uint8_t PIEPOS[PIERADIUS] PROGMEM = {4,8,9,11,12,13,14,15,16,17,17,18,18,19,19,19,20,20,20,20};
 
 //Filter graph constants for height 40
-#define GRAPHHEIGHT = 40
-const uint8_t FILTERGRAPH[GRAPHHEIGHT] PROGMEM = {0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,19,21,24,28};
+#define GRAPHHEIGHT 40
+const uint8_t FILTERGRAPH[GRAPHHEIGHT] PROGMEM = {0,3,5,6,7,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20,21,21,22,22,23,24,25,26,28,31};
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -79,6 +79,7 @@ void showError(uint8_t err) {
     case ERR_UNIT: display.print(F("Set unit")); break;
     case ERR_DUMP: display.print(F("Dump wrong")); break;
     case ERR_LOAD: display.print(F("Load error")); break;
+    case ERR_INIT: display.print(F("Init error")); break;
     default: display.print(F("Unknown"));
   }
 
@@ -598,22 +599,34 @@ void showFilterOnScreen(uint8_t screen, uint8_t lopass, uint8_t hipass) {
   drawNumber(lopass,127,12);
 
   //TODO: Show filter graph, calculated from hi & lo pass
-  drawCurve(true);
+  drawCurve(lopass/2,hipass/2);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
 }
 
-void drawCurve(bool positive) {
+void drawCurve(uint8_t lopass, uint8_t hipass) {
   uint8_t x1 = 0;
   uint8_t x2 = 0;
   for (uint8_t y=1; y<40; y++) {
     x1 = x2;
-    if (positive) {
-      x2 = FILTERGRAPH[y];
+    x2 = FILTERGRAPH[y];
+    if (x2+hipass<31) {
+      x2 = 0;
+    } else {
+      x2 = x2+hipass-31;
     }
     display.drawLine(x1,60-y,x2,59-y,SSD1306_WHITE);
   }
+  for (uint8_t y=39; y>0; y--) {
+    x1 = x2;
+    x2 = lopass+31-FILTERGRAPH[y];
+    if (x2>127) {
+      x2 = 127;
+    }
+    display.drawLine(x1,59-y,x2,60-y,SSD1306_WHITE);
+  }
+  display.drawLine(x2,59,127,59,SSD1306_WHITE);
 }
 
 void showDelayOnScreen(uint8_t screen, const efx_type& efx) {
