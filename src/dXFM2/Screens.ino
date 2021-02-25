@@ -13,7 +13,11 @@ const String NOTES[12] = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"};
 
 //Pie chart constants for radius 20
 #define PIERADIUS 20
-const uint8_t PIEPOS[PIERADIUS] = {4,8,9,11,12,13,14,15,16,17,17,18,18,19,19,19,20,20,20,20};
+const uint8_t PIEPOS[PIERADIUS] PROGMEM = {4,8,9,11,12,13,14,15,16,17,17,18,18,19,19,19,20,20,20,20};
+
+//Filter graph constants for height 40
+#define GRAPHHEIGHT = 40
+const uint8_t FILTERGRAPH[GRAPHHEIGHT] PROGMEM = {0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,19,21,24,28};
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -574,7 +578,7 @@ void showEffectsOnScreen(uint8_t screen, uint8_t routing, uint8_t bcdepth, uint8
   display.setCursor(0,39);
   display.print("Bitcrush");
   drawNumber(bcdepth,127,39);
-  
+
   display.setCursor(0,63);
   display.print("Decimat");
   drawNumber(dedepth,127,63);
@@ -594,9 +598,22 @@ void showFilterOnScreen(uint8_t screen, uint8_t lopass, uint8_t hipass) {
   drawNumber(lopass,127,12);
 
   //TODO: Show filter graph, calculated from hi & lo pass
+  drawCurve(true);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
+}
+
+void drawCurve(bool positive) {
+  uint8_t x1 = 0;
+  uint8_t x2 = 0;
+  for (uint8_t y=1; y<40; y++) {
+    x1 = x2;
+    if (positive) {
+      x2 = FILTERGRAPH[y];
+    }
+    display.drawLine(x1,60-y,x2,59-y,SSD1306_WHITE);
+  }
 }
 
 void showDelayOnScreen(uint8_t screen, const efx_type& efx) {
