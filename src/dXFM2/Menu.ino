@@ -27,8 +27,15 @@ void executeParamMenu(uint8_t param, uint8_t value) {
 }
 
 void executeInit() {
+  showMessage(F("Init dXFM2"));
   if (xfm2InitPatch()) {
-    showMessage(F("Init dXFM2"));
+    if (xfm2GetActiveProgram(0)) {
+      updateLEDs();
+      patchChanged = true;
+      doMenuChange();
+    } else {
+      showError(ERR_DUMP);
+    }
   } else {
     showError(ERR_INIT);
   }
