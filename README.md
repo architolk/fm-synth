@@ -39,11 +39,11 @@ Although the sound of the FM synthesizer is pretty much *in your face*, the mani
 
 When you look at the green LED buttons, you see that two rows of identical options are available. The dXFM2 has two identifical FM synth units, and by selected between the left or right column, you select the unit for which you want to change a parameter.
 
-- **LFO** will enable the parameter page for the low frequency oscillator;
-- **OSC** will enable the parameter page for the sound oscillators;
-- **OPS** will enable the parameter page for the operators (selected by default);
-- **EFX** will enable the parameter page for the effects;
-- **MASTER** will enable the parameter page for some global parameters.
+- **[LFO](doc/LFO-menu.md)** will enable the parameter page for the low frequency oscillator;
+- **[OSC](doc/OSC-menu.md)** will enable the parameter page for the sound oscillators;
+- **[OPS](doc/OPS-menu.md)** will enable the parameter page for the operators (selected by default);
+- **[EFX](doc/EFX-menu.md)** will enable the parameter page for the effects;
+- **[MASTER](doc/MASTER-menu.md)** will enable the parameter page for some global parameters.
 
 And if you really want to do some menu-diving, three additional dials are available:
 - The **Param** dial gives you access to a regular menu. From this menu, you can change some more exotic parameters or have some extra options to ease the workflow while shaping FM sounds.
