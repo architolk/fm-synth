@@ -20,5 +20,12 @@ void showParamMenu(uint8_t param) {
 
 void executeParamMenu(uint8_t param, uint8_t value) {
   //Debug
-  showValueOnScreen(F("MENU"),6,value);
+  switch (param) {
+    case 0: executeInit(); break;
+    default: showDebug(value); break;
+  }
+}
+
+void executeInit() {
+  showMessage(F("Init dXFM2"));
 }

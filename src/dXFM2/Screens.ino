@@ -106,6 +106,18 @@ void showDebug(uint16_t debug) {
   delay(2000); //Make sure the debug message is visible for two seconds
 }
 
+void showMessage(const String& msg) {
+  display.clearDisplay();
+  display.setFont(&Dungeon9pt7b);
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,32);
+  display.print(msg);
+
+  TCA9548A(SCRMAP[6]);
+  display.display();
+}
+
 void showPatchMenu(uint8_t patch) {
   display.clearDisplay();
   display.setFont(&Dungeon9pt7b);
