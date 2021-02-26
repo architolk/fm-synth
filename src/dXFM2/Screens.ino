@@ -279,8 +279,7 @@ void showPanOnScreen(uint8_t screen, uint8_t value) {
   display.display();
 }
 
-void showParamMenuOnScreen(uint8_t nr, const String& param, String value, uint8_t screen) {
-  display.clearDisplay();
+void drawMenuItem(uint8_t nr, const String& param) {
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
@@ -289,9 +288,42 @@ void showParamMenuOnScreen(uint8_t nr, const String& param, String value, uint8_
   display.print(F(" "));
   display.print(param);
 
-  display.setTextColor(SSD1306_WHITE);
+void showParamMenuOnScreen(uint8_t nr, const String& param, String value, uint8_t screen) {
+  display.clearDisplay();
+  drawMenuItem(nr,param);
+
   display.setCursor(0,40);
   display.print(value);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
+void drawOperatorBox(uint8_t x, uint8_t y, uint8_t nr, bool feedback) {
+  display.drawRect(x,y,10,10,SSD1306_WHITE);
+  display.drawLine(x+5,y+10,x+5,y+15,SSD1306_WHITE);
+  if (feedback) {
+    drawLine(x+5,y+12,x+12,y+12,SSD_WHITE);
+    drawLine(x+12,y+12,x+12,y-2,SSD_WHITE);
+    drawLine(x+12,y-2,x+5,y-2,SSD_WHITE);
+    drawLine(x+5,y-2,x+5,y,SSD_WHITE);
+  }
+  display.setCursor(x+2,y+1);
+  display.print(nr);
+}
+
+void showAlgorithmMenuOnScreen(uint8_t nr, const string& param, uint8_t algo, uint8_t screen) {
+  display.clearDisplay();
+  drawMenuItem(nr,param);
+
+  display.setFont(); //default font
+  drawOperatorBox(100,2,6,true);
+  drawOperatorBox(100,16,5);
+  drawOperatorBox(100,30,4);
+  drawOperatorBox(100,44,3);
+  drawOperatorBox(80,30,2);
+  drawOperatorBox(80,44,1);
+  display.drawLine(85,63,105,63,SSD_WHITE);
 
   TCA9548A(SCRMAP[screen]);
   display.display();

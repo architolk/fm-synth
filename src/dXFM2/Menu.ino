@@ -25,6 +25,7 @@ void setupMenu() {
 
 void showParamMenu(uint8_t param, uint8_t value) {
   switch (param) {
+    case 1: showAlgorithmMenuOnScreen(param,MENUNAMES[param],value,6); break;
     case 2: showParamMenuOnScreen(param,MENUNAMES[param],getPatchName(value),6); break;
     default: showParamMenuOnScreen(param,MENUNAMES[param],"",6); break;
   }
