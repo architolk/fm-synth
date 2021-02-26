@@ -279,15 +279,19 @@ void showPanOnScreen(uint8_t screen, uint8_t value) {
   display.display();
 }
 
-void showParamMenuOnScreen(uint8_t value, const String& param, uint8_t screen) {
+void showParamMenuOnScreen(uint8_t nr, const String& param, String value, uint8_t screen) {
   display.clearDisplay();
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
+  display.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
   display.setCursor(0,15);
-  display.print(value);
+  display.print(nr);
   display.print(F(" "));
   display.print(param);
+
+  display.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
+  display.setCursor(0,40);
+  display.print(value);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
