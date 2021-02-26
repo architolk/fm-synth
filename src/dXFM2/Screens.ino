@@ -800,7 +800,7 @@ void showPhaseOnScreen(uint8_t screen, uint8_t phase, uint8_t sync) {
   display.print(90*phase);
 
   display.setCursor(70,45);
-  if (sync==0) {
+  if (sync==1) {
     display.print(F("sync"));
   } else {
     display.print(F("free"));
