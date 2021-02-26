@@ -1,0 +1,21 @@
+{
+	"Short_Name": "DX7 Alg 17",
+	"Long_Name": "Preset DX7 Algorithm 17",
+	"Description": "XFM2 Program description",
+	"date": "20200410",
+	"Creator": "Design.Thoughtz.eu",
+	"parameters": [
+		{ "Par#": 1 , "Value": 45 } ,
+		{ "Par#": 2 , "Value": 0 } ,
+		{ "Par#": 3 , "Value": 16 } ,
+		{ "Par#": 4 , "Value": 0 } ,
+		{ "Par#": 5 , "Value": 64 } ,
+		{ "Par#": 6 , "Value": 0 } ,
+		{ "Par#": 7 , "Value": 0 } ,
+		{ "Par#": 8 , "Value": 1 } ,
+		{ "Par#": 9 , "Value": 0 } ,
+		{ "Par#": 10 , "Value": 0 } ,
+		{ "Par#": 11 , "Value": 0 } ,
+		{ "Par#": 12 , "Value": 0 }
+ 	]
+}

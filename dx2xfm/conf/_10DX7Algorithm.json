@@ -1,0 +1,22 @@
+{
+	"Short_Name": "DX7 Alg 10",
+	"Long_Name": "Preset DX7 Algorithm 10",
+	"Description": "XFM2 Program description",
+	"Creator": "Design.Thoughtz.eu",
+	"date": "2020-04-19 16:23:34 CEST",
+	"hash": "ea0f5b24",
+	"parameters": [
+		{"Par#": 1 , "Value": 5} ,
+		{"Par#": 2 , "Value": 8} ,
+		{"Par#": 3 , "Value": 0} ,
+		{"Par#": 4 , "Value": 97} ,
+		{"Par#": 5 , "Value": 0} ,
+		{"Par#": 6 , "Value": 0} ,
+		{"Par#": 7 , "Value": 0} ,
+		{"Par#": 8 , "Value": 0} ,
+		{"Par#": 9 , "Value": 1} ,
+		{"Par#": 10 , "Value": 0} ,
+		{"Par#": 11 , "Value": 0} ,
+		{"Par#": 12 , "Value": 0}
+	]
+}
