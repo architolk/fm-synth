@@ -295,12 +295,12 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         //Param encoder used, show correct menu page
         resetLastChange();
         displayMode = DISPLAY_MENU;
-        showParamMenu(value,paramData[value]);
-        setEncoderValue(8,paramData[value]);
+        showParamMenu(value,getMenuParamdata(value));
+        setEncoderValue(8,getMenuParamdata(value));
         setEncoderMax(8,getMenuMaxValue(value));
       } else {
         if (encoder==8) {
-          if (displayMode==DISPLAY) {
+          if (displayMode==DISPLAY_MENU) {
             if (clicked) {
               //Data encoder clicked, execute menu item
               resetLastChange();
@@ -310,15 +310,15 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
               //Data encoder used, show correct value for menu item
               resetLastChange();
               displayMode = DISPLAY_MENU;
-              paramData[getEncoderValue(7)] = value;
+              setMenuParamdata(getEncoderValue(7),value);
               showParamMenu(getEncoderValue(7),value);
             }
           } else {
             //Show param menu, we want to change something!
             resetLastChange();
             displayMode = DISPLAY_MENU;
-            showParamMenu(getEncoderValue(7));
-            setEncoderValue(8,paramData[value]);
+            showParamMenu(getEncoderValue(7),value);
+            setEncoderValue(8,getMenuParamdata(getEncoderValue(7)));
           }
         }
       }
