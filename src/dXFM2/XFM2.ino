@@ -57,19 +57,20 @@ bool xfm2GetActiveProgram(uint8_t unit) {
   } else {
     return false;
   }
+}
 
-  /*
-  paramValue[unit][0] = 0; //Parameter 0 doesn't exist, set to zero
-  uint16_t param = 1;
-  while (HWSERIAL.available()>0 && param<513) {
-    paramValue[unit][param] = HWSERIAL.read();
-    param++;
-    delay(20); //Give the XFM2 some time
+//Pushes the param storage to the active program on the XFM2
+//Normally, the param storage is in sync with the active program
+//this function is only needed when you change the param storage in bulk
+//(at this moment only needed for the default DX7 patches)
+//(might be needed if we add some serial interface directly from Teensy)
+bool xfm2PushActiveProgram(uint8_t unit) {
+  //No push-operation is available on the XFM2, so we need to do this parameter-for-parameter
+  for (uint16_t param=0; param<512; param++) {
+    xfm2SetParameter(param,paramValue[unit][param]);
+    delay(2); //Give the XFM2 some time (one second total delay)
   }
-  showDebug(param);
-  //Something went wrong if param is not 513: result of dump operation should be 512 bytes response
-  return (param==513);
-  */
+  return true; //No way of telling something went wrong :-(
 }
 
 uint8_t initXFM2() {

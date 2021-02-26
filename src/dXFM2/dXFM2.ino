@@ -105,6 +105,7 @@ bool rotating = false;
 
 void setup() {
   setupParams();
+  setupMenu();
 
   //We begin with the LEDs, splash them and continu with the OLED screens
   pinMode(MAXPIN_LOAD, OUTPUT); //MAXPIN_LOAD is defined in the submodule
@@ -291,22 +292,33 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
       }
     } else {
       if (encoder==7) {
+        //Param encoder used, show correct menu page
         resetLastChange();
         displayMode = DISPLAY_MENU;
-        showParamMenu(value);
+        showParamMenu(value,paramData[value]);
+        setEncoderValue(8,paramData[value]);
+        setEncoderMax(8,getMenuMaxValue(value));
       } else {
         if (encoder==8) {
-          if (clicked) {
-            if (displayMode==DISPLAY_MENU) {
+          if (displayMode==DISPLAY) {
+            if (clicked) {
+              //Data encoder clicked, execute menu item
               resetLastChange();
               displayMode = DISPLAY_MENU;
               executeParamMenu(getEncoderValue(7),value);
             } else {
-              //Show param menu, we want to change something!
+              //Data encoder used, show correct value for menu item
               resetLastChange();
               displayMode = DISPLAY_MENU;
-              showParamMenu(getEncoderValue(7));
+              paramData[getEncoderValue(7)] = value;
+              showParamMenu(getEncoderValue(7),value);
             }
+          } else {
+            //Show param menu, we want to change something!
+            resetLastChange();
+            displayMode = DISPLAY_MENU;
+            showParamMenu(getEncoderValue(7));
+            setEncoderValue(8,paramData[value]);
           }
         }
       }

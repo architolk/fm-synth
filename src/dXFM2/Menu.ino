@@ -14,11 +14,19 @@ const String MENUNAMES[MENUCOUNT] = {
   "Param",
   "LEDs"
 };
+const uint8_t MENUMAX[MENUCOUNT] = {0,31,31,0,0,0}; //Max values for a specific menu
+uint8_t paramData[MENUCOUNT];
 
-void showParamMenu(uint8_t param) {
+void setupMenu() {
+  for (param=0; param<MENUCOUNT; param++) {
+    paramData[param] = 0;
+  }
+}
+
+void showParamMenu(uint8_t param, uint8_t value) {
   switch (param) {
-    3: showParamMenuOnScreen(param % MENUCOUNT,MENUNAMES[param % MENUCOUNT],getPatchName(0),6); break;
-    default: showParamMenuOnScreen(param % MENUCOUNT,MENUNAMES[param % MENUCOUNT],"",6); break;
+    3: showParamMenuOnScreen(param,MENUNAMES[param],getPatchName(value),6); break;
+    default: showParamMenuOnScreen(param,MENUNAMES[param],"",6); break;
   }
 }
 
@@ -47,5 +55,10 @@ void executeInit() {
 }
 
 void activatePatch() {
-  //Something..
+  //Only unit 0 supported
+  loadDefaultPatch(0,euh...);
+}
+
+uint8_t getMenuMaxValue(uint8_t param) {
+  return MENUMAX[param];
 }

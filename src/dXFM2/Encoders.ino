@@ -70,7 +70,7 @@ encoder_type encoders[10]; //Encoder values 0-9
 
 bool encoderALastValue[10];
 
-uint8_t encoderMax[10] = {255,255,255,255,255,255,255,255,255,127}; //Default maximum values for an encoder
+uint8_t encoderMax[10] = {255,255,255,255,255,255,255,MENUCOUNT,255,127}; //Default maximum values for an encoder
 
 void setupEncoders() {
   //Initialize values

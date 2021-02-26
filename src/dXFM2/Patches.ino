@@ -59,3 +59,9 @@ const uint8_t PATCHPARAMS[2][512] PROGMEM = {
 String getPatchName(uint8_t patch) {
   return PATCHNAMES[patch];
 }
+
+void loadDefaultPatch(uint8_t unit, uint8_t patch) {
+  for (uint16_t param=0; param<512; param++) {
+    paramValue[unit][param] = PATCHPARAMS[patch][param];
+  }
+}
