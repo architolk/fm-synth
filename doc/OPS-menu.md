@@ -6,7 +6,7 @@
 
 ## Ratio
 
-![](../media/OSC-Ratio.png)
+![](../media/OPS-Ratio.png)
 
 # Pitch
 
