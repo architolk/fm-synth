@@ -8,7 +8,7 @@
 #define MENUCOUNT 6
 const String MENUNAMES[MENUCOUNT] = {
   "Initialize",
-  "Algorithm",
+  "Algo",
   "DX7 Patch",
   "MIDI",
   "Param",
@@ -35,6 +35,7 @@ void executeParamMenu(uint8_t param, uint8_t value) {
   //Debug
   switch (param) {
     case 0: executeInit(); break;
+    case 1: setAlgorithm(value); break;
     case 2: activatePatch(value); break;
     default: showDebug(value); break;
   }
@@ -60,6 +61,15 @@ void activatePatch(uint8_t patch) {
   showMessage(F("DX7 Mode!"));
   loadDefaultPatch(0,patch);
   xfm2PushActiveProgram(0);
+  updateLEDs();
+  patchChanged = true;
+  doMenuChange();
+}
+
+void setAlgorithm(uint8_t algo) {
+  //Only unit 0 supported
+  showMessage(F("Algorithm"));
+  xfm2SetAlgorithm(0,algo);
   updateLEDs();
   patchChanged = true;
   doMenuChange();

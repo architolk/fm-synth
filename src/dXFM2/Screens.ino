@@ -19,6 +19,46 @@ const uint8_t PIEPOS[PIERADIUS] PROGMEM = {4,8,9,11,12,13,14,15,16,17,17,18,18,1
 #define GRAPHHEIGHT 40
 const uint8_t FILTERGRAPH[GRAPHHEIGHT] PROGMEM = {0,3,5,6,7,8,9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,19,19,20,20,21,21,22,22,23,24,25,26,28,31};
 
+//Algorithm placement
+//0-5 = horizontal placement
+//0,8,16,32 = vertical placement
+//128 = feedback
+//64 = feedback 6 from bottom of tower
+const uint8_t ALGOPOS[32][8] = {
+  {0b00011100,0b00010100,0b00011101,0b00010101,0b00001101,0b10000101,1,0}, //1
+  {0b00011100,0b10010100,0b00011101,0b00010101,0b00001101,0b00000101,1,0}, //2
+  {0b00011100,0b00010100,0b00001100,0b00011101,0b00010101,0b10001101,1,0}, //3
+  {0b00011100,0b00010100,0b00001100,0b00011101,0b00010101,0b01001101,1,0}, //4
+  {0b00011011,0b00010011,0b00011100,0b00010100,0b00011101,0b10010101,2,0}, //5
+  {0b00011011,0b00010011,0b00011100,0b00010100,0b00011101,0b01010101,2,0}, //6
+  {0b00011011,0b00010011,0b00011100,0b00010100,0b00010101,0b10001101,1,4}, //7
+  {0b00011011,0b00010011,0b00011100,0b10010100,0b00010101,0b00001101,1,4}, //8
+  {0b00011011,0b10010011,0b00011100,0b00010100,0b00010101,0b00001101,1,4}, //9
+  {0b00011011,0b00010011,0b10001011,0b00011100,0b00010100,0b00010101,1,4}, //10
+  {0b00011011,0b00010011,0b00001011,0b00011100,0b00010100,0b10010101,1,4}, //11
+  {0b00011010,0b10010010,0b00011100,0b00010011,0b00010100,0b00010101,2,3}, //12
+  {0b00011010,0b00010010,0b00011100,0b00010011,0b00010100,0b10010101,2,3}, //13
+  {0b00011011,0b00010011,0b00011100,0b00010100,0b00001100,0b10001101,1,4}, //14
+  {0b00011011,0b10010011,0b00011100,0b00010100,0b00001100,0b00001101,1,4}, //15
+  {0b00011100,0b00010011,0b00010100,0b00001100,0b00010101,0b10001101,0,3}, //16
+  {0b00011100,0b10010011,0b00010100,0b00001100,0b00010101,0b00001101,0,3}, //17
+  {0b00011100,0b00010011,0b10010100,0b00010101,0b00001101,0b00000101,0,3}, //18
+  {0b00011011,0b00010011,0b00001011,0b00011100,0b00011101,0b10010100,2,2}, //19
+  {0b00011010,0b00011011,0b10010011,0b00011101,0b00010100,0b00010101,3,4}, //20
+  {0b00011010,0b00011011,0b10010010,0b00011100,0b00011101,0b00010100,3,4}, //21
+  {0b00011010,0b00010010,0b00011011,0b00011100,0b00011101,0b10010100,3,3}, //22
+  {0b00011010,0b00011011,0b00010011,0b00011100,0b00011101,0b10010100,3,4}, //23
+  {0b00011001,0b00011010,0b00011011,0b00011100,0b00011101,0b10010100,4,3}, //24
+  {0b00011001,0b00011010,0b00011011,0b00011100,0b00011101,0b10010100,4,4}, //25
+  {0b00011001,0b00011010,0b00010010,0b00011101,0b00010100,0b10010101,4,4}, //26
+  {0b00011001,0b00011010,0b10010010,0b00011101,0b00010100,0b00010101,4,4}, //27
+  {0b00011011,0b00010011,0b00011100,0b00010100,0b10001100,0b00011101,2,0}, //28
+  {0b00011010,0b00011011,0b00011100,0b00010100,0b00011101,0b10010101,3,0}, //29
+  {0b00011010,0b00011011,0b00011100,0b00010100,0b10001100,0b10011101,3,0}, //30
+  {0b00011001,0b00011010,0b00011011,0b00011100,0b00011101,0b10010101,4,0}, //31
+  {0b00011000,0b00011001,0b00011010,0b00011011,0b00011100,0b10011101,5,0}  //32
+};
+
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 #define OLED_RESET -1 //Share reset with Arduino reset pin
@@ -283,10 +323,11 @@ void drawMenuItem(uint8_t nr, const String& param) {
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0,15);
+  display.setCursor(0,12);
   display.print(nr);
   display.print(F(" "));
   display.print(param);
+}
 
 void showParamMenuOnScreen(uint8_t nr, const String& param, String value, uint8_t screen) {
   display.clearDisplay();
@@ -303,27 +344,45 @@ void drawOperatorBox(uint8_t x, uint8_t y, uint8_t nr, bool feedback) {
   display.drawRect(x,y,10,10,SSD1306_WHITE);
   display.drawLine(x+5,y+10,x+5,y+15,SSD1306_WHITE);
   if (feedback) {
-    drawLine(x+5,y+12,x+12,y+12,SSD_WHITE);
-    drawLine(x+12,y+12,x+12,y-2,SSD_WHITE);
-    drawLine(x+12,y-2,x+5,y-2,SSD_WHITE);
-    drawLine(x+5,y-2,x+5,y,SSD_WHITE);
+    display.drawLine(x+5,y+12,x+12,y+12,SSD1306_WHITE);
+    display.drawLine(x+12,y+12,x+12,y-2,SSD1306_WHITE);
+    display.drawLine(x+12,y-2,x+5,y-2,SSD1306_WHITE);
+    display.drawLine(x+5,y-2,x+5,y,SSD1306_WHITE);
   }
   display.setCursor(x+2,y+1);
   display.print(nr);
 }
 
-void showAlgorithmMenuOnScreen(uint8_t nr, const string& param, uint8_t algo, uint8_t screen) {
+void showAlgorithmMenuOnScreen(uint8_t nr, const String& param, uint8_t algo, uint8_t screen) {
   display.clearDisplay();
   drawMenuItem(nr,param);
 
+  display.setCursor(6,30);
+  display.print(algo+1);
+
   display.setFont(); //default font
-  drawOperatorBox(100,2,6,true);
-  drawOperatorBox(100,16,5);
-  drawOperatorBox(100,30,4);
-  drawOperatorBox(100,44,3);
-  drawOperatorBox(80,30,2);
-  drawOperatorBox(80,44,1);
-  display.drawLine(85,63,105,63,SSD_WHITE);
+  for (uint8_t op=0; op<6; op++) {
+    drawOperatorBox(6+(ALGOPOS[algo][op] & 0b111)*20,6+((ALGOPOS[algo][op] & 0b11000)/8)*14,op+1,(ALGOPOS[algo][op] & 128)==128);
+  }
+  if (ALGOPOS[algo][6]>0) {
+    display.drawLine(11+(ALGOPOS[algo][0] & 0b111)*20,63,11+((ALGOPOS[algo][0] & 0b111)+ALGOPOS[algo][6])*20,63,SSD1306_WHITE);
+  }
+  if (ALGOPOS[algo][7]>0) {
+    display.drawLine(11+(ALGOPOS[algo][7])*20,46,111,46,SSD1306_WHITE);
+  }
+
+  if (algo==3) {
+    display.drawLine(111,60,118,60,SSD1306_WHITE);
+    display.drawLine(118,60,118,18,SSD1306_WHITE);
+    display.drawLine(118,18,111,18,SSD1306_WHITE);
+    display.drawLine(111,18,111,20,SSD1306_WHITE);
+  }
+  if (algo==5) {
+    display.drawLine(111,60,118,60,SSD1306_WHITE);
+    display.drawLine(118,60,118,32,SSD1306_WHITE);
+    display.drawLine(118,32,111,32,SSD1306_WHITE);
+    display.drawLine(111,32,111,34,SSD1306_WHITE);
+  }
 
   TCA9548A(SCRMAP[screen]);
   display.display();

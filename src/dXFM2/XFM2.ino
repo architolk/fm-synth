@@ -6,6 +6,16 @@
 *
 */
 
+const uint8_t ALGOMAP[32][6] = {
+  {0b00000101,0b00000000,0b00010001,0b00100000,0b01000000,0b01000000}, //1
+  {0b00000101,0b00000100,0b00010001,0b00100000,0b01000000,0b00000000}, //2
+  {0b00000101,0b00001000,0b00000000,0b00100001,0b01000000,0b01000000}, //3
+  {0b00000101,0b00001000,0b00000000,0b00100001,0b01000000,0b00010000}, //4
+  {0b00000101,0b00000000,0b00010001,0b00000000,0b01000001,0b01000000}, //5
+  {0b00000101,0b00000000,0b00010001,0b00000000,0b01000001,0b00100000}, //6
+  {0b00000101,0b00000000,0b00110001,0b00000000,0b01000000,0b10000000}, //7
+};
+
 //Sets the unit that is active
 //All communication that follows will be for this unit
 //A call to this function is only necessary when you switch between units
@@ -82,6 +92,14 @@ uint8_t initXFM2() {
     }
   } else {
     return ERR_UNIT;
+  }
+}
+
+void xfm2SetAlgorithm(uint8_t unit, uint8_t algo) {
+  for (uint8_t op=0; op<6; op++) {
+    paramValue[unit][op+1] = ALGOMAP[algo][op];
+    xfm2SetParameter(op+1,ALGOMAP[algo][op]);
+    delay(2);
   }
 }
 
