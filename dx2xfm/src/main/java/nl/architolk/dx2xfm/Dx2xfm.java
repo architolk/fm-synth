@@ -212,8 +212,8 @@ public class Dx2xfm {
                  }
                  //System.out.println("********** " + XFM2parL.toString());
                  // calculate feedback
-                 for (int p = 7; p < 12 ; p++) {
-                     XFM2parL[p] = XFM2parL[p]*32* DX7Par[135];
+                 for (int p = 7; p < 13 ; p++) {
+                     XFM2parL[p] = XFM2parL[p]*DX7Par[135]*255/7; //Max value DX7 = 7, max value XFM2 = 255
                  }
                  // translate DX7Par parameters to XFM2 buffer values per Operator
                  long mode = 0x00;
