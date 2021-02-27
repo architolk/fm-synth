@@ -98,12 +98,14 @@ public class Dx2xfm {
 
 
      String fInput =  baseDir + DX7Syx + ".syx";
-     String XFM2out = baseDir + "out/";
+     String fOutput = baseDir + "out/" + DX7Syx + ".h";
+     String XFM2out = baseDir + "out/XFM2/";
      String DX7out =  baseDir + "out/DX7/";
      confDir = baseDir + "conf/";
      String confStr = confDir + "000init.json";
 
      try {
+       Files.createDirectories(Paths.get(baseDir + "out"));
        Files.createDirectories(Paths.get(XFM2out));
        Files.createDirectories(Paths.get(DX7out));
      } catch (Exception e) {
@@ -117,6 +119,7 @@ public class Dx2xfm {
 
      try (
              InputStream inputStream = new BufferedInputStream(new FileInputStream(fInput));
+             FileWriter outwriter = new FileWriter(fOutput);
      ) {
          long fileSize = new File(fInput).length();
          byte[] allBytes = new byte[(int) fileSize];
@@ -126,6 +129,16 @@ public class Dx2xfm {
          int[]  DX7Par = new int[155];
          String ProgName = null;
          String pNameSpaces = null;
+
+         outwriter.write("//DX7 converted Sysex patches\n");
+         outwriter.write("//Name: " + DX7Syx + "\n");
+         outwriter.write("typedef struct {\n");
+         outwriter.write("  String patch;\n");
+         outwriter.write("  uint8_t algo;\n");
+         outwriter.write("  uint8_t param[512];\n");
+         outwriter.write("} patch_type;");
+         outwriter.write("\n");
+         outwriter.write("const patch_type PATCHPARAMS[32] = {\n");
 
          //System.out.println("File size = " + fileSize + "\n");
          inputStream.read(allBytes);
@@ -344,23 +357,31 @@ public class Dx2xfm {
                          writer.write("\t\t{ \"Par#\": " + k + " , \"Value\": " + Byte.toUnsignedInt(XFM2parB[k]) + " } ,\n");
                      }
                      writer.write("\t\t{ \"Par#\": " + 511 + " , \"Value\": " + Byte.toUnsignedInt(XFM2parB[511]) + " }\n");
-                     writer.write("\t]\n");
+                     writer.write("\t]}\n");
 
                      //Extra Dump
-                     writer.write("\t\"dump\": [");
+                     outwriter.write("  {\"" + pNameSpaces + "\"," + Integer.toString(DX7Par[134]) + ",{");
                      for (int k = 0; k < 512; k++) {
                        if (k>0) {
-                         writer.write(",");
+                         outwriter.write(",");
                        }
-                       writer.write(Integer.toString(Byte.toUnsignedInt(XFM2parB[k])));
+                       outwriter.write(Integer.toString(Byte.toUnsignedInt(XFM2parB[k])));
                      }
-                     writer.write("]\n}\n");
+                     outwriter.write("}}");
+                     if (i==31) {
+                       outwriter.write("\n");
+                     } else {
+                       outwriter.write(",\n");
+                     }
 
                      writer.flush();
                      System.out.println("Saved Program to: " + fJson );
                  }
              }
          }
+         outwriter.write("};\n");
+         outwriter.flush();
+
      } catch (IOException ex) {
          ex.printStackTrace();
      }
