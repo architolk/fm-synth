@@ -9,43 +9,43 @@
 //DX7 converted Sysex patches
 //Name: dx7
 
-const char BRASS_1_[] PROGMEM =  "BRASS   1 ";
-const char BRASS_2_[] PROGMEM =  "BRASS   2 ";
-const char BRASS_3_[] PROGMEM =  "BRASS   3 ";
-const char STRINGS_1_[] PROGMEM =  "STRINGS 1 ";
-const char STRINGS_2_[] PROGMEM =  "STRINGS 2 ";
-const char STRINGS_3_[] PROGMEM =  "STRINGS 3 ";
-const char ORCHESTRA_[] PROGMEM =  "ORCHESTRA ";
-const char PIANO_1_[] PROGMEM =  "PIANO   1 ";
-const char PIANO_2_[] PROGMEM =  "PIANO   2 ";
-const char PIANO_3_[] PROGMEM =  "PIANO   3 ";
-const char E_PIANO_1_[] PROGMEM =  "E.PIANO 1 ";
-const char GUITAR_1_[] PROGMEM =  "GUITAR  1 ";
-const char GUITAR_2_[] PROGMEM =  "GUITAR  2 ";
-const char SYN_LEAD_1[] PROGMEM =  "SYN-LEAD 1";
-const char BASS_1_[] PROGMEM =  "BASS    1 ";
-const char BASS_2_[] PROGMEM =  "BASS    2 ";
-const char E_ORGAN_1_[] PROGMEM =  "E.ORGAN 1 ";
-const char PIPES_1_[] PROGMEM =  "PIPES   1 ";
-const char HARPSICH_1[] PROGMEM =  "HARPSICH 1";
-const char CLAV_1_[] PROGMEM =  "CLAV    1 ";
-const char VIBE_1_[] PROGMEM =  "VIBE    1 ";
-const char MARIMBA_[] PROGMEM =  "MARIMBA   ";
-const char KOTO_[] PROGMEM =  "KOTO      ";
-const char FLUTE_1_[] PROGMEM =  "FLUTE   1 ";
-const char ORCH_CHIME[] PROGMEM =  "ORCH-CHIME";
-const char TUB_BELLS_[] PROGMEM =  "TUB BELLS ";
-const char STEEL_DRUM[] PROGMEM =  "STEEL DRUM";
-const char TIMPANI_[] PROGMEM =  "TIMPANI   ";
-const char REFS_WHISL[] PROGMEM =  "REFS WHISL";
-const char VOICE_1_[] PROGMEM =  "VOICE   1 ";
-const char TRAIN_[] PROGMEM =  "TRAIN     ";
-const char TAKE_OFF_[] PROGMEM =  "TAKE OFF  ";
+const char BRASS_1_[] PROGMEM =  "Brass 1";
+const char BRASS_2_[] PROGMEM =  "Brass 2";
+const char BRASS_3_[] PROGMEM =  "Brass 3";
+const char STRINGS_1_[] PROGMEM =  "Strings 1";
+const char STRINGS_2_[] PROGMEM =  "Strings 2";
+const char STRINGS_3_[] PROGMEM =  "Strings 3";
+const char ORCHESTRA_[] PROGMEM =  "Orchestra";
+const char PIANO_1_[] PROGMEM =  "Piano 1";
+const char PIANO_2_[] PROGMEM =  "Piano 2";
+const char PIANO_3_[] PROGMEM =  "Piano 3";
+const char E_PIANO_1_[] PROGMEM =  "E.Piano 1";
+const char GUITAR_1_[] PROGMEM =  "Guitar 1";
+const char GUITAR_2_[] PROGMEM =  "Guitar 2";
+const char SYN_LEAD_1[] PROGMEM =  "Synth lead 1";
+const char BASS_1_[] PROGMEM =  "Bass 1";
+const char BASS_2_[] PROGMEM =  "Bass 2";
+const char E_ORGAN_1_[] PROGMEM =  "E.Organ 1";
+const char PIPES_1_[] PROGMEM =  "Pipes 1";
+const char HARPSICH_1[] PROGMEM =  "Harpsichord 1";
+const char CLAV_1_[] PROGMEM =  "Clav 1";
+const char VIBE_1_[] PROGMEM =  "Vibe 1";
+const char MARIMBA_[] PROGMEM =  "Marimba";
+const char KOTO_[] PROGMEM =  "Koto";
+const char FLUTE_1_[] PROGMEM =  "Flute 1";
+const char ORCH_CHIME[] PROGMEM =  "Orch-Chime";
+const char TUB_BELLS_[] PROGMEM =  "Tubelar bells";
+const char STEEL_DRUM[] PROGMEM =  "Steel drum";
+const char TIMPANI_[] PROGMEM =  "Timpani";
+const char REFS_WHISL[] PROGMEM =  "Refs whisle";
+const char VOICE_1_[] PROGMEM =  "Voice 1";
+const char TRAIN_[] PROGMEM =  "Train";
+const char TAKE_OFF_[] PROGMEM =  "Take off";
 
 typedef struct {
-  PGM_P name;
+  char * const name;
   uint8_t algo;
-  uint8_t param[512];
+  uint8_t pval[512];
 } patch_type;
 const patch_type PATCHPARAMS[32] PROGMEM = {
   {BRASS_1_,21,{0,5,0,65,65,65,64,0,0,0,0,0,255,63,0,0,0,1,1,1,1,0,0,0,0,0,0,135,135,126,128,129,128,252,198,255,255,252,192,0,0,64,64,64,64,48,36,48,48,48,48,0,0,0,0,0,139,36,18,0,0,0,128,4,4,4,4,4,0,4,0,4,4,4,0,255,211,255,255,255,252,0,226,244,252,252,252,252,0,247,247,252,252,252,234,0,0,0,0,0,0,0,0,220,188,232,232,232,147,0,183,113,183,74,74,255,0,255,55,202,87,87,53,0,169,169,169,169,169,160,128,128,128,128,216,244,244,154,0,0,0,0,0,0,0,128,0,0,0,12,0,95,0,4,0,30,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,36,0,0,0,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,255,255,255,255,128,0,128,255,0,0,0,0,0,0,0,0,128,128,128,0,127,255,255,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,0,0,0,0,0,0,0,0,0,255,255,255,255,255,255,255,255,255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,0,0,128,0,255,0,100,1,0,255,0,0,128,10,0,128,2,128,0,255,0,0,0,0,0,0,0,0,0,10,0,0,120,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,0,0,0,0,0,0,0,0,0,255,0,0,50,0,0,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,0,0,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,0,100,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0}},
@@ -83,9 +83,7 @@ const patch_type PATCHPARAMS[32] PROGMEM = {
 };
 
 String getPatchName(uint8_t patch) {
-  char buffer[30];
-  strcpy_P(buffer, (PGM_P)pgm_read_word(&(PATCHPARAMS[patch].name)));
-  return String(buffer);
+  return String(PATCHPARAMS[patch].name);
 }
 
 void loadDefaultPatch(uint8_t unit, uint8_t patch) {
