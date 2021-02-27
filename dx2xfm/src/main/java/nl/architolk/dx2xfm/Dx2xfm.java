@@ -26,6 +26,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
 
 import static java.nio.file.Files.readString;
 
@@ -104,6 +106,8 @@ public class Dx2xfm {
      confDir = baseDir + "conf/";
      String confStr = confDir + "000init.json";
 
+     List<String> names = new ArrayList<String>();
+
      try {
        Files.createDirectories(Paths.get(baseDir + "out"));
        Files.createDirectories(Paths.get(XFM2out));
@@ -133,12 +137,12 @@ public class Dx2xfm {
          outwriter.write("//DX7 converted Sysex patches\n");
          outwriter.write("//Name: " + DX7Syx + "\n");
          outwriter.write("typedef struct {\n");
-         outwriter.write("  String patch;\n");
+         outwriter.write("  PGM_P name;\n");
          outwriter.write("  uint8_t algo;\n");
          outwriter.write("  uint8_t param[512];\n");
          outwriter.write("} patch_type;");
          outwriter.write("\n");
-         outwriter.write("const patch_type PATCHPARAMS[32] = {\n");
+         outwriter.write("const patch_type PATCHPARAMS[32] PROGMEM = {\n");
 
          //System.out.println("File size = " + fileSize + "\n");
          inputStream.read(allBytes);
@@ -360,7 +364,8 @@ public class Dx2xfm {
                      writer.write("\t]}\n");
 
                      //Extra Dump
-                     outwriter.write("  {\"" + pNameSpaces + "\"," + Integer.toString(DX7Par[134]) + ",{");
+                     names.add(pNameSpaces);
+                     outwriter.write("  {" + ProgName + "," + Integer.toString(DX7Par[134]) + ",{");
                      for (int k = 0; k < 512; k++) {
                        if (k>0) {
                          outwriter.write(",");
@@ -380,6 +385,13 @@ public class Dx2xfm {
              }
          }
          outwriter.write("};\n");
+
+         Iterator<String> iterator = names.iterator();
+          while(iterator.hasNext()) {
+              String aname = iterator.next();
+              outwriter.write("const char " + aname.replaceAll("[^a-zA-Z0-9#()]+","_") + "[] PROGMEM =  \"" + aname + "\";\n");
+          }
+
          outwriter.flush();
 
      } catch (IOException ex) {
