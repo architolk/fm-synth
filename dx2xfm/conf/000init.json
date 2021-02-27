@@ -2,9 +2,7 @@
 	"Short_Name": "XFM2 init",
 	"Long_Name": "XFM2 init",
 	"Description": "init with aftertouch amp lfo set to 0",
-	"Creator": "Design.Thoughtz.eu",
-	"date": "2020-04-27 17:06:29 CEST",
-	"hash": "b4d2ab55",
+	"date": "20210227",
 	"parameters": [
 		{"Par#": 0 , "Value": 0} ,
 		{"Par#": 1 , "Value": 1} ,

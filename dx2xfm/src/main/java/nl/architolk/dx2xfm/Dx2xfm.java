@@ -1,3 +1,14 @@
+/*
+* Dx2xfm: reading DX7 sysex file and convert them to XFM2 parameter values (in JSON format)
+*
+* Based on:
+* - https://github.com/xerhard/DX7syx-to-XFM2patches
+*   (Java version, modified and fixed conversion errors)
+* - https://github.com/rheslip/dx72xfm2
+*   (C version, with better conversion - the java version has been modified with the optimalizations from the C version)
+*
+* Author: https://github.com/architolk
+*/
 package nl.architolk.dx2xfm;
 
 import org.json.JSONArray;
@@ -19,6 +30,45 @@ import java.util.Iterator;
 import static java.nio.file.Files.readString;
 
 public class Dx2xfm {
+
+   private static String confDir;
+   private static JSONArray flatcurve;
+   private static JSONArray levelcurve;
+   private static JSONArray ratecurve;
+   private static JSONArray attackcurve;
+
+   private static int lscale(int rate, JSONArray curve) {
+   	float x1,y1,x2,y2,y,slope,r;
+   	r = (float) rate;
+   	x1 = curve.getJSONObject(0).getInt("DX7");
+   	y1 = curve.getJSONObject(0).getInt("XFM2");;
+   	for (int i=1;i <5; i++) {  // step through each line segment of the curve
+      x2 = curve.getJSONObject(i).getInt("DX7");
+      y2 = curve.getJSONObject(i).getInt("XFM2");;
+   		if (x2 >= r) {  // find the segment this rate (X point) lies on
+   			slope = (y2-y1)/(x2-x1);
+   			y = y1+(r-x1)*slope;
+   			return (int)(Math.round(y));
+   		}
+   		x1=x2;
+   		y1=y2;
+   	}
+   	return 255;  // if curves are correct we should never get here
+   }
+
+   private static JSONArray loadCurve(String name) {
+     try {
+        String JsonStr = readString(Paths.get(confDir + "curve_" + name + ".json"), StandardCharsets.UTF_8);
+        JSONObject jsonObject = new JSONObject(JsonStr);
+        return (JSONArray) jsonObject.get("parameters");
+     } catch (Exception e) {
+         e.printStackTrace();
+         System.exit(1);
+         return null;
+     } finally {
+
+     }
+   }
 
    public static void main(String[] args) {
 
@@ -50,7 +100,7 @@ public class Dx2xfm {
      String fInput =  baseDir + DX7Syx + ".syx";
      String XFM2out = baseDir + "out/";
      String DX7out =  baseDir + "out/DX7/";
-     String confDir = baseDir + "conf/";
+     confDir = baseDir + "conf/";
      String confStr = confDir + "000init.json";
 
      try {
@@ -59,6 +109,11 @@ public class Dx2xfm {
      } catch (Exception e) {
          //Nothing: exception might be that directory already exists - whatever...
      }
+
+     flatcurve = loadCurve("flat");
+     levelcurve = loadCurve("level");
+     ratecurve = loadCurve("rate");
+     attackcurve = loadCurve("attack");
 
      try (
              InputStream inputStream = new BufferedInputStream(new FileInputStream(fInput));
@@ -106,7 +161,7 @@ public class Dx2xfm {
                      //System.out.println("Amp Mod Sens = " + DX7Par[11] + " Key Vel Sens = " + DX7Par[12]);
                      DX7Par[16+p*21] = allBytes[startpos + p*17 + 14]& 0xFF;         // OP# OUT LEVEL
                      DX7Par[17+p*21] = allBytes[startpos + p*17 + 15] & 0x01;        // OSC MOD fixed/ratio 0=ratio
-                     DX7Par[15+p*21] = (allBytes[startpos + p*17 + 15] & 0x3E)>>1;   // OSC FREQ COARSE
+                     DX7Par[18+p*21] = (allBytes[startpos + p*17 + 15] & 0x3E)>>1;   // OSC FREQ COARSE
                      DX7Par[19+p*21] = allBytes[startpos + p*17 + 16] & 0xFF;        // OSC FREQ FINE
                      // DX7Par 20 already filled ...
                  }
@@ -218,46 +273,50 @@ public class Dx2xfm {
                  // translate DX7Par parameters to XFM2 buffer values per Operator
                  long mode = 0x00;
                  for (int op = 0;  op < 6 ; op++) {  //dx7 starts with OP6 and xfm2 with OP1
-                     XFM2parL[103+op]= DX7Par[0+(5-op)*21]*256/100; // R1
-                     XFM2parL[110+op]= DX7Par[1+(5-op)*21]*256/100; // R2
-                     XFM2parL[117+op]= DX7Par[2+(5-op)*21]*256/100; // R3
-                     XFM2parL[124+op]= DX7Par[3+(5-op)*21]*256/100; // R4
-                     XFM2parL[75+op]= DX7Par[4+(5-op)*21]*256/100;  // L1
-                     XFM2parL[82+op]= DX7Par[5+(5-op)*21]*256/100;  // L2
-                     XFM2parL[89+op]= DX7Par[6+(5-op)*21]*256/100;  // L3
-                     XFM2parL[96+op]= DX7Par[7+(5-op)*21]*256/100;  // L4
+                     XFM2parL[103+op]= lscale(DX7Par[0+(5-op)*21],attackcurve); // R1
+                     XFM2parL[110+op]= lscale(DX7Par[1+(5-op)*21],ratecurve); // R2
+                     XFM2parL[117+op]= lscale(DX7Par[2+(5-op)*21],ratecurve); // R3
+                     XFM2parL[124+op]= lscale(DX7Par[3+(5-op)*21],ratecurve); // R4
+                     XFM2parL[75+op]= DX7Par[4+(5-op)*21]*255/99;  // L1
+                     XFM2parL[82+op]= DX7Par[5+(5-op)*21]*255/99;  // L2
+                     XFM2parL[89+op]= DX7Par[6+(5-op)*21]*255/99;  // L3
+                     XFM2parL[96+op]= DX7Par[7+(5-op)*21]*255/99;  // L4
                      XFM2parL[45+op]= DX7Par[8+(5-op)*21]+9;        // BP DX7 C3=39 , XFM2 C3=48
-                     XFM2parL[51+op]= DX7Par[9+(5-op)*21]*256/100;  // Key LDept
-                     XFM2parL[57+op]= DX7Par[10+(5-op)*21]*256/100; // Key RDept
+                     XFM2parL[51+op]= DX7Par[9+(5-op)*21]*255/99;  // Key LDept
+                     XFM2parL[57+op]= DX7Par[10+(5-op)*21]*255/99; // Key RDept
                      XFM2parL[63+op] = (DX7Par[11+(5-op)*21]==0) ? 1 : (DX7Par[11+(5-op)*21]==1) ? 0 : (DX7Par[11+(5-op)*21]==2) ? 3 :4;
                      XFM2parL[69+op] = (DX7Par[12+(5-op)*21]==0) ? 1 : (DX7Par[12+(5-op)*21]==1) ? 0 : (DX7Par[12+(5-op)*21]==2) ? 3 :4;
                      XFM2parL[140+op]= DX7Par[13+(5-op)*21]*32;     //Rate Key
                      XFM2parL[159+op]= DX7Par[14+(5-op)*21]*64;     //AMS
                      XFM2parL[39+op]= DX7Par[15+(5-op)*21]*32;      //Velo Sens
-                     XFM2parL[33+op]= DX7Par[16+(5-op)*21]*256/100; // LEVEL
+                     if ((XFM2parL[1+op] & 1) == 1) {
+                       XFM2parL[33+op]= lscale(DX7Par[16+(5-op)*21],flatcurve); // LEVEL for carriers
+                     } else {
+                       XFM2parL[33+op]= lscale(DX7Par[16+(5-op)*21],levelcurve); // LEVEL for operators
+                     }
                      // MODE DX7Par[17..] on DX7 1bit per Operator => XFM2 bits set in XFM2parL[14]
                      mode |= DX7Par[17+(5-op)*21] << (op);
-                     XFM2parL[15+op]= DX7Par[18+(5-op)*21]*8;       // RATIO
-                     XFM2parL[21+op]= DX7Par[19+(5-op)*21]*256/100; // RATIO FINE
+                     XFM2parL[15+op]= DX7Par[18+(5-op)*21];       // RATIO
+                     XFM2parL[21+op]= DX7Par[19+(5-op)*21]*150/50; // RATIO FINE (255/99 doesn't seem to be OK - according to code of rheslip)
 // Check!!
                      XFM2parL[27+op]= 128+(DX7Par[20+(5-op)*21]-7);  // Pitch FINE  neutral   DX7 (0-14)  7 = XFM2 128
 // CHeck!!
                  }
                  XFM2parL[13]=(DX7Par[136]==1) ? 63 : 0;
                  XFM2parL[14]=mode;
-                 XFM2parL[134]= DX7Par[126]*256/100;  // R1
-                 XFM2parL[135]= DX7Par[127]*256/100;  // R2
-                 XFM2parL[136]= DX7Par[128]*256/100;  // R3
-                 XFM2parL[137]= DX7Par[129]*256/100;  // R4
-                 XFM2parL[130]= DX7Par[130]*256/100;  // L1
-                 XFM2parL[131]= DX7Par[131]*256/100;  // L2
-                 XFM2parL[132]= DX7Par[132]*256/100;  // L3
-                 XFM2parL[133]= DX7Par[133]*256/100;  // L4
+                 XFM2parL[134]= DX7Par[126]*255/99;  // R1
+                 XFM2parL[135]= DX7Par[127]*255/99;  // R2
+                 XFM2parL[136]= DX7Par[128]*255/99;  // R3
+                 XFM2parL[137]= DX7Par[129]*255/99;  // R4
+                 XFM2parL[130]= DX7Par[130]*255/99;  // L1
+                 XFM2parL[131]= DX7Par[131]*255/99;  // L2
+                 XFM2parL[132]= DX7Par[132]*255/99;  // L3
+                 XFM2parL[133]= DX7Par[133]*255/99;  // L4
                  XFM2parL[13]=(DX7Par[136]==1) ? 63 : 0;  //SYNC
-                 XFM2parL[151]= DX7Par[137]*256/100;  // LFO SPEED
-                 XFM2parL[154]= DX7Par[138]*256/100;  // LFO FADE/DELAY
-                 XFM2parL[149]= DX7Par[139]*256/100;  // PITCH MOD PMD??
-                 XFM2parL[150]= DX7Par[140]*256/100;  // AMP MOD   AMD??
+                 XFM2parL[151]= DX7Par[137]*255/99;  // LFO SPEED
+                 XFM2parL[154]= DX7Par[138]*255/99;  // LFO FADE/DELAY
+                 XFM2parL[149]= DX7Par[139]*255/99;  // PITCH MOD PMD??
+                 XFM2parL[150]= DX7Par[140]*255/99;  // AMP MOD   AMD??
                  XFM2parL[152]= DX7Par[141];          // LFO SYNC
                  XFM2parL[153]=(DX7Par[142]==1) ? 3 : (DX7Par[142]==3) ? 1 : DX7Par[142] ; // LFO WAVE
                  // PITCH MOD SENSITIVITY  VOICE[143]
@@ -276,7 +335,7 @@ public class Dx2xfm {
                      String jHead = "{\n\t\"Short_Name\": \"" + pNameSpaces + "\",\n";
                      jHead = jHead + "\t\"Long_Name\": \"DX7-" + pNameSpaces + "  " + iStr + "\",\n";
                      jHead = jHead + "\t\"Description\": \"Converted from DX7 SysEx file " + DX7Syx + ".syx\",\n";
-                     jHead = jHead + "\t\"Creator\": \"Design.Thoughtz.eu\",\n";
+                     jHead = jHead + "\t\"Creator\": \"https://github.com/architolk\",\n";
                      jHead = jHead + "\t\"date\": \"" + strDate + "\",\n";
                      jHead = jHead + "\t\"hash\": \"" + Integer.toHexString((int) hash) + "\",\n";
                      jHead = jHead + "\t\"parameters\": [\n";

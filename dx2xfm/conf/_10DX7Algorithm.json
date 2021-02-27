@@ -2,9 +2,7 @@
 	"Short_Name": "DX7 Alg 10",
 	"Long_Name": "Preset DX7 Algorithm 10",
 	"Description": "XFM2 Program description",
-	"Creator": "Design.Thoughtz.eu",
-	"date": "2020-04-19 16:23:34 CEST",
-	"hash": "ea0f5b24",
+	"date": "20210227",
 	"parameters": [
 		{"Par#": 1 , "Value": 5} ,
 		{"Par#": 2 , "Value": 8} ,

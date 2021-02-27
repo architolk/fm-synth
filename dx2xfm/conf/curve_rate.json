@@ -1,0 +1,13 @@
+{
+	"Short_Name": "Rate curve",
+	"Long_Name": "Rate Conversion curve",
+	"Description": "Rate curve - scales lower env gen rates down to make the envelopes longer",
+	"date": "20210227",
+	"parameters": [
+		{ "DX7": 0 , "XFM2": 0 } ,
+		{ "DX7": 25 , "XFM2": 45 } ,
+		{ "DX7": 50 , "XFM2": 110 } ,
+		{ "DX7": 75 , "XFM2": 180 } ,
+		{ "DX7": 99 , "XFM2": 255 }
+ 	]
+}

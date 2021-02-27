@@ -2,8 +2,7 @@
 	"Short_Name": "DX7 Alg 30",
 	"Long_Name": "Preset DX7 Algorithm 30",
 	"Description": "XFM2 Program description",
-	"date": "20200410",
-	"Creator": "Design.Thoughtz.eu",
+	"date": "20210227",
 	"parameters": [
 		{ "Par#": 1 , "Value": 1 } ,
 		{ "Par#": 2 , "Value": 1 } ,

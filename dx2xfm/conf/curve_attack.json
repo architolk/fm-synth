@@ -1,0 +1,13 @@
+{
+	"Short_Name": "Attack curve",
+	"Long_Name": "Attack Conversion curve",
+	"Description": "Attack curve - rates have to be sped up (higher numbers)",
+	"date": "20210227",
+	"parameters": [
+		{ "DX7": 0 , "XFM2": 0 } ,
+		{ "DX7": 25 , "XFM2": 80 } ,
+		{ "DX7": 50 , "XFM2": 150 } ,
+		{ "DX7": 75 , "XFM2": 230 } ,
+		{ "DX7": 99 , "XFM2": 255 }
+ 	]
+}

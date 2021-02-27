@@ -1,0 +1,13 @@
+{
+	"Short_Name": "Flat curve",
+	"Long_Name": "Flat Conversion curve",
+	"Description": "Curve to convert dx7 values to xfm2 values",
+	"date": "20210227",
+	"parameters": [
+		{ "DX7": 0 , "XFM2": 0 } ,
+		{ "DX7": 25 , "XFM2": 64 } ,
+		{ "DX7": 50 , "XFM2": 127 } ,
+		{ "DX7": 75 , "XFM2": 192 } ,
+		{ "DX7": 99 , "XFM2": 255 }
+ 	]
+}

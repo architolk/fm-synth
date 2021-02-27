@@ -1,0 +1,13 @@
+{
+	"Short_Name": "Level curve",
+	"Long_Name": "Level Conversion curve",
+	"Description": "Level curve - scales DX7 operator levels down. Compress the top end of the range. Max op level is less than 255 to better match DX7 op levels",
+	"date": "20210227",
+	"parameters": [
+		{ "DX7": 0 , "XFM2": 0 } ,
+		{ "DX7": 25 , "XFM2": 65 } ,
+		{ "DX7": 75 , "XFM2": 180 } ,
+		{ "DX7": 90 , "XFM2": 205 } ,
+		{ "DX7": 99 , "XFM2": 210 }
+ 	]
+}
