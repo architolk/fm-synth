@@ -321,19 +321,19 @@ public class Dx2xfm {
                  }
                  XFM2parL[13]=(DX7Par[136]==1) ? 63 : 0;
                  XFM2parL[14]=mode;
-                 XFM2parL[134]= DX7Par[126]*255/99;  // R1
-                 XFM2parL[135]= DX7Par[127]*255/99;  // R2
-                 XFM2parL[136]= DX7Par[128]*255/99;  // R3
-                 XFM2parL[137]= DX7Par[129]*255/99;  // R4
+                 XFM2parL[134]= lscale(DX7Par[126],attackcurve);  // R1
+                 XFM2parL[135]= lscale(DX7Par[127],ratecurve);  // R2
+                 XFM2parL[136]= lscale(DX7Par[128],ratecurve);  // R3
+                 XFM2parL[137]= lscale(DX7Par[129],ratecurve);  // R4
                  XFM2parL[130]= DX7Par[130]*255/99;  // L1
                  XFM2parL[131]= DX7Par[131]*255/99;  // L2
                  XFM2parL[132]= DX7Par[132]*255/99;  // L3
                  XFM2parL[133]= DX7Par[133]*255/99;  // L4
                  XFM2parL[13]=(DX7Par[136]==1) ? 63 : 0;  //SYNC
-                 XFM2parL[151]= DX7Par[137]*255/99;  // LFO SPEED
+                 XFM2parL[151]= DX7Par[137]*115/30;  // LFO SPEED (255/99 doesn't seem to be OK - according to code of rheslip)
                  XFM2parL[154]= DX7Par[138]*255/99;  // LFO FADE/DELAY
-                 XFM2parL[149]= DX7Par[139]*255/99;  // PITCH MOD PMD??
-                 XFM2parL[150]= DX7Par[140]*255/99;  // AMP MOD   AMD??
+                 XFM2parL[149]= DX7Par[139]*7/17;  // LFO PITCH DEPTH (255/99 doesn't seem to be OK - according to code of rheslip)
+                 XFM2parL[150]= DX7Par[140]*255/99;  // LFO AMP DEPTH
                  XFM2parL[152]= DX7Par[141];          // LFO SYNC
                  XFM2parL[153]=(DX7Par[142]==1) ? 3 : (DX7Par[142]==3) ? 1 : DX7Par[142] ; // LFO WAVE
                  // PITCH MOD SENSITIVITY  VOICE[143]
