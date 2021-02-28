@@ -25,7 +25,7 @@ const uint8_t FILTERGRAPH[GRAPHHEIGHT] PROGMEM = {0,3,5,6,7,8,9,9,10,10,11,11,12
 //128 = feedback
 //64 = shorten length of vertical line out of box
 //32 = create an extra vertical line into the box
-const uint8_t ALGOPOS[32][8] = {
+const uint8_t ALGOPOS[32][8] PROGMEM = {
   {0b00011100,0b00010100,0b00011101,0b00010101,0b00001101,0b10000101,1,0}, //1
   {0b00011100,0b10010100,0b00011101,0b00010101,0b00001101,0b00000101,1,0}, //2
   {0b00011100,0b00010100,0b00001100,0b00011101,0b00010101,0b10001101,1,0}, //3
@@ -178,14 +178,18 @@ void showPatchMenu(uint8_t patch) {
 }
 
 //Shows a note on the screen, with respect to a certain offset
-void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relative) {
+void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relative, uint8_t lscale, uint8_t lcurve, uint8_t rscale, uint8_t rcurve) {
   display.clearDisplay();
 
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(5,14);
-  display.print(F("Transpose")); //This is not only transpose, but for now...
+  if (relative) {
+    display.print(F("Transpose"));
+  } else {
+    display.print(F("KB scale"));
+  }
 
   uint16_t pos = value;
   pos = (pos*63/offset)+1;
@@ -196,8 +200,9 @@ void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relati
   display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(62-getStringWidth(NOTES[value%12])/2,60);
+  display.setCursor(62-(getStringWidth(NOTES[value%12])+getNumberWidth((value+60-offset)/12))/2,60);
   display.print(NOTES[value%12]);
+  display.print((value+60-offset)/12); //C4 = 60, if offset!=60, compensate so offset = C4
   if (relative) {
     display.setFont(&Dungeon9pt7b);
     if (value<offset) {
@@ -209,8 +214,6 @@ void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relati
       display.setCursor(100,60);
       display.print(value-offset);
     }
-  } else {
-    display.print(value/12);
   }
 
   TCA9548A(SCRMAP[screen]);
@@ -618,16 +621,23 @@ void showOSCRatioOnScreen(uint8_t screen, uint8_t ratio, uint8_t mode) {
 
 void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coarse, uint8_t fine, uint8_t pitch) {
   display.clearDisplay();
-  display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0,20);
   if (isPitch) {
+    display.setFont(&Dungeon9pt7b);
+    display.setCursor(0,15);
     display.print(F("Pitch"));
+    float pitch = (32.7 * coarse) + (0.5 * fine);
+    drawNumber(pitch,110,15);
+    display.setCursor(110,15);
+    display.print(F("Hz"));
   } else {
+    display.setFont(&Dungeon12pt7b);
+    display.setCursor(0,20);
     display.print(F("Ratio"));
   }
 
+  display.setFont(&Dungeon12pt7b);
   display.setCursor(15,50);
   display.print(F("1:"));
   display.print(coarse);

@@ -165,7 +165,14 @@ void showPMS(uint8_t op) {
 
 void showKeyTracking(uint8_t op) {
   //TODO: this is not really correct: keytrack is BP and curve, showNoteOnScreen is only BP!
-  showNoteOnScreen(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0),60,false);
+  showNoteOnScreen(op
+    ,getParamValue(greenSelect,BLUE_PITCH,operatorSelect,op,0)
+    ,getParamValue(greenSelect,BLUE_RATIO,operatorSelect,op,0)
+    ,getParamValue(greenSelect,BLUE_RATIO,operatorSelect,op,1)
+    ,getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,op,0)
+    ,getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,op,1)
+    ,60,false
+  );
 }
 
 void showLFO(uint8_t op) {
@@ -336,7 +343,7 @@ void showReserved(uint8_t op) {
 void showMaster(uint8_t op) {
   switch (op) {
     case 0: showPanOnScreen(0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
-    case 1: showNoteOnScreen(1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0),24,true); break;
+    case 1: showNoteOnScreen(1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0),24,true,0,0,0,0); break;
     case 2: showMonoPolyOnScreen(2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
     case 3: showValueOnScreen(F("Porta time"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
     case 4: showPortaModeOnScreen(4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;

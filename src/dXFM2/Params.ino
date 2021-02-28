@@ -76,7 +76,7 @@ const uint8_t PARAMMAX[512] PROGMEM = {
   255,255,255,255,255,255, //Fine
   255,255,255,255,255,255, //Level
   255,255,255,255,255,255, //Velo sensitivity
-  255,255,255,255,255,255, //Key Breakpoint
+  120,120,120,120,120,120, //Key Breakpoint (center = 60 = C4, anything above 120 seems kinda pointless)
   255,255,255,255,255,255, //Key left depth
   255,255,255,255,255,255, //Key right depth
   3,3,3,3,3,3, //Key left curve
@@ -103,7 +103,7 @@ const uint8_t PARAMMAX[512] PROGMEM = {
   255,255,255,255, //LFO Wheels
   255,255,255,255,255,255, //LFO AMS
   0,0,0,0,0,0,0,255,255, //LFO Bend
-  255, //Transpose. Center is 24, so probably 48 max?
+  48, //Transpose. Center is 24, so we set max to 48, having a scale of -2 to +2 octaves
   0,0,0,0,0,255, //Volume
   255,255,255,255,255,255, //Envelope L0
   255,255,255,255,255,255, //Envelope R0
@@ -180,7 +180,7 @@ const uint8_t PARAMMAX[512] PROGMEM = {
 const uint8_t PARAMDEFAULT[512] PROGMEM = {
   0,1,0,0,0,0,0, //Operator 1 is carrier. All other operators are off and no modulation. No self-modulation (feedback)
   0,0,0,0,0,0, //Feedback levels all zero
-  0,0, //Oscillator sync and mode
+  0,0, //Oscillator sync and mode (free running, ratio frequency)
   1,1,1,1,1,1, //Ratio, all default to 1:1
   0,0,0,0,0,0, //Ratio fine
   128,128,128,128,128,128, //Percentage operator ajustment (128 = 0%)
@@ -207,13 +207,13 @@ const uint8_t PARAMDEFAULT[512] PROGMEM = {
   30, //LFO Pitch depth (global)
   0, //LFO Amplitude depth
   100, //LFO Speed
-  0, //LFO Sync
+  0, //LFO Sync (free running)
   0, //LFO Wave
   255, //LFO Fade
   30,0,30,255, //LFO Wheels
   255,255,255,255,255,255, //LFO AMS per operator (see also global setting)
   0,0,0,0,0,0,0,2,2, //LFO Bend
-  12, //Transpose. Center is 24, so probably 48 max? (huh? so it is actually transposed 12 down???)
+  24, //Transpose. Center = 24 = no transpose (C4)
   0,0,0,0,0,200, //Volume
   0,0,0,0,0,0, //Envelope L0 (start of envelope)
   0,0,0,0,0,0, //Envelope R0 (delay)
