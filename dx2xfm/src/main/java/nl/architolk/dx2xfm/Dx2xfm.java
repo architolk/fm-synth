@@ -137,9 +137,9 @@ public class Dx2xfm {
          outwriter.write("//DX7 converted Sysex patches\n");
          outwriter.write("//Name: " + DX7Syx + "\n");
          outwriter.write("typedef struct {\n");
-         outwriter.write("  PGM_P name;\n");
+         outwriter.write("  char * const name;\n");
          outwriter.write("  uint8_t algo;\n");
-         outwriter.write("  uint8_t param[512];\n");
+         outwriter.write("  uint8_t pval[512];\n");
          outwriter.write("} patch_type;");
          outwriter.write("\n");
          outwriter.write("const patch_type PATCHPARAMS[32] PROGMEM = {\n");
