@@ -187,59 +187,65 @@ void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relati
   if (relative) {
     display.setCursor(5,14);
     display.print(F("Transpose"));
-  } else {
-    display.setCursor(40,14);
-    display.print(F("Scale"));
   }
-
   uint16_t pos = value;
   pos = (pos*63/offset)+1;
-  display.drawLine(0,30,127,30,SSD1306_WHITE);
-  display.drawLine(0,31,127,31,SSD1306_WHITE);
-  display.drawLine(pos,25,pos,35,SSD1306_WHITE);
+  if (relative) {
+    display.drawLine(0,32,127,32,SSD1306_WHITE);
+    display.drawLine(0,33,127,33,SSD1306_WHITE);
+  }
+  display.drawLine(pos,27,pos,37,SSD1306_WHITE);
 
   display.setFont(&Dungeon12pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(62-(getStringWidth(NOTES[value%12])+getNumberWidth((value+60-offset)/12))/2,60);
+  display.setCursor(62-(getStringWidth(NOTES[value%12])+getNumberWidth((value+60-offset)/12))/2,63);
   display.print(NOTES[value%12]);
   display.print((value+48-offset)/12); //C4 = 60, if offset!=60, compensate so offset = C4
+  display.setFont(&Dungeon9pt7b);
   if (relative) {
-    display.setFont(&Dungeon9pt7b);
     if (value<offset) {
-      display.setCursor(0,60);
+      display.setCursor(0,63);
       display.print(F("-"));
       display.print(offset-value);
     }
     if (value>offset) {
-      display.setCursor(100,60);
+      display.setCursor(100,63);
       display.print(value-offset);
     }
   } else {
-    display.setCursor(0,63);
+    if (lcurve<2) {
+      display.setCursor(0,63);
+    } else {
+      display.setCursor(0,14);
+    }
     display.print(lscale);
-    drawNumber(rscale,127,63);
-    for (uint8_t i=0; i<127 i++) {
+    if (rcurve<2) {
+      drawNumber(rscale,127,63);
+    } else {
+      drawNumber(rscale,127,14);
+    }
+    for (uint8_t i=0; i<128; i++) {
       //Left part
-      float y = 25;
+      float y = 32;
       switch (lcurve) {
-        case 0: y = y - i*i*0.04; break; //Exponential decrease
-        case 1: y = y - i*0.2; break; //Linear decrease
-        case 2: y = y + i*0.2; break; //Linear increase
-        case 3: y = y + i*i*0.04; break;; //Exponential increase
+        case 0: y = y - i*i*0.008*lscale/255; break; //Exponential decrease
+        case 1: y = y - i*0.4*lscale/255; break; //Linear decrease
+        case 2: y = y + i*0.4*lscale/255; break; //Linear increase
+        case 3: y = y + i*i*0.008*lscale/255; break;; //Exponential increase
       }
-      if (i>=pos && y>=0 && y<=63)
+      if (i<=pos && y>=0 && y<=63) {
         display.drawPixel(pos-i,y,SSD1306_WHITE);
       }
       //Right part
-      y = 25;
+      y = 32;
       switch (rcurve) {
-        case 0: y = y - i*i*0.04; break; //Exponential decrease
-        case 1: y = y - i*0.2; break; //Linear decrease
-        case 2: y = y + i*0.2; break; //Linear increase
-        case 3: y = y + i*i*0.04; break;; //Exponential increase
+        case 0: y = y - i*i*0.008*rscale/255; break; //Exponential decrease
+        case 1: y = y - i*0.4*rscale/255; break; //Linear decrease
+        case 2: y = y + i*0.4*rscale/255; break; //Linear increase
+        case 3: y = y + i*i*0.008*rscale/255; break;; //Exponential increase
       }
-      if (i<=127-pos && y>=0 && y<=63)
+      if (i<=127-pos && y>=0 && y<=63) {
         display.drawPixel(pos+i,y,SSD1306_WHITE);
       }
     }
