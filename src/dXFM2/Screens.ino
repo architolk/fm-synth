@@ -662,7 +662,9 @@ void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coa
     display.setFont(&Dungeon9pt7b);
     display.setCursor(0,15);
     display.print(F("Pitch"));
-    float pitch = (32.7 * coarse) + (0.5 * fine);
+    float pitch = fine;
+    pitch = 0.34*pitch*pitch/(256*256) + 0.66*pitch/256;
+    pitch = (32.7 * coarse) * (1 + pitch); //Coarse is spot on, fine is a bit fussy, but close enough
     drawNumber(pitch,127,15);
     display.setCursor(96,30);
     display.print(F("Hz"));
