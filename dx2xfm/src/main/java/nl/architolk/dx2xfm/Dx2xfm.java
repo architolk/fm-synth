@@ -337,12 +337,16 @@ public class Dx2xfm {
                  XFM2parL[153]=(DX7Par[142]==1) ? 3 : (DX7Par[142]==3) ? 1 : DX7Par[142] ; // LFO WAVE
                  // PITCH MOD SENSITIVITY  VOICE[143]
                  // TRANSPOSE DX7: C3 = 24, XFM2: C4 = 24, so XFM2: C3 = 12 (!)
+                 // Strangely enough, with "adlib" conversion, the keyboard seems ok, so for now...
+                 XFM2parL[174]= DX7Par[144];
+                 /*
                  if (DX7Par[144]<12) {
                    XFM2parL[174]= DX7Par[144]; //Problem! Cannot go lower than 0 :-(
                    System.out.println("!!!WARNING: had to shift transpose: resulting voice will be an octave to high");
                  } else {
                    XFM2parL[174]= DX7Par[144]-12;
                  }
+                 */
 
                  // write algorithm values to XFM2 buffer
                  for (int p= 0; p < 512; p++) {
