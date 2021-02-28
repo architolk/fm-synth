@@ -70,3 +70,11 @@ The actual formula to get the frequency: Hz = COARSE * (1 + (FINE * 8.772 / 99))
 | 152 | ASCII | Voice name char 8 |
 | 153 | ASCII | Voice name char 9 |
 | 154 | ASCII | Voice name char 10 |
+
+## XFM2 conversion
+
+Transpose 24 = no transpose, so 24 corresponds with C4.
+
+Midi note implementation:
+- C4 = MIDI 60 = 261.63 Hz
+- A4 = MIDI 69 = 440.00 Hz
