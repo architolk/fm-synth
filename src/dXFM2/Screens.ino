@@ -184,11 +184,12 @@ void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relati
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(5,14);
   if (relative) {
+    display.setCursor(5,14);
     display.print(F("Transpose"));
   } else {
-    display.print(F("KB scale"));
+    display.setCursor(40,14);
+    display.print(F("Scale"));
   }
 
   uint16_t pos = value;
@@ -213,6 +214,34 @@ void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relati
     if (value>offset) {
       display.setCursor(100,60);
       display.print(value-offset);
+    }
+  } else {
+    display.setCursor(0,63);
+    display.print(lscale);
+    drawNumber(rscale,127,63);
+    for (uint8_t i=0; i<127 i++) {
+      //Left part
+      float y = 25;
+      switch (lcurve) {
+        case 0: y = y - i*i*0.04; break; //Exponential decrease
+        case 1: y = y - i*0.2; break; //Linear decrease
+        case 2: y = y + i*0.2; break; //Linear increase
+        case 3: y = y + i*i*0.04; break;; //Exponential increase
+      }
+      if (i>=pos && y>=0 && y<=63)
+        display.drawPixel(pos-i,y,SSD1306_WHITE);
+      }
+      //Right part
+      y = 25;
+      switch (rcurve) {
+        case 0: y = y - i*i*0.04; break; //Exponential decrease
+        case 1: y = y - i*0.2; break; //Linear decrease
+        case 2: y = y + i*0.2; break; //Linear increase
+        case 3: y = y + i*i*0.04; break;; //Exponential increase
+      }
+      if (i<=127-pos && y>=0 && y<=63)
+        display.drawPixel(pos+i,y,SSD1306_WHITE);
+      }
     }
   }
 
