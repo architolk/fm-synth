@@ -202,7 +202,7 @@ void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relati
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(62-(getStringWidth(NOTES[value%12])+getNumberWidth((value+60-offset)/12))/2,60);
   display.print(NOTES[value%12]);
-  display.print((value+60-offset)/12); //C4 = 60, if offset!=60, compensate so offset = C4
+  display.print((value+48-offset)/12); //C4 = 60, if offset!=60, compensate so offset = C4
   if (relative) {
     display.setFont(&Dungeon9pt7b);
     if (value<offset) {
@@ -628,8 +628,8 @@ void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coa
     display.setCursor(0,15);
     display.print(F("Pitch"));
     float pitch = (32.7 * coarse) + (0.5 * fine);
-    drawNumber(pitch,110,15);
-    display.setCursor(110,15);
+    drawNumber(pitch,127,15);
+    display.setCursor(96,30);
     display.print(F("Hz"));
   } else {
     display.setFont(&Dungeon12pt7b);

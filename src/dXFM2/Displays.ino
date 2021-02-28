@@ -165,14 +165,18 @@ void showPMS(uint8_t op) {
 
 void showKeyTracking(uint8_t op) {
   //TODO: this is not really correct: keytrack is BP and curve, showNoteOnScreen is only BP!
-  showNoteOnScreen(op
-    ,getParamValue(greenSelect,BLUE_PITCH,operatorSelect,op,0)
-    ,getParamValue(greenSelect,BLUE_RATIO,operatorSelect,op,0)
-    ,getParamValue(greenSelect,BLUE_RATIO,operatorSelect,op,1)
-    ,getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,op,0)
-    ,getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,op,1)
-    ,60,false
-  );
+  if (op==6) {
+    showVolumeOnScreen(6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0));
+  } else {
+    showNoteOnScreen(op
+      ,getParamValue(greenSelect,BLUE_PITCH,operatorSelect,op,0)
+      ,60,false
+      ,getParamValue(greenSelect,BLUE_RATIO,operatorSelect,op,0)
+      ,getParamValue(greenSelect,BLUE_RATIO,operatorSelect,op,1)
+      ,getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,op,0)
+      ,getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,op,1)
+    );
+  }
 }
 
 void showLFO(uint8_t op) {
