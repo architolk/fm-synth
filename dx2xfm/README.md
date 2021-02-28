@@ -20,7 +20,7 @@ The table below give the DX7 Sysex parameters, captures from the [original DX7 m
 | 5 | 26 | 47 | 68 | 89 | 110 | 0-99 | Op envelope level 2 |
 | 6 | 27 | 48 | 69 | 90 | 111 | 0-99 | Op envelope level 3 |
 | 7 | 28 | 49 | 70 | 91 | 112 | 0-99 | Op envelope level 4 |
-| 8 | 29 | 50 | 71 | 92 | 113 | 0-99 | KB level scale breakpoint |
+| 8 | 29 | 50 | 71 | 92 | 113 | 0-99 | KB level scale breakpoint (from A-1 to C8, C3 = 27) |
 | 9 | 30 | 51 | 72 | 93 | 114 | 0-99 | KB level scale, left depth |
 | 10 | 31 | 52 | 73 | 94 | 115 | 0-99 | KB level scale, right depth |
 | 11 | 32 | 53 | 74 | 95 | 116 | 0-3 | Left curve (0=-LIN, 1=-EXP, 2=+EXP, 3=+LIN) |

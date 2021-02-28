@@ -197,7 +197,7 @@ public class Dx2xfm {
                  DX7Par[141] = allBytes[startpos + 116] & 0x01;        // LFO SYNC
                  DX7Par[142] = (allBytes[startpos + 116] & 0x0E)>>1;   // LFO Waveform
                  DX7Par[143] = (allBytes[startpos + 116] & 0x70)>>4;   // LFO Mod Sensitivity
-                 DX7Par[144] = (allBytes[startpos + 117] + 12) & 0xFF; // TRANSPOSE DX7 24 = C3 XFM2 24 = C4
+                 DX7Par[144] = allBytes[startpos + 117] & 0xFF; // TRANSPOSE
                  //Read Program name 118 .. 127
                  for (int n = 0; n < 10 ; n++) {  // 6 + i*128 + 118
                      name[n] = allBytes[6 + i*128 + 118 + n];
@@ -238,7 +238,6 @@ public class Dx2xfm {
                  String JsonStr = readString(Paths.get(confStr), StandardCharsets.UTF_8);
                  try {
                      JSONObject jsonObject = new JSONObject(JsonStr);
-                     //System.out.println(jsonObject.toJSONString());
                      // Build Parameter string for json file to write to
                      String parStr = "\t\"parameters\": [\n";
                      int lPar;
@@ -298,11 +297,11 @@ public class Dx2xfm {
                      XFM2parL[82+op]= DX7Par[5+(5-op)*21]*255/99;  // L2
                      XFM2parL[89+op]= DX7Par[6+(5-op)*21]*255/99;  // L3
                      XFM2parL[96+op]= DX7Par[7+(5-op)*21]*255/99;  // L4
-                     XFM2parL[45+op]= DX7Par[8+(5-op)*21]+9;        // BP DX7 C3=39 , XFM2 C3=48
+                     XFM2parL[45+op]= DX7Par[8+(5-op)*21]+21;        // BP DX7 C3=27 , XFM2 C3=48
                      XFM2parL[51+op]= DX7Par[9+(5-op)*21]*255/99;  // Key LDept
                      XFM2parL[57+op]= DX7Par[10+(5-op)*21]*255/99; // Key RDept
-                     XFM2parL[63+op] = (DX7Par[11+(5-op)*21]==0) ? 1 : (DX7Par[11+(5-op)*21]==1) ? 0 : (DX7Par[11+(5-op)*21]==2) ? 3 :4;
-                     XFM2parL[69+op] = (DX7Par[12+(5-op)*21]==0) ? 1 : (DX7Par[12+(5-op)*21]==1) ? 0 : (DX7Par[12+(5-op)*21]==2) ? 3 :4;
+                     XFM2parL[63+op] = (DX7Par[11+(5-op)*21]==0) ? 1 : (DX7Par[11+(5-op)*21]==1) ? 0 : (DX7Par[11+(5-op)*21]==2) ? 3 :2;
+                     XFM2parL[69+op] = (DX7Par[12+(5-op)*21]==0) ? 1 : (DX7Par[12+(5-op)*21]==1) ? 0 : (DX7Par[12+(5-op)*21]==2) ? 3 :2;
                      XFM2parL[140+op]= DX7Par[13+(5-op)*21]*32;     //Rate Key
                      XFM2parL[159+op]= DX7Par[14+(5-op)*21]*64;     //AMS
                      XFM2parL[39+op]= DX7Par[15+(5-op)*21]*32;      //Velo Sens
@@ -337,7 +336,13 @@ public class Dx2xfm {
                  XFM2parL[152]= DX7Par[141];          // LFO SYNC
                  XFM2parL[153]=(DX7Par[142]==1) ? 3 : (DX7Par[142]==3) ? 1 : DX7Par[142] ; // LFO WAVE
                  // PITCH MOD SENSITIVITY  VOICE[143]
-                 XFM2parL[174]= DX7Par[144];  // TRANSPOSE
+                 // TRANSPOSE DX7: C3 = 24, XFM2: C4 = 24, so XFM2: C3 = 12 (!)
+                 if (DX7Par[144]<12) {
+                   XFM2parL[174]= DX7Par[144]; //Problem! Cannot go lower than 0 :-(
+                   System.out.println("!!!WARNING: had to shift transpose: resulting voice will be an octave to high");
+                 } else {
+                   XFM2parL[174]= DX7Par[144]-12;
+                 }
 
                  // write algorithm values to XFM2 buffer
                  for (int p= 0; p < 512; p++) {
