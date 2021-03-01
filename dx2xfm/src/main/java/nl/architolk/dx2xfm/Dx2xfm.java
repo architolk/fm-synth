@@ -42,6 +42,7 @@ public class Dx2xfm {
    private static JSONArray ratecurve;
    private static JSONArray attackcurve;
    private static JSONArray paramnames;
+   private static JSONArray inits;
 
    private static int lscale(int rate, JSONArray curve) {
    	float x1,y1,x2,y2,y,slope,r;
@@ -238,8 +239,8 @@ public class Dx2xfm {
                      int lPar;
                      int lVal;
 
-                     JSONArray array = (JSONArray) jsonObject.get("parameters");
-                     Iterator<Object> iterator = array.iterator();
+                     inits = (JSONArray) jsonObject.get("parameters");
+                     Iterator<Object> iterator = inits.iterator();
                      while (iterator.hasNext()) {
                          JSONObject element = (JSONObject) iterator.next();
                          lPar = (int) element.get("Par#");
@@ -360,10 +361,15 @@ public class Dx2xfm {
                      jHead = jHead + "\t\"hash\": \"" + Integer.toHexString((int) hash) + "\",\n";
                      jHead = jHead + "\t\"parameters\": [\n";
                      writer.write(jHead);
-                     for (int k = 0; k < 511; k++) {
-                         writer.write("\t\t{ \"Par#\": " + k + " , \"Value\": " + Byte.toUnsignedInt(XFM2parB[k]) + " } ,\n");
+                     for (int k = 0; k < 512; k++) {
+                         String paramname = inits.getJSONObject(k).getString("Name");
+                         writer.write("\t\t{ \"Par#\": " + k + " , \"Value\": " + Byte.toUnsignedInt(XFM2parB[k]) + ", \"Name\": \"" + paramname + "\" }");
+                         if (k==511) {
+                           writer.write("\n");
+                         } else {
+                           writer.write(",\n");
+                         }
                      }
-                     writer.write("\t\t{ \"Par#\": " + 511 + " , \"Value\": " + Byte.toUnsignedInt(XFM2parB[511]) + " }\n");
                      writer.write("\t]}\n");
 
                      //Extra Dump
