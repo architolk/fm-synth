@@ -300,11 +300,15 @@ public class Dx2xfm {
                      XFM2parL[140+op]= DX7Par[13+(5-op)*21]*255/7;     //Rate Key (DX7: 0-7, XFM2: 0-255)
                      XFM2parL[159+op]= DX7Par[14+(5-op)*21]*255/3;     //AMS (DX7: 0-3, XFM2: 0-255)
                      XFM2parL[39+op]= DX7Par[15+(5-op)*21]*255/7;      //Velo Sens (DX7: 0-7, XFM2: 0-255)
+                     //Just a test: it seems that the original flat level is better, just KB levels should be better!!!
+                     XFM2parL[33+op]= DX7Par[16+(5-op)*21]*255/99;
+                     /*
                      if ((XFM2parL[1+op] & 1) == 1) {
                        XFM2parL[33+op]= lscale(DX7Par[16+(5-op)*21],flatcurve); // LEVEL for carriers
                      } else {
                        XFM2parL[33+op]= lscale(DX7Par[16+(5-op)*21],levelcurve); // LEVEL for operators
                      }
+                     */
                      // MODE DX7Par[17..] on DX7 1bit per Operator => XFM2 bits set in XFM2parL[14]
                      mode |= DX7Par[17+(5-op)*21] << (op);
                      XFM2parL[15+op]= DX7Par[18+(5-op)*21];       // RATIO
