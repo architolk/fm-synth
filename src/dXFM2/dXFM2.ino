@@ -274,6 +274,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
       resetLastChange();
       if (clicked) {
         //Laden van een programma
+        clearAlgoLEDs(); //Algorithm LEDs will be off during loading process
         patchSelect = value;
         if (xfm2LoadPatch(patchSelect)) {
           if (xfm2GetActiveProgram(0)) {

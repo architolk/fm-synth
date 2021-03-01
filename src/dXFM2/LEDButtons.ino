@@ -90,11 +90,7 @@ void initLEDs() {
 
 void updateLEDs() {
   //First, set all LEDs to zero
-  clearLEDRow(1);
-  clearLEDRow(2);
-  clearLEDRow(3);
-  clearLEDRow(4);
-  clearLEDRow(6);
+  clearAlgoLEDs();
   //LEDs from parameters
   //opc = Carrier Operator, corresponds to a "menu"
   //opm = Modulator Operator, corresponds to a "btn"
@@ -172,6 +168,15 @@ void clearLEDs() {
   for (uint8_t row=0; row<=7; row++) {
     clearLEDRow(row);
   }
+}
+
+//Low-level function to clear the algorithm LEDs
+void clearAlgoLEDs() {
+  clearLEDRow(1);
+  clearLEDRow(2);
+  clearLEDRow(3);
+  clearLEDRow(4);
+  clearLEDRow(6);
 }
 
 //Low-level function to clear a row

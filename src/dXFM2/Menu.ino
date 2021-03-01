@@ -45,6 +45,7 @@ void executeParamMenu(uint8_t param, uint8_t value) {
 }
 
 void executeInit() {
+  clearAlgoLEDs(); //Algorithm LEDs will be off during init process
   showMessage(F("Init dXFM2"));
   if (xfm2InitPatch()) {
     if (xfm2GetActiveProgram(0)) {
@@ -61,6 +62,7 @@ void executeInit() {
 
 void activatePatch(uint8_t patch) {
   //Only unit 0 supported
+  clearAlgoLEDs(); //Algorithm LEDs will be off during loading process
   showMessage(F("DX7 Mode!"));
   loadDefaultPatch(0,patch);
   xfm2PushActiveProgram(0);
