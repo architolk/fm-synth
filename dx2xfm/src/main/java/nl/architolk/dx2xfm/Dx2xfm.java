@@ -297,9 +297,9 @@ public class Dx2xfm {
                      XFM2parL[57+op]= DX7Par[10+(5-op)*21]*255/99; // Key RDept
                      XFM2parL[63+op] = (DX7Par[11+(5-op)*21]==0) ? 1 : (DX7Par[11+(5-op)*21]==1) ? 0 : (DX7Par[11+(5-op)*21]==2) ? 3 :2;
                      XFM2parL[69+op] = (DX7Par[12+(5-op)*21]==0) ? 1 : (DX7Par[12+(5-op)*21]==1) ? 0 : (DX7Par[12+(5-op)*21]==2) ? 3 :2;
-                     XFM2parL[140+op]= DX7Par[13+(5-op)*21]*32;     //Rate Key
-                     XFM2parL[159+op]= DX7Par[14+(5-op)*21]*64;     //AMS
-                     XFM2parL[39+op]= DX7Par[15+(5-op)*21]*32;      //Velo Sens
+                     XFM2parL[140+op]= DX7Par[13+(5-op)*21]*255/7;     //Rate Key (DX7: 0-7, XFM2: 0-255)
+                     XFM2parL[159+op]= DX7Par[14+(5-op)*21]*255/3;     //AMS (DX7: 0-3, XFM2: 0-255)
+                     XFM2parL[39+op]= DX7Par[15+(5-op)*21]*255/7;      //Velo Sens (DX7: 0-7, XFM2: 0-255)
                      if ((XFM2parL[1+op] & 1) == 1) {
                        XFM2parL[33+op]= lscale(DX7Par[16+(5-op)*21],flatcurve); // LEVEL for carriers
                      } else {
