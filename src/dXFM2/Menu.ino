@@ -11,8 +11,8 @@ const String MENUNAMES[MENUCOUNT] = {
   "Algo",
   "DX7 Patch",
   "MIDI",
-  "Params 0-255",
-  "Params 256-511",
+  "Params A",
+  "Params B",
   "LEDs"
 };
 const uint8_t MENUMAX[MENUCOUNT] = {0,31,31,0,255,255,0}; //Max values for a specific menu
@@ -28,8 +28,8 @@ void showParamMenu(uint8_t param, uint8_t value) {
   switch (param) {
     case 1: showAlgorithmMenuOnScreen(param,MENUNAMES[param],value,6); break;
     case 2: showParamMenuOnScreen(param,MENUNAMES[param],getPatchName(value),6); break;
-    case 4: showParamValueMenuOnScreen(param,MENUNAMES[param],0,value,getParamValueQuick({0,value}));
-    case 5: showParamValueMenuOnScreen(param,MENUNAMES[param],256,value,getParamValueQuick({0,256+value}));
+    case 4: showParamValueMenuOnScreen(param,MENUNAMES[param],0,value,getParamValueQuick({0,value}),6); break;
+    case 5: showParamValueMenuOnScreen(param,MENUNAMES[param],256,value,getParamValueQuick({0,256+value}),6); break;
     default: showParamMenuOnScreen(param,MENUNAMES[param],"",6); break;
   }
 }
