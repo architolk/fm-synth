@@ -379,6 +379,20 @@ void showParamMenuOnScreen(uint8_t nr, const String& param, String value, uint8_
   display.display();
 }
 
+void showParamValueMenuOnScreen(uint8_t nr, const String& param, uint16_t offset, uint8_t param, uint8_t value) {
+  display.clearDisplay();
+  drawMenuItem(nr,param);
+
+  display.setCursor(0,48);
+  display.print(offset+param);
+
+  display.drawRect(60,30,120,50,SSD1306_WHITE);
+  drawNumber(value,120,48);
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
+}
+
 void drawOperatorBox(uint8_t x, uint8_t y, uint8_t l, uint8_t nr, bool feedback, bool input) {
   display.drawRect(x,y,10,10,SSD1306_WHITE);
   display.drawLine(x+5,y+10,x+5,y+10+l,SSD1306_WHITE);
