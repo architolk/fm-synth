@@ -11,23 +11,26 @@
 */
 package nl.architolk.dx2xfm;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.nio.ByteBuffer;
 import java.io.IOException;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import static java.nio.file.Files.readString;
 
@@ -93,10 +96,6 @@ public class Dx2xfm {
      }
      String DX7Syx = fullName.substring(0,fullName.lastIndexOf("."));
      String baseDir = "./";
-/* */
-//        String baseDir = "/home/gerhard/Data/Java/Projects/ReadDX7SysEx/src/";
-//        String DX7Syx = "aegix";
-
 
      String fInput =  baseDir + DX7Syx + ".syx";
      String fOutput = baseDir + "out/" + DX7Syx + ".h";
@@ -144,7 +143,6 @@ public class Dx2xfm {
          outwriter.write("\n");
          outwriter.write("const patch_type PATCHPARAMS[32] PROGMEM = {\n");
 
-         //System.out.println("File size = " + fileSize + "\n");
          inputStream.read(allBytes);
          if (ByteBuffer.wrap(allBytes, 0, 4).equals(ByteBuffer.wrap(singlVoice, 0, 4))) {
              System.out.println("************** Single DX7Par SysEx file found");
@@ -155,27 +153,19 @@ public class Dx2xfm {
                  System.out.println(">>>>>>> START PRESET NUMBER: " + i);
                  String iStr = String.format("%02d", i);
                  startpos = 6 + i*128;
-                 //System.out.println("Startpos = " + startpos);
                  //START Read 6 operator blocks 0 .. 101
                  for (int p = 0; p < 6; p++) {  // 21 parameters to be filled from 17 packed
                      //First 11 parameters 0 .. 10   Read byte into int as unsigned: int i2 = b & 0xFF;
-                     //System.out.println(">> OPERATOR NUMBER: " + (6-p));
                      for (int q = 0; q < 11; q++) {
                          DX7Par[q+p*21] = allBytes[(startpos + p*17 + q)] & 0xFF;
-                         //System.out.println("q = "+q+" pos = " + (startpos + p*17 + q)+ " "+DX7Par[q+p*21]+" "+(allBytes[(startpos + p*17 + q)] & 0xFF));
                      }
                      //extract packed parameters 11 .. 16
                      DX7Par[11+p*21] = allBytes[startpos + p*17 + 11] & 0x03;        // LEFT CURVE
                      DX7Par[12+p*21] = (allBytes[startpos + p*17 + 11] & 0x0C)>>2;   // RGHT CURVE
-                     //System.out.println("Left Curve = " + DX7Par[11] + " Right Curve = " + DX7Par[12]);
-                     //System.out.println(DX7Par[12]+" "+((allBytes[startpos + p*17 + 11] & 0x0C)>>2));
-                     //System.out.println("********************");
                      DX7Par[13+p*21] = allBytes[startpos + p*17 + 12] & 0x07;        // Keyb Rate Scale
                      DX7Par[20+p*21] = (allBytes[startpos + p*17 + 12] & 0x78)>>3;   // OSC DETUNE
-                     //System.out.println("Keyb Rate Scal= " + DX7Par[13] + " OSC DETUNE = " + DX7Par[12]);
                      DX7Par[14+p*21] = allBytes[startpos + p*17 + 13] & 0x03;        // AMP MOD SENSITIVITY
                      DX7Par[15+p*21] = (allBytes[startpos + p*17 + 13] & 0x1C)>>2;   // KEY VEL SENSITIVITY
-                     //System.out.println("Amp Mod Sens = " + DX7Par[11] + " Key Vel Sens = " + DX7Par[12]);
                      DX7Par[16+p*21] = allBytes[startpos + p*17 + 14]& 0xFF;         // OP# OUT LEVEL
                      DX7Par[17+p*21] = allBytes[startpos + p*17 + 15] & 0x01;        // OSC MOD fixed/ratio 0=ratio
                      DX7Par[18+p*21] = (allBytes[startpos + p*17 + 15] & 0x3E)>>1;   // OSC FREQ COARSE
@@ -286,7 +276,6 @@ public class Dx2xfm {
                  } catch (Exception e) {
                      e.printStackTrace();
                  }
-                 //System.out.println("********** " + XFM2parL.toString());
                  // calculate feedback
                  for (int p = 7; p < 13 ; p++) {
                      XFM2parL[p] = XFM2parL[p]*DX7Par[135]*255/7; //Max value DX7 = 7, max value XFM2 = 255
