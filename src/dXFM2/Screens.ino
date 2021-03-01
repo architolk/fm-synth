@@ -229,10 +229,10 @@ void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relati
       //Left part
       float y = 32;
       switch (lcurve) {
-        case 0: y = y - i*i*0.008*lscale/255; break; //Exponential decrease
-        case 1: y = y - i*0.4*lscale/255; break; //Linear decrease
-        case 2: y = y + i*0.4*lscale/255; break; //Linear increase
-        case 3: y = y + i*i*0.008*lscale/255; break;; //Exponential increase
+        case 0: y = y + i*i*0.008*lscale/255; break; //Exponential decrease (y=0 = top, so decrease is y+)
+        case 1: y = y + i*0.4*lscale/255; break; //Linear decrease
+        case 2: y = y - i*0.4*lscale/255; break; //Linear increase (y=0 = top, so increase is y-)
+        case 3: y = y - i*i*0.008*lscale/255; break;; //Exponential increase
       }
       if (i<=pos && y>=0 && y<=63) {
         display.drawPixel(pos-i,y,SSD1306_WHITE);
@@ -240,10 +240,10 @@ void showNoteOnScreen(uint8_t screen, uint8_t value, uint8_t offset, bool relati
       //Right part
       y = 32;
       switch (rcurve) {
-        case 0: y = y - i*i*0.008*rscale/255; break; //Exponential decrease
-        case 1: y = y - i*0.4*rscale/255; break; //Linear decrease
-        case 2: y = y + i*0.4*rscale/255; break; //Linear increase
-        case 3: y = y + i*i*0.008*rscale/255; break;; //Exponential increase
+        case 0: y = y + i*i*0.008*rscale/255; break; //Exponential decrease
+        case 1: y = y + i*0.4*rscale/255; break; //Linear decrease
+        case 2: y = y - i*0.4*rscale/255; break; //Linear increase
+        case 3: y = y - i*i*0.008*rscale/255; break;; //Exponential increase
       }
       if (i<=127-pos && y>=0 && y<=63) {
         display.drawPixel(pos+i,y,SSD1306_WHITE);
@@ -379,15 +379,15 @@ void showParamMenuOnScreen(uint8_t nr, const String& param, String value, uint8_
   display.display();
 }
 
-void showParamValueMenuOnScreen(uint8_t nr, const String& param, uint16_t offset, uint8_t param, uint8_t value) {
+void showParamValueMenuOnScreen(uint8_t nr, const String& prmname, uint16_t offset, uint8_t param, uint8_t value, uint8_t screen) {
   display.clearDisplay();
-  drawMenuItem(nr,param);
+  drawMenuItem(nr,prmname);
 
   display.setCursor(0,48);
   display.print(offset+param);
 
-  display.drawRect(60,30,120,50,SSD1306_WHITE);
-  drawNumber(value,120,48);
+  display.drawRect(60,32,60,20,SSD1306_WHITE);
+  drawNumber(value,110,48);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
