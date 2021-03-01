@@ -38,6 +38,7 @@ public class Dx2xfm {
    private static JSONArray levelcurve;
    private static JSONArray ratecurve;
    private static JSONArray attackcurve;
+   private static JSONArray paramnames;
 
    private static int lscale(int rate, JSONArray curve) {
    	float x1,y1,x2,y2,y,slope,r;
@@ -58,17 +59,15 @@ public class Dx2xfm {
    	return 255;  // if curves are correct we should never get here
    }
 
-   private static JSONArray loadCurve(String name) {
+   private static JSONArray loadConfig(String name) {
      try {
-        String JsonStr = readString(Paths.get(confDir + "curve_" + name + ".json"), StandardCharsets.UTF_8);
+        String JsonStr = readString(Paths.get(confDir + name + ".json"), StandardCharsets.UTF_8);
         JSONObject jsonObject = new JSONObject(JsonStr);
         return (JSONArray) jsonObject.get("parameters");
      } catch (Exception e) {
          e.printStackTrace();
          System.exit(1);
          return null;
-     } finally {
-
      }
    }
 
@@ -116,10 +115,11 @@ public class Dx2xfm {
          //Nothing: exception might be that directory already exists - whatever...
      }
 
-     flatcurve = loadCurve("flat");
-     levelcurve = loadCurve("level");
-     ratecurve = loadCurve("rate");
-     attackcurve = loadCurve("attack");
+     flatcurve = loadConfig("curve_flat");
+     levelcurve = loadConfig("curve_level");
+     ratecurve = loadConfig("curve_rate");
+     attackcurve = loadConfig("curve_attack");
+     paramnames = loadConfig("DX7Params");
 
      try (
              InputStream inputStream = new BufferedInputStream(new FileInputStream(fInput));
@@ -222,10 +222,15 @@ public class Dx2xfm {
                      jHead = jHead + "\t\"hash\": \"0\",\n";
                      jHead = jHead + "\t\"parameters\": [\n";
                      writer.write(jHead);
-                     for (int k = 0; k < 154; k++) {
-                         writer.write("\t\t{ \"Par#\": " + k + " , \"Value\": " + DX7Par[k] + " } ,\n");
+                     for (int k = 0; k < 155; k++) {
+                         String paramname = paramnames.getJSONObject(k).getString("Name");
+                         writer.write("\t\t{ \"Par#\": " + k + " , \"Value\": " + DX7Par[k] + ", \"Name\": \"" + paramname + "\" }");
+                         if (k==154) {
+                           writer.write("\n");
+                         } else {
+                           writer.write(",\n");
+                         }
                      }
-                     writer.write("\t\t{ \"Par#\": " + 154 + " , \"Value\": " + DX7Par[154] + " }\n");
                      writer.write("\t]\n}\n");
                      writer.flush();
                      System.out.println("Saved Program to: " + fJson );
