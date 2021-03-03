@@ -81,6 +81,11 @@ Very detailed information about the DX7 envelope generators can be found here:
 - [The Yamaha DX7 Envelope Generator, part three](https://tlbflush.org/notes/post/dx7eg3/)
 - [The Yamaha DX7 Envelope Generator, part four](https://tlbflush.org/notes/post/dx7eg4/)
 
+Most important conclusions from this information:
+- Both envelope increase and decrease are non-lineair.
+- Envelope increase is faster than envelope decrease.
+- Envelope decrease is exponential, envelope increase is quadratic.
+
 ## XFM2 conversion
 
 Transpose 24 = no transpose, so 24 corresponds with C4.
