@@ -312,7 +312,8 @@ public class Dx2xfm {
                      // MODE DX7Par[17..] on DX7 1bit per Operator => XFM2 bits set in XFM2parL[14]
                      mode |= DX7Par[17+(5-op)*21] << (op);
                      XFM2parL[15+op]= DX7Par[18+(5-op)*21];       // RATIO
-                     XFM2parL[21+op]= DX7Par[19+(5-op)*21]*255/99; // Back to normal, tried with 150/50 according to rheslip. RATIO FINE (255/99 doesn't seem to be OK - according to code of rheslip)
+                     //Ratio 256/100 would actually be "logical", because it is a fine rate between 1.00 and 1.99 at coarse level 1 for DX7 and 1+(0/256) and 1+(255/256) for XFM7: 1.5 = DX7 50 = XFM2 128!
+                     XFM2parL[21+op]= DX7Par[19+(5-op)*21]*256/100; // Back to normal, tried with 150/50 according to rheslip. RATIO FINE (255/99 doesn't seem to be OK - according to code of rheslip)
 // Check!!
                      XFM2parL[27+op]= 128+(DX7Par[20+(5-op)*21]-7);  // Pitch FINE  neutral   DX7 (0-14)  7 = XFM2 128
 // CHeck!!
