@@ -73,7 +73,13 @@ The actual formula to get the frequency: Hz = COARSE * (1 + (FINE * 8.772 / 99))
 
 ## Explanation of the DX7 parameters
 
-[This article](https://www.muzines.co.uk/articles/understanding-the-dx7/7842) give a lot of useful insights.
+[This article](https://www.muzines.co.uk/articles/understanding-the-dx7/7842) gives a lot of useful insights.
+
+Very detailed information about the DX7 envelope generators can be found here:
+- [The Yamaha DX7 Envelope Generator, part one](https://tlbflush.org/notes/post/dx7eg1/)
+- [The Yamaha DX7 Envelope Generator, part two](https://tlbflush.org/notes/post/dx7eg2/)
+- [The Yamaha DX7 Envelope Generator, part three](https://tlbflush.org/notes/post/dx7eg3/)
+- [The Yamaha DX7 Envelope Generator, part four](https://tlbflush.org/notes/post/dx7eg4/)
 
 ## XFM2 conversion
 
