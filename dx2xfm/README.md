@@ -71,6 +71,10 @@ The actual formula to get the frequency: Hz = COARSE * (1 + (FINE * 8.772 / 99))
 | 153 | ASCII | Voice name char 9 |
 | 154 | ASCII | Voice name char 10 |
 
+## Explanation of the DX7 parameters
+
+[This article](https://www.muzines.co.uk/articles/understanding-the-dx7/7842) give a lot of useful insights.
+
 ## XFM2 conversion
 
 Transpose 24 = no transpose, so 24 corresponds with C4.
