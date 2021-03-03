@@ -88,6 +88,14 @@ Most important conclusions from this information:
 
 ## XFM2 conversion
 
+### Fine ratio
+
+- Fine ratio on the DX7 is a percentage of the frequency. A4 (=440 Hz) with frequency ratio 1.10 (coarse = 1, fine = 10) results in a frequency of 484. The calculation is F = Fc x (1 + Rf/100), F being the resulting frequency, Fc the frequency with only the coarse part and Rf the fine ratio parameter value.
+- Fine ratio on the XFM2 is a percentage of an octave. Using [equal temperament](https://en.wikipedia.org/wiki/Equal_temperament), this means that the calculation is actually F = Fc x 2^(Rf/256). So to get the correct ratio, the value is actually fine = 35.
+- This means: no easy conversion! For example: 1.25 gives 82, 1.5 gives 150, 1.75 gives 207 and 1.99 gives 254.
+
+### Transpose
+
 Transpose 24 = no transpose, so 24 corresponds with C4.
 
 Midi note implementation:
