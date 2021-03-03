@@ -5,7 +5,7 @@
 *
 */
 
-#define MENUCOUNT 7
+#define MENUCOUNT 8
 const String MENUNAMES[MENUCOUNT] = {
   "Initialize",
   "Algo",
@@ -13,9 +13,10 @@ const String MENUNAMES[MENUCOUNT] = {
   "MIDI",
   "Params A",
   "Params B",
-  "LEDs"
+  "LEDs",
+  "Synth mode"
 };
-const uint8_t MENUMAX[MENUCOUNT] = {0,31,31,0,255,255,0}; //Max values for a specific menu
+const uint8_t MENUMAX[MENUCOUNT] = {0,31,31,0,255,255,0,1}; //Max values for a specific menu
 uint8_t paramData[MENUCOUNT];
 
 void setupMenu() {
@@ -30,6 +31,7 @@ void showParamMenu(uint8_t param, uint8_t value) {
     case 2: showParamMenuOnScreen(param,MENUNAMES[param],getPatchName(value),6); break;
     case 4: showParamValueMenuOnScreen(param,MENUNAMES[param],0,value,getParamValueQuick({0,value}),6); break;
     case 5: showParamValueMenuOnScreen(param,MENUNAMES[param],256,value,getParamValueQuick({0,256+value}),6); break;
+    case 7: showParamMenuOnScreen(param,MENUNAMES[param],value==0 ? F("XFM2") : F("DX7"),6); break;
     default: showParamMenuOnScreen(param,MENUNAMES[param],"",6); break;
   }
 }
@@ -40,6 +42,7 @@ void executeParamMenu(uint8_t param, uint8_t value) {
     case 0: executeInit(); break;
     case 1: setAlgorithm(value); break;
     case 2: activatePatch(value); break;
+    case 7: setSynthMode(value); break;
     default: showDebug(value); break;
   }
 }
@@ -78,6 +81,20 @@ void setAlgorithm(uint8_t algo) {
   updateLEDs();
   patchChanged = true;
   doMenuChange();
+}
+
+void setSynthMode(uint8_t mode) {
+  //In DX7 mode, all parameter values are displayed like the DX7, so its easier to compare DX7 patches
+  //Warning: doing this, you can't tell what is the actual value, and some small changes might not be visible
+  //Also: at this moment, it doesn't compensate for differences in the engine between XFM2 and DX7
+  if (mode==0) {
+    showMessage(F("XFM2 mode"));
+    dx7LegacyMode = false;
+  } else {
+    showMessage(F("DX7 mode"));
+    dx7LegacyMode = true;
+  }
+  delay(1000);
 }
 
 uint8_t getMenuParamdata(uint8_t param) {

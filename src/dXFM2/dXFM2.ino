@@ -96,6 +96,7 @@ uint8_t operatorUsed = 0; //Operator actually used
 uint8_t toggleMode = 0; //Sets the toggle mode
 uint8_t patchSelect = 0; //The active patch
 bool patchChanged = false; //True if the patch is changed without saving it
+bool dx7LegacyMode = false; //Don't go into legacy mode! (it's not allowed ;-))
 
 uint8_t displayMode = DISPLAY_OVERVIEW; //Sets the overview mode (extra information, is temporarilly set to DISPLAY_NORMAL whenever you hit a button)
 unsigned long lastChange = 0; //Sets the time when you last hit a button
