@@ -135,7 +135,7 @@ When using fixed pitch operator mode, the frequency is obtained on the DX7 using
 
 When using fixed pitch operator mode, the frequency is obtained on the XFM2 using the following formula: COARSE * FINE:
 - COARSE is a value between 0-255, frequency is calculated using the formula Hz = COARSE * 32.7
-- FINE is a value between 0-255, probably the same formula as with frequency fine ratio, so: 2^(FINE/256)
+- FINE is a value between 0-255, using the same formula as with frequency fine ratio, so: 2^(FINE/256), for [equal temperament](https://en.wikipedia.org/wiki/Equal_temperament).
 - The actual formula to get the frequency for the XFM2 is: Hz = COARSE * 32.7 * 2^(FINE/256)
 - An approximation for this formula is: Hz = COARSE * 32.7 * (1 + (FINE/256) * (FINE/256) * 0.34 + (FINE/256) * 0.66)
 - The multiplication range for the XFM2 FINE parameter can be calculated from this: it goes from 1 to 1.9946
@@ -155,6 +155,13 @@ Conversion of coarse & fine parameters in fixed pitch mode needs to be combined:
 | 3 | 10 | 1886 Hz | 57 | 4 |
 | 3 | 99 | 9772 Hz | 298 | 1 |
 
+The correct conversion is as follows:
+- XFM2-COARSE = Hz / 32.7, rounded down (not using fractions), Hz being the "correct" frequency as calculated for the DX7
+- Let HZ-FINE be the fine ratio in Hz needed get to the "correct" frequency: HZ-FINE = (Hz - XFM2-COARSE) / Hz
+- XFM2-FINE = 256 / Log2(1 + HZ-FINE)
+
+**NB**: this conversion is ONLY correct for XMF2 Tuning parameter value 0 (= normal tuning = [equal temperament](https://en.wikipedia.org/wiki/Equal_temperament))
+
 ### Frequency coarse ratio
 
 | DX7 | XFM2 |
@@ -173,7 +180,9 @@ Conversion of coarse & fine parameters in fixed pitch mode needs to be combined:
 
 - Fine ratio on the DX7 is a percentage of the frequency. A4 (=440 Hz) with frequency ratio 1.10 (coarse = 1, fine = 10) results in a frequency of 484. The calculation is F = Fc * (1 + Rf/100), F being the resulting frequency, Fc the frequency with only the coarse part and Rf the fine ratio parameter value.
 - Fine ratio on the XFM2 is a percentage of an octave. Using [equal temperament](https://en.wikipedia.org/wiki/Equal_temperament), this means that the calculation is actually F = Fc * 2^(Rf/256). So to get the correct ratio, the value is actually fine = 35.
-- This means: no easy conversion! For example: 1.25 gives 82, 1.5 gives 150, 1.75 gives 207 and 1.99 gives 254.
+- The correct conversion would be: XFM2 fine = 256 / Log2(1 + Rf/100), Rf being the fine ratio parameter value of the DX7.
+
+**NB**: this conversion is ONLY correct for XMF2 Tuning parameter value 0 (= normal tuning = [equal temperament](https://en.wikipedia.org/wiki/Equal_temperament))
 
 ### Detune
 
