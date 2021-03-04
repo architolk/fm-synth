@@ -41,7 +41,6 @@ public class Dx2xfm {
    private static JSONArray levelcurve;
    private static JSONArray ratecurve;
    private static JSONArray attackcurve;
-   private static JSONArray ratiocurve;
    private static JSONArray paramnames;
    private static JSONArray inits;
 
@@ -126,7 +125,6 @@ public class Dx2xfm {
      levelcurve = loadConfig("curve_level");
      ratecurve = loadConfig("curve_rate");
      attackcurve = loadConfig("curve_attack");
-     ratiocurve = loadConfig("curve_ratio");
      paramnames = loadConfig("DX7Params");
 
      try (
