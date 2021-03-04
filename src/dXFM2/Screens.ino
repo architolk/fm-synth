@@ -677,8 +677,8 @@ void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coa
     display.setCursor(0,15);
     display.print(F("Pitch"));
     float pitch = fine;
-    pitch = 0.34*pitch*pitch/(256*256) + 0.66*pitch/256;
-    pitch = (32.7 * coarse) * (1 + pitch); //Coarse is spot on, fine is a bit fussy, but close enough
+    pitch = 0.34*pitch*pitch/(256*256) + 0.66*pitch/256; //Approximation: actual conversion is 2^(pitch/256)-1 for equal temperament
+    pitch = (32.7 * coarse) * (1 + pitch); //Coarse is spot on, fine might be 0-2 Hz off
     drawNumber(pitch,127,15);
     display.setCursor(96,30);
     display.print(F("Hz"));

@@ -129,9 +129,31 @@ The conversion for the coarse & fine frequency parameters are different with res
 ### Fixed pitch parameter conversion
 
 When using fixed pitch operator mode, the frequency is obtained on the DX7 using the following formula: COARSE * FINE:
-- On the DX7, COARSE is a value between 0-3, corresponding to 1Hz, 10Hz, 100Hz or 1000Hz;
-- On the DX7, FINE is a value between 0-99, corresponding with multipliers 1 to 9.772
-- The actual formula to get the frequency for the D7 is: Hz = COARSE * (1 + (FINE * 8.772 / 99))
+- COARSE is a value between 0-3, corresponding to 1Hz, 10Hz, 100Hz or 1000Hz (=HZ-COARSE);
+- FINE is a value between 0-99, corresponding with multipliers 1 to 9.772
+- The actual formula to get the frequency for the D7 is: Hz = HZ-COARSE * (1 + (FINE * 8.772 / 99))
+
+When using fixed pitch operator mode, the frequency is obtained on the XFM2 using the following formula: COARSE * FINE:
+- COARSE is a value between 0-255, frequency is calculated using the formula Hz = COARSE * 32.7
+- FINE is a value between 0-255, probably the same formula as with frequency fine ratio, so: 2^(FINE/256)
+- The actual formula to get the frequency for the XFM2 is: Hz = COARSE * 32.7 * 2^(FINE/256)
+- An approximation for this formula is: Hz = COARSE * 32.7 * (1 + (FINE/256) * (FINE/256) * 0.34 + (FINE/256) * 0.66)
+- The multiplication range for the XFM2 FINE parameter can be calculated from this: it goes from 1 to 1.9946
+- Need to check: this would mean that a frequency below 32.7 is not possible using fixed pitch rate. Maybe COARSE = 0 is actually 16.35?
+
+Conversion of coarse & fine parameters in fixed pitch mode needs to be combined: the resulting value for the XFM2 coarse parameter depends on both the coarse & fine parameters of the DX7, for reference see this table:
+
+|DX7 Coarse | DX7 Fine | Hz | XFM2 Coarse | XFM2 Fine |
+|-----------|----------|----|-------------|-----------|
+| 1 | 0 | 10 Hz | ? | ? |
+| 1 | 50 | 54 Hz | 1 | 187 |
+| 1 | 99 | 98 Hz | 2 | 148 |
+| 2 | 0 | 100 Hz | 3 | 7 |
+| 2 | 10 | 189 Hz | 5 | 53 |
+| 2 | 99 | 997 Hz | 29 | 11 |
+| 3 | 0 | 1000 Hz | 30 | 7 |
+| 3 | 10 | 1886 Hz | 57 | 4 |
+| 3 | 99 | 9772 Hz | 298 | 1 |
 
 ### Frequency coarse ratio
 
@@ -149,8 +171,8 @@ When using fixed pitch operator mode, the frequency is obtained on the DX7 using
 |-----|------|
 | 19,40,61,82,103,124 | 21-26 |
 
-- Fine ratio on the DX7 is a percentage of the frequency. A4 (=440 Hz) with frequency ratio 1.10 (coarse = 1, fine = 10) results in a frequency of 484. The calculation is F = Fc x (1 + Rf/100), F being the resulting frequency, Fc the frequency with only the coarse part and Rf the fine ratio parameter value.
-- Fine ratio on the XFM2 is a percentage of an octave. Using [equal temperament](https://en.wikipedia.org/wiki/Equal_temperament), this means that the calculation is actually F = Fc x 2^(Rf/256). So to get the correct ratio, the value is actually fine = 35.
+- Fine ratio on the DX7 is a percentage of the frequency. A4 (=440 Hz) with frequency ratio 1.10 (coarse = 1, fine = 10) results in a frequency of 484. The calculation is F = Fc * (1 + Rf/100), F being the resulting frequency, Fc the frequency with only the coarse part and Rf the fine ratio parameter value.
+- Fine ratio on the XFM2 is a percentage of an octave. Using [equal temperament](https://en.wikipedia.org/wiki/Equal_temperament), this means that the calculation is actually F = Fc * 2^(Rf/256). So to get the correct ratio, the value is actually fine = 35.
 - This means: no easy conversion! For example: 1.25 gives 82, 1.5 gives 150, 1.75 gives 207 and 1.99 gives 254.
 
 ### Detune
