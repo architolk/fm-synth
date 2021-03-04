@@ -76,6 +76,12 @@ public class Dx2xfm {
      }
    }
 
+   private static int getXFM2Ratio(int dx7ratio) {
+     double ratio = dx7ratio;
+     ratio = 256/(Math.log(2)/Math.log(1+ratio/100)); // log(2)/log(x) = log2(x)
+     return (int)Math.round(ratio);
+   }
+
    public static void main(String[] args) {
 
      if (args.length!=1) {
@@ -171,7 +177,11 @@ public class Dx2xfm {
                      DX7Par[15+p*21] = (allBytes[startpos + p*17 + 13] & 0x1C)>>2;   // KEY VEL SENSITIVITY
                      DX7Par[16+p*21] = allBytes[startpos + p*17 + 14]& 0xFF;         // OP# OUT LEVEL
                      DX7Par[17+p*21] = allBytes[startpos + p*17 + 15] & 0x01;        // OSC MOD fixed/ratio 0=ratio
-                     DX7Par[18+p*21] = (allBytes[startpos + p*17 + 15] & 0x3E)>>1;   // OSC FREQ COARSE
+                     if (DX7Par[17+p*21]==0) {
+                       DX7Par[18+p*21] = (allBytes[startpos + p*17 + 15] & 0x3E)>>1;   // OSC FREQ COARSE, ratio PITCH
+                     } else {
+                       DX7Par[18+p*21] = (allBytes[startpos + p*17 + 15] & 0x06)>>1;   // OSC FREQ COARSE, fixed pitch
+                     }
                      DX7Par[19+p*21] = allBytes[startpos + p*17 + 16] & 0xFF;        // OSC FREQ FINE
                      // DX7Par 20 already filled ...
                  }
@@ -313,12 +323,23 @@ public class Dx2xfm {
                      */
                      // MODE DX7Par[17..] on DX7 1bit per Operator => XFM2 bits set in XFM2parL[14]
                      mode |= DX7Par[17+(5-op)*21] << (op);
-                     XFM2parL[15+op]= DX7Par[18+(5-op)*21];       // RATIO
-                     //Ratio 256/100 would actually be "logical", because it is a fine rate between 1.00 and 1.99 at coarse level 1 for DX7 and 1+(0/256) and 1+(255/256) for XFM7: 1.5 = DX7 50 = XFM2 128!
-                     XFM2parL[21+op]= lscale(DX7Par[19+(5-op)*21],ratiocurve); // Back to normal, tried with 150/50 according to rheslip. RATIO FINE (255/99 doesn't seem to be OK - according to code of rheslip)
-// Check!!
-                     XFM2parL[27+op]= 128+(DX7Par[20+(5-op)*21]-7);  // Pitch FINE  neutral   DX7 (0-14)  7 = XFM2 128
-// CHeck!!
+                     if (DX7Par[17+(5-op)*21]==0) {
+                       //Pitch ratio
+                       XFM2parL[15+op]= DX7Par[18+(5-op)*21];       // RATIO
+                       XFM2parL[21+op]= getXFM2Ratio(DX7Par[19+(5-op)*21]); // Fine ratio XFM2 = part of an octave, Fine ratio DX7 = part of a frequency
+                       // Check!!
+                       XFM2parL[27+op]= 128+(DX7Par[20+(5-op)*21]-7);  // Pitch FINE  neutral   DX7 (0-14)  7 = XFM2 128
+                       // CHeck!!
+                     } else {
+                       // Fixed pitch
+                       double freq = DX7Par[18+(5-op)*21];
+                       freq = (freq==0) ? 1 : (freq==1) ? 10 : (freq==2) ? 100 : 1000; //Frequency part from coarse
+                       freq = freq * (1 + 8.772*DX7Par[19+(5-op)*21]/99); //Calculated frequency
+                       XFM2parL[15+op] = (int)(freq/32.7); //RATIO = Rounded down frequency/32.7
+                       freq = (freq - 32.7*XFM2parL[15+op])/(32.7*XFM2parL[15+op]); //frequency ratio we need to add (kinda similar to ratio fine)
+                       XFM2parL[21+op] = (int)Math.round(256/(Math.log(2)/Math.log(1+freq))); // FINE RATIO: log(2)/log(x) = log2(x))
+                       XFM2parL[27+op] = 0; // Pitch FINE, detune
+                     }
                  }
                  XFM2parL[13]=(DX7Par[136]==1) ? 63 : 0;
                  XFM2parL[14]=mode;
