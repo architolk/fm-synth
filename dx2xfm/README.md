@@ -34,11 +34,6 @@ The table below give the DX7 Sysex parameters, captures from the [original DX7 m
 | 19 | 40 | 61 | 82 | 103 | 124 | 0-99 | Fine frequency ratio (1.00 - 1.99 multiplier)|
 | 20 | 41 | 62 | 83 | 104 | 125 | 0-14 | Detune (7 = 0%) |
 
-When using fixed pitch operator mode, the frequency is obtained using the following formula: COARSE * FINE:
-- COARSE is a value between 0-3, corresponding to 1Hz, 10Hz, 100Hz or 1000Hz;
-- FINE is a value between 0-99, corresponding with multipliers 1 to 9.772
-The actual formula to get the frequency: Hz = COARSE * (1 + (FINE * 8.772 / 99))
-
 | Nr | Range | Parameter |
 |----|-------|-----------|
 | 126 | 0-99 | Pitch envelope rate 1 |
@@ -88,11 +83,87 @@ Most important conclusions from this information:
 
 ## XFM2 conversion
 
-### Fine ratio
+### Algorithm
+
+| DX7 | XFM2 |
+|-----|------|
+| 134 | 1 - 6 |
+
+- The algorithms of the DX7 need to be converted to the bitmapped version for the XFM2.
+- Mark that the feedback bit (making a XFM2 operator modulates itself) needs to be included as well!
+- Algorithm 4 and 6 have feedback that is not self-modulated (from 4 to 6 and from 5 to 6): so probably operator 6 won't have a feedback bit set!
+
+### Feedback
+
+| DX7 | XFM2 |
+|-----|------|
+| 135 | 7 - 12 |
+
+- DX7 has only one feedback parameter, range 0-7
+- XFM2 has a feedback parameter per operator, range 0-255
+- The value from DX7 needs to be copied to the feedback parameter of the XFM2 for the operator that has feedback, according to the algorithm.
+- Not tested, but assuming a lineair conversion scale: 255/7
+- Not sure: is the feedback parameter used for algorithms 4 and 6, or do these algorithms use the operator output level from operator 4 (for algorithm 4) and operator 5 (for algorithm 6)? We assume the the latter: the XFM2 feedback parameter is only for self modulation!
+
+### Oscillator keyboard sync
+
+| DX7 | XFM2 |
+|-----|------|
+| 136 | 13 |
+
+- DX7 has global oscillator sync, range 0-1
+- XFM2 has bitwise oscillator sync, per operator, LSB = operator 1
+- When DX7 has oscillator sync enabled, set the XFM2 oscillator sync parameter to 0b00111111 (=63)
+
+### Operator mode
+
+| DX7 | XFM2 |
+|-----|------|
+| 17,38,59,80,101,122 | 14 |
+
+- DX7 has a parameter per operator. 0 = ratio, 1 = fixed pitch
+- XFM2 has a bitwise parameter. LSB = operator 1. 0 = ratio, 1 = fixed pitch
+
+The conversion for the coarse & fine frequency parameters are different with respect to this parameter!
+
+### Fixed pitch parameter conversion
+
+When using fixed pitch operator mode, the frequency is obtained on the DX7 using the following formula: COARSE * FINE:
+- On the DX7, COARSE is a value between 0-3, corresponding to 1Hz, 10Hz, 100Hz or 1000Hz;
+- On the DX7, FINE is a value between 0-99, corresponding with multipliers 1 to 9.772
+- The actual formula to get the frequency for the D7 is: Hz = COARSE * (1 + (FINE * 8.772 / 99))
+
+### Frequency coarse ratio
+
+| DX7 | XFM2 |
+|-----|------|
+| 18,39,60,81,102,123 | 15-20 |
+
+- Coarse frequency works the same for DX7 and XFM2
+- Range of the XFM2 runs all the way up to 255, DX7 only goes to 31: XFM2 can have higher coarse frequency rates.
+- A coarse frequency of 0 on the DX7 is usually depicted as ratio 0.50 (what it actually is: a sub-oscillator)
+
+### Frequency fine ratio
+
+| DX7 | XFM2 |
+|-----|------|
+| 19,40,61,82,103,124 | 21-26 |
 
 - Fine ratio on the DX7 is a percentage of the frequency. A4 (=440 Hz) with frequency ratio 1.10 (coarse = 1, fine = 10) results in a frequency of 484. The calculation is F = Fc x (1 + Rf/100), F being the resulting frequency, Fc the frequency with only the coarse part and Rf the fine ratio parameter value.
 - Fine ratio on the XFM2 is a percentage of an octave. Using [equal temperament](https://en.wikipedia.org/wiki/Equal_temperament), this means that the calculation is actually F = Fc x 2^(Rf/256). So to get the correct ratio, the value is actually fine = 35.
 - This means: no easy conversion! For example: 1.25 gives 82, 1.5 gives 150, 1.75 gives 207 and 1.99 gives 254.
+
+### Detune
+
+| DX7 | XFM2 |
+|-----|------|
+| 20,41,62,83,104,125 | 27-32 |
+
+- DX7 detune is ranged 0-14, 0 corresponds to -7, 7 corresponds to 0, 14 corresponds to +7
+- XFM2 detune is ranged 0-255, 0 corresponeds to -127, 128 corresponds to 0, 127 corresponds to +127
+- DX7 detune segments an fine pitch interval of the DX7 (rang -0.007 to +0.007? Not sure..)
+- XFM2 detune is ranged in cents, so an interval within a semitone of an octave (see also frequency fine ratio)
+- The means: DX7 has detune with respect to frequency, XFM2 has detune with respect to semitones: same different as for frequency fine ratio. But because the intervals are so small, we will probably get away with a fixed conversion ratio.
 
 ### Transpose
 
