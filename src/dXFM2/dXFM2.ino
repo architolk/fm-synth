@@ -261,6 +261,9 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
     if (greenSelect==GREEN_OSC && blueSelect>3) {
       showDisplay(6);
     } else {
+      showDisplay(operatorSelect);
+      /*
+      DISABLED: Was necessary to have a screen per effect, we now go back to a screen per dial!
       if (greenSelect==GREEN_EFX) {
         showDisplay(5-blueSelect);
         if (blueSelect==0) {
@@ -269,6 +272,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
       } else {
         showDisplay(operatorSelect);
       }
+      */
     }
   } else {
     if (encoder==9) {

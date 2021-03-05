@@ -52,6 +52,7 @@ void showOPSDisplay(uint8_t op) {
 }
 
 void showEFXDisplay(uint8_t op) {
+  /*
   switch (op) {
     case 0: showAMDisplay(op); break;
     case 1: showDelayDisplay(op); break;
@@ -60,8 +61,17 @@ void showEFXDisplay(uint8_t op) {
     case 4: showChorusDisplay(op); break;
     case 5: showEffectsDisplay(op); break;
     case 6: showFilterDisplay(op); break;
+  }*/
+  switch (blueSelect) {
+    case 0: showEffectsDisplay(op); break;
+    case 1: showChorusDisplay(op); break;
+    case 2: showReverbDisplay(op); break;
+    case 3: showPhaserDisplay(op); break;
+    case 4: showDelayDisplay(op); break;
+    case 5: showAMDisplay(op); break;
   }
 }
+
 
 void showAMDisplay(uint8_t op) {
   //Depth, speed, range, LR Phase
@@ -126,11 +136,20 @@ void showChorusDisplay(uint8_t op) {
 void showEffectsDisplay(uint8_t op) {
   //BLUE_VOLUME 2: Decimator depth, 1: Bitcrusher depth, 5: FX Routing
   showEffectsOnScreen(5,getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,5,0),getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,2,0),getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,1,0));
+  switch (op) {
+    case 0: showMessage(F("ACTIVE")); break;
+    case 1: showValueOnScreen(F("Bitcrusher"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
+    case 2: showValueOnScreen(F("Decimator"),2,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
+    case 3: showFilterDisplay(3); break;
+    case 4: showMessage(F("Filter")); break;
+    case 5: showEffectsOnScreen(5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0),0,0) break;
+    case 6: showMessage(F("ACTIVE")); break;
+  }
 }
 
 void showFilterDisplay(uint8_t op) {
   //BLUE_VOLUME 4: Lo pass, 3: Hi Pass
-  showFilterOnScreen(6,getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,4,0),getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,3,0));
+  showFilterOnScreen(op,getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,4,0),getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,3,0));
 }
 
 void showMasterDisplay(uint8_t op) {
