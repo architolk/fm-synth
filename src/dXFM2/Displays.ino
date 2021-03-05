@@ -52,16 +52,6 @@ void showOPSDisplay(uint8_t op) {
 }
 
 void showEFXDisplay(uint8_t op) {
-  /*
-  switch (op) {
-    case 0: showAMDisplay(op); break;
-    case 1: showDelayDisplay(op); break;
-    case 2: showPhaserDisplay(op); break;
-    case 3: showReverbDisplay(op); break;
-    case 4: showChorusDisplay(op); break;
-    case 5: showEffectsDisplay(op); break;
-    case 6: showFilterDisplay(op); break;
-  }*/
   switch (blueSelect) {
     case 0: showEffectsDisplay(op); break;
     case 1: showChorusDisplay(op); break;
@@ -74,82 +64,103 @@ void showEFXDisplay(uint8_t op) {
 
 
 void showAMDisplay(uint8_t op) {
-  //Depth, speed, range, LR Phase
-  efx_type efx;
-  efx.speed = getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,4,0);
-  efx.depth = getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,3,0);
-  showAMOnScreen(0,efx);
+  switch (op) {
+    case 0: showValueOnScreen(F("Range"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 1: showValueOnScreen(F("LR Phase"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
+    case 2: showMessageOnScreen(2,F("AM")); break;
+    case 3: showMessageOnScreen(3,F("AM")); break;
+    case 4: showValueOnScreen(F("Speed"),4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
+    case 5: showValueOnScreen(F("Depth"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
+    case 6: showMessageOnScreen(6,F("AM")); break;
+  }
 }
 
 void showDelayDisplay(uint8_t op) {
-  //Dry, Wet, Mode, Time, Feedback, Lo, Hi, Tempo, Mul, Div
-  efx_type efx;
-  efx.dry = getParamValue(greenSelect,BLUE_DURATION,operatorSelect,6,0);
-  efx.wet = getParamValue(greenSelect,BLUE_DURATION,operatorSelect,5,0);
-  efx.mode = getParamValue(greenSelect,BLUE_DURATION,operatorSelect,1,0);
-  showDelayOnScreen(1,efx);
+  switch (op) {
+    case 0: showValueOnScreen(F("Ratio"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 1: showDelayModeOnScreen(1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
+    case 2: showValueOnScreen(F("Feedback"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
+    case 3: showValueOnScreen(F("Hi pass"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
+    case 4: showValueOnScreen(F("Lo pass"),4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
+    case 5: showValueOnScreen(F("Wet"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
+    case 6: showValueOnScreen(F("Dry"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0)); break;
+  }
 }
 
 void showPhaserDisplay(uint8_t op) {
-  //Dry, Wet, Mode, Speed, Depth, Feedback, Offset, stages, LR Phase
-  efx_type efx;
-  efx.dry = getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,6,0);
-  efx.wet = getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,5,0);
-  efx.speed = getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,4,0);
-  efx.depth = getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,3,0);
-  efx.mode = getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,1,0);
-  efx.feedback = getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,2,0);
-  efx.lrphase = getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,0,0);
-  showPhaserOnScreen(2,efx);
+  switch (op) {
+    case 0: showValueOnScreen(F("Phase"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 1: showPhaserModeOnScreen(1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
+    case 2: showValueOnScreen(F("Feedback"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
+    case 3: showValueOnScreen(F("Depth"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
+    case 4: showValueOnScreen(F("Speed"),4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
+    case 5: showValueOnScreen(F("Wet"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
+    case 6: showValueOnScreen(F("Dry"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0)); break;
+  }
 }
 
 void showReverbDisplay(uint8_t op) {
-  //Dry, wet, Mode, Decay, Damp
-  efx_type efx;
-  efx.dry = getParamValue(greenSelect,BLUE_PITCH,operatorSelect,6,0);
-  efx.wet = getParamValue(greenSelect,BLUE_PITCH,operatorSelect,5,0);
-  efx.decay = getParamValue(greenSelect,BLUE_PITCH,operatorSelect,4,0);
-  efx.damp = getParamValue(greenSelect,BLUE_PITCH,operatorSelect,3,0);
-  efx.mode = getParamValue(greenSelect,BLUE_PITCH,operatorSelect,1,0);
-  showReverbOnScreen(3,efx);
+  switch (op) {
+    case 0: showMessageOnScreen(0,F("Reverb")); break;
+    case 1: showReverbModeOnScreen(1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
+    case 2: showMessageOnScreen(2,F("Reverb")); break;
+    case 3: showValueOnScreen(F("Damp"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
+    case 4: showValueOnScreen(F("Decay"),4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
+    case 5: showValueOnScreen(F("Wet"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
+    case 6: showValueOnScreen(F("Dry"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0)); break;
+  }
 }
 
 void showChorusDisplay(uint8_t op) {
-  //BLUE_RATIO 6: Dry, 0: Wet, 1: Speed, 2: Depth, 3: Mode, 4: Feedback, 5: LR Phase
-  //Dry & Wet -> 0..255 (volume like)
-  //Speed -> 0..255 (speed of the modulation)
-  //Depth -> 0..255 (depth of the modulation)
-  //Feedback -> 0..255 (amount of feedback)
-  //LR Phase -> -127 (L) to +127 (R)
-  //Mode -> 4 values (chorus long, chorus short, flanger long, flanger short)
-  efx_type efx;
-  efx.dry = getParamValue(greenSelect,BLUE_RATIO,operatorSelect,6,0);
-  efx.wet = getParamValue(greenSelect,BLUE_RATIO,operatorSelect,5,0);
-  efx.speed = getParamValue(greenSelect,BLUE_RATIO,operatorSelect,4,0);
-  efx.depth = getParamValue(greenSelect,BLUE_RATIO,operatorSelect,3,0);
-  efx.mode = getParamValue(greenSelect,BLUE_RATIO,operatorSelect,1,0);
-  efx.feedback = getParamValue(greenSelect,BLUE_RATIO,operatorSelect,2,0);
-  efx.lrphase = getParamValue(greenSelect,BLUE_RATIO,operatorSelect,0,0);
-  showChorusOnScreen(4,efx);
+  switch (op) {
+    case 0: showValueOnScreen(F("Phase"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 1: showChorusModeOnScreen(1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
+    case 2: showValueOnScreen(F("Feedback"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
+    case 3: showValueOnScreen(F("Depth"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
+    case 4: showValueOnScreen(F("Speed"),4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
+    case 5: showValueOnScreen(F("Wet"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
+    case 6: showValueOnScreen(F("Dry"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0)); break;
+  }
 }
 
 void showEffectsDisplay(uint8_t op) {
-  //BLUE_VOLUME 2: Decimator depth, 1: Bitcrusher depth, 5: FX Routing
-  showEffectsOnScreen(5,getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,5,0),getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,2,0),getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,1,0));
   switch (op) {
-    case 0: showMessage(F("ACTIVE")); break;
+    case 0: showEffectsStatusDisplay(op,false); break;
     case 1: showValueOnScreen(F("Bitcrusher"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
-    case 2: showValueOnScreen(F("Decimator"),2,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
-    case 3: showFilterDisplay(3); break;
-    case 4: showMessage(F("Filter")); break;
-    case 5: showEffectsOnScreen(5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0),0,0) break;
-    case 6: showMessage(F("ACTIVE")); break;
+    case 2: showValueOnScreen(F("Decimator"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
+    case 3: showFilterDisplay(op); break;
+    case 4: showFilterDisplay(op); break;
+    case 5: showEffectsRoutingOnScreen(5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0),0,0); break;
+    case 6: showEffectsStatusDisplay(op,true); break;
+  }
+}
+
+uint8_t getDepth(uint8_t wet, uint8_t dry) {
+  if (wet==0) {
+    return 0;
+  } else {
+    uint16_t depth = 255 * wet;
+    return depth / (wet + dry);
+  }
+}
+
+void showEffectsStatusDisplay(uint8_t op, bool first) {
+  if (first) {
+    //Chorus, Reverb, Phaser
+    uint8_t chorus = getDepth(getParamValue(greenSelect,BLUE_RATIO,operatorSelect,5,0),getParamValue(greenSelect,BLUE_RATIO,operatorSelect,6,0));
+    uint8_t reverb = getDepth(getParamValue(greenSelect,BLUE_PITCH,operatorSelect,5,0),getParamValue(greenSelect,BLUE_PITCH,operatorSelect,6,0));
+    uint8_t phaser = getDepth(getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,5,0),getParamValue(greenSelect,BLUE_FEEDBACK,operatorSelect,6,0));
+    showEffectsStatusOnScreen(op,F("Chorus"),chorus,F("Reverb"),reverb,F("Phaser"),phaser);
+  } else {
+    //Delay, AM
+    uint8_t delay = getDepth(getParamValue(greenSelect,BLUE_DURATION,operatorSelect,5,0),getParamValue(greenSelect,BLUE_DURATION,operatorSelect,6,0));
+    showEffectsStatusOnScreen(op,F("Delay"),delay,F("AM"),getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,5,0),F(""),0);
   }
 }
 
 void showFilterDisplay(uint8_t op) {
-  //BLUE_VOLUME 4: Lo pass, 3: Hi Pass
-  showFilterOnScreen(op,getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,4,0),getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,3,0));
+  showFilterOnScreen(3,getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,4,0),getParamValue(greenSelect,BLUE_VOLUME,operatorSelect,3,0));
+  ShowFilterMessageOnScreen(4,operatorSelect==4,operatorSelect==3);
 }
 
 void showMasterDisplay(uint8_t op) {
@@ -216,9 +227,9 @@ void showLFO(uint8_t op) {
 void showPitchEnvelope(uint8_t op) {
   if (op==6) {
     env_type env;
-    env.level[0] = getParamValue(greenSelect,BLUE_LEVEL,op,0,0); //Start level
-    env.level[1] = getParamValue(greenSelect,BLUE_LEVEL,op,1,0); //Level at end of attack phase
-    env.level[2] = getParamValue(greenSelect,BLUE_LEVEL,op,2,0); //Level at end of decay-1 phase
+    env.level[0] = getParamValue(greenSelect,BLUE_LEVEL,op,6,0); //Start level
+    env.level[1] = getParamValue(greenSelect,BLUE_LEVEL,op,0,0); //Level at end of attack phase
+    env.level[2] = getParamValue(greenSelect,BLUE_LEVEL,op,1,0); //Level at end of decay-1 phase
     env.level[3] = getParamValue(greenSelect,BLUE_LEVEL,op,3,0); //Level at end of decay-2 phase (= sustain level)
     env.level[4] = getParamValue(greenSelect,BLUE_LEVEL,op,4,0); //Level at end of release-1 phase
     env.level[5] = getParamValue(greenSelect,BLUE_LEVEL,op,5,0); //Level at end of release-2 phase (= end level)
@@ -234,7 +245,7 @@ void showPitchEnvelope(uint8_t op) {
       sel = 14; //Not "rate" but "range" for pitch envelope
     }
 
-    showEnvelopeOnScreen(6,sel,env,true,getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0),blueSelect==BLUE_LEVEL && sel!=14,getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,6,0));
+    showEnvelopeOnScreen(6,sel,env,true,getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0),blueSelect==BLUE_LEVEL && sel!=14,getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,6,0)); //Last parameter is incorrect!
   } else {
     // Pitch envelope is only displayed in screen 6, so other screens can display the "overview" mode
     showOverview(op);
@@ -274,9 +285,9 @@ void showAmplitudeEnvelope(uint8_t op) {
   }
   if (op<6) {
     env_type env;
-    env.level[0] = getParamValue(greenSelect,BLUE_LEVEL,op,0,0); //Start level
-    env.level[1] = getParamValue(greenSelect,BLUE_LEVEL,op,1,0); //Level at end of attack phase
-    env.level[2] = getParamValue(greenSelect,BLUE_LEVEL,op,2,0); //Level at end of decay-1 phase
+    env.level[0] = getParamValue(greenSelect,BLUE_LEVEL,op,6,0); //Start level
+    env.level[1] = getParamValue(greenSelect,BLUE_LEVEL,op,0,0); //Level at end of attack phase
+    env.level[2] = getParamValue(greenSelect,BLUE_LEVEL,op,1,0); //Level at end of decay-1 phase
     env.level[3] = getParamValue(greenSelect,BLUE_LEVEL,op,3,0); //Level at end of decay-2 phase (= sustain level)
     env.level[4] = getParamValue(greenSelect,BLUE_LEVEL,op,4,0); //Level at end of release-1 phase
     env.level[5] = getParamValue(greenSelect,BLUE_LEVEL,op,5,0); //Level at end of release-2 phase (= end level)
@@ -287,7 +298,7 @@ void showAmplitudeEnvelope(uint8_t op) {
     env.rate[4] = getParamValue(greenSelect,BLUE_DURATION,op,4,0); //Rate of releease-1 phase
     env.rate[5] = getParamValue(greenSelect,BLUE_DURATION,op,5,0); //Rate of releease-2 phase
 
-    showEnvelopeOnScreen(op,(blueSelect-4)*7+operatorUsed,env,(op==operatorSelect),getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0),false,getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,6,0));
+    showEnvelopeOnScreen(op,(blueSelect-4)*7+operatorUsed,env,(op==operatorSelect),getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0),false,getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,6,0)); //Last parameter is incorrect
   }
 }
 
@@ -321,9 +332,9 @@ void showLevel(uint8_t op) {
 
 void showOverview(uint8_t op) {
   env_type env;
-  env.level[0] = getParamValue(GREEN_OPS,BLUE_LEVEL,op,0,0); //Start level
-  env.level[1] = getParamValue(GREEN_OPS,BLUE_LEVEL,op,1,0); //Level at end of attack phase
-  env.level[2] = getParamValue(GREEN_OPS,BLUE_LEVEL,op,2,0); //Level at end of decay-1 phase
+  env.level[0] = getParamValue(GREEN_OPS,BLUE_LEVEL,op,6,0); //Start level
+  env.level[1] = getParamValue(GREEN_OPS,BLUE_LEVEL,op,0,0); //Level at end of attack phase
+  env.level[2] = getParamValue(GREEN_OPS,BLUE_LEVEL,op,1,0); //Level at end of decay-1 phase
   env.level[3] = getParamValue(GREEN_OPS,BLUE_LEVEL,op,3,0); //Level at end of decay-2 phase (= sustain level)
   env.level[4] = getParamValue(GREEN_OPS,BLUE_LEVEL,op,4,0); //Level at end of release-1 phase
   env.level[5] = getParamValue(GREEN_OPS,BLUE_LEVEL,op,5,0); //Level at end of release-2 phase (= end level)

@@ -73,19 +73,6 @@ typedef struct {
   uint8_t level[6]; //l0, l1, l2, l3, l4, l5
 } env_type;
 
-//Typedef for efx
-typedef struct {
-  uint8_t dry;
-  uint8_t wet;
-  uint8_t depth;
-  uint8_t mode;
-  uint8_t speed;
-  uint8_t lrphase;
-  uint8_t feedback;
-  uint8_t decay;
-  uint8_t damp;
-} efx_type;
-
 const uint8_t MAXPIN_LOAD = 10; //LOAD pin for Teensy of the MAX7219CNG chip
 
 //Default menu: OSC of unit 1, Volume
@@ -261,7 +248,11 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
     if (greenSelect==GREEN_OSC && blueSelect>3) {
       showDisplay(6);
     } else {
-      showDisplay(operatorSelect);
+      if (greenSelect==GREEN_EFX && blueSelect==BLUE_VOLUME && operatorSelect==4) {
+        showDisplay(3);
+      } else {
+        showDisplay(operatorSelect);
+      }
       /*
       DISABLED: Was necessary to have a screen per effect, we now go back to a screen per dial!
       if (greenSelect==GREEN_EFX) {
