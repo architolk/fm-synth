@@ -18,7 +18,7 @@
 		{"Par#": 11 , "Value": 0, "Name": "OP-5 Feedback"} ,
 		{"Par#": 12 , "Value": 0, "Name": "OP-6 Feedback"} ,
 		{"Par#": 13 , "Value": 0, "Name": "Oscillator sync"} ,
-		{"Par#": 14 , "Value": 0, "Name": "Oscillator mode"} ,
+		{"Par#": 14 , "Value": 0, "Name": "Operator mode"} ,
 		{"Par#": 15 , "Value": 1, "Name": "OP-1 Coarse frequency ratio"} ,
 		{"Par#": 16 , "Value": 1, "Name": "OP-2 Coarse frequency ratio"} ,
 		{"Par#": 17 , "Value": 1, "Name": "OP-3 Coarse frequency ratio"} ,
