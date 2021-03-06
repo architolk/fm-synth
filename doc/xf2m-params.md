@@ -260,7 +260,7 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 240 | Oscillator 1 wave, Op-5 | OSC | Volume | Op-5 dial |
 | 241 | Oscillator 1 wave, Op-6 | OSC | Volume | Op-6 dial |
 | 242 | Velocity offset | Master | Pitch/Feedback | Output dial |
-| 243 | Velocity curve | ? | ? | ? |
+| 243 | Velocity curve | - | - | - |
 | 244 | Envelope loop | ? | ? | ? |
 | 245 | Envelope loop segment | ? | ? | ? |
 | 246 | Envelope restart | ? | ? | ? |
@@ -317,28 +317,28 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 297 | NOP | - | - | - |
 | 298 | NOP | - | - | - |
 | 299 | NOP | - | - | - |
-| 300 | EFX Delay dry | EFX | Delay | ? |
-| 301 | EFX Delay wet | EFX | Delay | ? |
-| 302 | EFX Delay mode | EFX | Delay | ? |
-| 303 | EFX Delay time | EFX | Delay | ? |
-| 304 | EFX Delay feedback | EFX | Delay | ? |
-| 305 | EFX Delay feedback lo filter | EFX | Delay | ? |
-| 306 | EFX Delay feedback hi filter | EFX | Delay | ? |
-| 307 | EFX Delay tempo | EFX | Delay | ? |
-| 308 | EFX Delay num | EFX | Delay | ? |
-| 309 | EFX Delay den | EFX | Delay | ? |
-| 310 | EFX Phaser dry | EFX | Phaser | ? |
-| 311 | EFX Phaser wet | EFX | Phaser | ? |
-| 312 | EFX Phaser mode | EFX | Phaser | ? |
-| 313 | EFX Phaser depth | EFX | Phaser | ? |
-| 314 | EFX Phaser speed | EFX | Phaser | ? |
-| 315 | EFX Phaser feedback | EFX | Phaser | ? |
-| 316 | EFX Phaser offset | EFX | Phaser | ? |
-| 317 | EFX Phaser stages | EFX | Phaser | ? |
-| 318 | EFX Phaser phase | EFX | Phaser | ? |
+| 300 | EFX Delay dry | EFX | Delay | Output dial |
+| 301 | EFX Delay wet | EFX | Delay | Op-6 dial |
+| 302 | EFX Delay mode | EFX | Delay | Op-5 dial |
+| 303 | EFX Delay time | EFX | Delay | *Op-2 dial*|
+| 304 | EFX Delay feedback | EFX | Delay | Op-3 dial |
+| 305 | EFX Delay feedback lo filter | EFX | Delay | Op-4 dial |
+| 306 | EFX Delay feedback hi filter | EFX | Delay | Op-4 dial |
+| 307 | EFX Delay tempo | EFX | Delay | *Op-2 dial* |
+| 308 | EFX Delay num | EFX | Delay | *Op-1 dial* |
+| 309 | EFX Delay den | EFX | Delay | *Op-1 dial* |
+| 310 | EFX Phaser dry | EFX | Phaser | Output dial |
+| 311 | EFX Phaser wet | EFX | Phaser | Op-6 dial |
+| 312 | EFX Phaser mode | EFX | Phaser | *Op-5 dial* |
+| 313 | EFX Phaser depth | EFX | Phaser | Op-4 dial |
+| 314 | EFX Phaser speed | EFX | Phaser | Op-2 dial |
+| 315 | EFX Phaser feedback | EFX | Phaser | Op-3 dial |
+| 316 | EFX Phaser offset | EFX | Phaser | *Op-1 dial* |
+| 317 | EFX Phaser stages | EFX | Phaser | *Op-5 dial* |
+| 318 | EFX Phaser phase | EFX | Phaser | *Op-1 dial* |
 | 319 | EFX Phaser waveform | EFX | Phaser | - |
-| 320 | EFX Filter low pass | EFX | EFX | ? |
-| 321 | EFX Filter high pass | EFX | EFX | ? |
+| 320 | EFX Filter low pass | EFX | EFX | Op-5 dial |
+| 321 | EFX Filter high pass | EFX | EFX | Op-4 dial |
 | 322 | NOP | - | - | - |
 | 323 | NOP | - | - | - |
 | 324 | NOP | - | - | - |
@@ -347,10 +347,10 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 327 | NOP | - | - | - |
 | 328 | NOP | - | - | - |
 | 329 | NOP | - | - | - |
-| 330 | EFX AM speed | EFX | AM | ? |
-| 331 | EFX AM range | EFX | AM | ? |
-| 332 | EFX AM depth | EFX | AM | ? |
-| 333 | EFX AM phase | EFX | AM | ? |
+| 330 | EFX AM speed | EFX | AM | Op-2 dial |
+| 331 | EFX AM range | EFX | AM | Op-4 dial |
+| 332 | EFX AM depth | EFX | AM | Op-6 dial |
+| 333 | EFX AM phase | EFX | AM | Op-1 dial |
 | 334 | NOP | - | - | - |
 | 335 | NOP | - | - | - |
 | 336 | NOP | - | - | - |
@@ -377,17 +377,17 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 357 | NOP | - | - | - |
 | 358 | NOP | - | - | - |
 | 359 | NOP | - | - | - |
-| 360 | EFX Chorus dry | EFX | Chorus | ? |
-| 361 | EFX Chorus wet | EFX | Chorus | ? |
-| 362 | EFX Chorus mode | EFX | Chorus | ? |
-| 363 | EFX Chorus speed | EFX | Chorus | ? |
-| 364 | EFX Chorus depth | EFX | Chorus | ? |
-| 365 | EFX Chorus feedback | EFX | Chorus | ? |
-| 366 | EFX Chorus phase | EFX | Chorus | ? |
+| 360 | EFX Chorus dry | EFX | Chorus | Output dial |
+| 361 | EFX Chorus wet | EFX | Chorus | Op-6 dial |
+| 362 | EFX Chorus mode | EFX | Chorus | Op-5 dial |
+| 363 | EFX Chorus speed | EFX | Chorus | Op-2 dial |
+| 364 | EFX Chorus depth | EFX | Chorus | Op-4 dial |
+| 365 | EFX Chorus feedback | EFX | Chorus | Op-3 dial |
+| 366 | EFX Chorus phase | EFX | Chorus | Op-1 dial |
 | 367 | NOP | - | - | - |
 | 368 | NOP | - | - | - |
 | 369 | NOP | - | - | - |
-| 370 | EFX Decimator depth | EFX | EFX | ? |
+| 370 | EFX Decimator depth | EFX | EFX | Op-3 dial |
 | 371 | NOP | - | - | - |
 | 372 | NOP | - | - | - |
 | 373 | NOP | - | - | - |
@@ -397,7 +397,7 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 377 | NOP | - | - | - |
 | 378 | NOP | - | - | - |
 | 379 | NOP | - | - | - |
-| 380 | EFX Bitcrusher depth | EFX | EFX | ? |
+| 380 | EFX Bitcrusher depth | EFX | EFX | Op-2 dial |
 | 381 | NOP | - | - | - |
 | 382 | NOP | - | - | - |
 | 383 | NOP | - | - | - |
@@ -407,11 +407,11 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 387 | NOP | - | - | - |
 | 388 | NOP | - | - | - |
 | 389 | NOP | - | - | - |
-| 390 | EFX Reverb dry | EFX | Reverb | ? |
-| 391 | EFX Reverb wet | EFX | Reverb | ? |
-| 392 | EFX Reverb mode | EFX | Reverb | ? |
-| 393 | EFX Reverb decay | EFX | Reverb | ? |
-| 394 | EFX Reverb damp | EFX | Reverb | ? |
+| 390 | EFX Reverb dry | EFX | Reverb | Output dial |
+| 391 | EFX Reverb wet | EFX | Reverb | Op-6 dial |
+| 392 | EFX Reverb mode | EFX | Reverb | Op-5 dial |
+| 393 | EFX Reverb decay | EFX | Reverb | Op-2 dial |
+| 394 | EFX Reverb damp | EFX | Reverb | Op-4 dial |
 | 395 | EFX Reverb D0 | EFX | Reverb | - |
 | 396 | EFX Reverb D1 | EFX | Reverb | - |
 | 397 | EFX Reverb D2 | EFX | Reverb | - |
@@ -427,7 +427,7 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 407 | NOP | - | - | - |
 | 408 | NOP | - | - | - |
 | 409 | NOP | - | - | - |
-| 410 | EFX Routing | EFX | EFX | ? |
+| 410 | EFX Routing | EFX | EFX | Op-6 dial |
 | 411 | Output level | Master | Volume | *Output dial* |
 | 412 | Gain | Master | Volume | *Output dial* |
 | 413 | NOP | - | - | - |

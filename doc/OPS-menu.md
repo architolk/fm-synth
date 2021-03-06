@@ -42,6 +42,8 @@ Parameter value mapping:
 
 ![](../media/OPS-Envelope.png)
 
+![](Envelope.png)
+
 In **Duration** mode, sustain acts as a "normal" ADSR sustain level, so not only L3 is affected, but also L2 (end of Decay-1 level). With settings L0=L4=L5=0 and L1=255, you get a "normal" ADSR. Attack sets the attack rate, decay-1 sets the decay rate and release-1 sets the release rate.
 
 Two duration modes are available:
