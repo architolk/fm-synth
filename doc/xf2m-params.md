@@ -24,12 +24,12 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 4 | Algorithm Op-4 | - | - | Orange & Red LEDs, Op-4 row |
 | 5 | Algorithm Op-5 | - | - | Orange & Red LEDs, Op-5 row |
 | 6 | Algorithm Op-6 | - | - | Orange & Red LEDs, Op-6 row |
-| 7 | Feedback Op-1 | - | Feedback | Op-1 dial |
-| 8 | Feedback Op-2 | - | Feedback | Op-2 dial |
-| 9 | Feedback Op-3 | - | Feedback | Op-3 dial |
-| 10 | Feedback Op-4 | - | Feedback | Op-4 dial |
-| 11 | Feedback Op-5 | - | Feedback | Op-5 dial |
-| 12 | Feedback Op-6 | - | Feedback | Op-6 dial |
+| 7 | Feedback Op-1 | OPS | Feedback | Op-1 dial |
+| 8 | Feedback Op-2 | OPS | Feedback | Op-2 dial |
+| 9 | Feedback Op-3 | OPS | Feedback | Op-3 dial |
+| 10 | Feedback Op-4 | OPS | Feedback | Op-4 dial |
+| 11 | Feedback Op-5 | OPS | Feedback | Op-5 dial |
+| 12 | Feedback Op-6 | OPS | Feedback | Op-6 dial |
 | 13 | Oscillator sync | OSC | *Feedback* | Op dials |
 | 14 | Operator mode | OPS | Pitch | Op dials click |
 | 15 | Coarse ratio Op-1 | OPS | *Ratio* | Op-1 dial |
@@ -44,18 +44,18 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 24 | Fine ratio Op-4 | OPS | *Ratio* | Op-4 dial |
 | 25 | Fine ratio Op-5 | OPS | *Ratio* | Op-5 dial |
 | 26 | Fine ratio Op-6 | OPS | *Ratio* | Op-6 dial |
-| 27 | Detune Op-1 | OSC | Pitch | Op-1 dial |
-| 28 | Detune Op-2 | OSC | Pitch | Op-2 dial |
-| 29 | Detune Op-3 | OSC | Pitch | Op-3 dial |
-| 30 | Detune Op-4 | OSC | Pitch | Op-4 dial |
-| 31 | Detune Op-5 | OSC | Pitch | Op-5 dial |
-| 32 | Detune Op-6 | OSC | Pitch | Op-6 dial |
-| 33 | Level Op-1 | OSC | Volume | Op-1 dial |
-| 34 | Level Op-2 | OSC | Volume | Op-2 dial |
-| 35 | Level Op-3 | OSC | Volume | Op-3 dial |
-| 36 | Level Op-4 | OSC | Volume | Op-4 dial |
-| 37 | Level Op-5 | OSC | Volume | Op-5 dial |
-| 38 | Level Op-6 | OSC | Volume | Op-6 dial |
+| 27 | Detune Op-1 | OPS | Pitch | Op-1 dial |
+| 28 | Detune Op-2 | OPS | Pitch | Op-2 dial |
+| 29 | Detune Op-3 | OPS | Pitch | Op-3 dial |
+| 30 | Detune Op-4 | OPS | Pitch | Op-4 dial |
+| 31 | Detune Op-5 | OPS | Pitch | Op-5 dial |
+| 32 | Detune Op-6 | OPS | Pitch | Op-6 dial |
+| 33 | Level Op-1 | OPS | Volume | Op-1 dial |
+| 34 | Level Op-2 | OPS | Volume | Op-2 dial |
+| 35 | Level Op-3 | OPS | Volume | Op-3 dial |
+| 36 | Level Op-4 | OPS | Volume | Op-4 dial |
+| 37 | Level Op-5 | OPS | Volume | Op-5 dial |
+| 38 | Level Op-6 | OPS | Volume | Op-6 dial |
 | 39 | Velo sense Op-1 | Master | Pitch/Feedback | Op-1 dial |
 | 40 | Velo sense Op-2 | Master | Pitch/Feedback | Op-2 dial |
 | 41 | Velo sense Op-3 | Master | Pitch/Feedback | Op-3 dial |
@@ -148,13 +148,13 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 128 | Envelope rate 4, Op-1 | OPS | Duration | Op-5 dial (release-1) / Op-5 selected |
 | 129 | Envelope rate 4, Op-1 | OPS | Duration | Op-5 dial (release-1) / Op-6 selected |
 | 130 | Pitch envelope level 1 | OSC | Level | Op-1 dial (attack) |
-| 131 | Pitch envelope level 2 | OPS | Level | Op-2 dial (decay-1) |
-| 132 | Pitch envelope level 3 | OPS | Level | Op-4 dial (sustain) |
-| 133 | Pitch envelope level 4 | OPS | Level | Op-5 dial (release-1) |
+| 131 | Pitch envelope level 2 | OSC | Level | Op-2 dial (decay-1) |
+| 132 | Pitch envelope level 3 | OSC | Level | Op-4 dial (sustain) |
+| 133 | Pitch envelope level 4 | OSC | Level | Op-5 dial (release-1) |
 | 134 | Pitch envelope rate 1 | OSC | Level | Op-1 dial (attack) |
-| 135 | Pitch envelope rate 2 | OPS | Level | Op-2 dial (decay-1) |
-| 136 | Pitch envelope rate 3 | OPS | Level | Op-4 dial (decay-2) |
-| 137 | Pitch envelope rate 4 | OPS | Level | Op-5 dial (release-1) |
+| 135 | Pitch envelope rate 2 | OSC | Level | Op-2 dial (decay-1) |
+| 136 | Pitch envelope rate 3 | OSC | Level | Op-4 dial (decay-2) |
+| 137 | Pitch envelope rate 4 | OSC | Level | Op-5 dial (release-1) |
 | 138 | Pitch envelope range | ? | ? | ? |
 | 139 | Pitch envelope range velocity | ? | ? | ? |
 | 140 | Envelope rate key, Op-1 | ? | ? | ? |
