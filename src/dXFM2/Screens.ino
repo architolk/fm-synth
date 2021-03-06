@@ -748,7 +748,7 @@ void showEnvOperatorOnScreen(uint8_t screen, uint8_t op, uint8_t envmode) {
   display.setTextSize(1);
   display.setCursor(0,12);
   switch (envmode) {
-    case ENVMODE_ADDSRR: display.print("ADDSRR XFM2"); break;
+    case ENVMODE_ADDSRR: display.print("AddSrr XFM2"); break;
     case ENVMODE_ADSR: display.print("ADSR"); break;
     case ENVMODE_ASR: display.print("ASR Plucked"); break;
   }

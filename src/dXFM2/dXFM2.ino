@@ -222,13 +222,13 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         operatorUsed = encoder;
         setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
         if (blueSelect==BLUE_DURATION) {
-          if (encoder==2 && toggleMode==1) {
+          if (encoder==1 && toggleMode==1) {
             //In duration and toggleMode=1, decay-1 will also change release-1, making it an ASR envelope (for plucked sounds)
             setParamValue(greenSelect,BLUE_DURATION,operatorSelect,4,0,value);
           }
-          if (encoder==4) {
+          if (encoder==3) {
             //In duration, sustain will also change the L2 level, making it a regular ADSR envelope (actually an ADSRR...)
-            setParamValue(greenSelect,BLUE_LEVEL,operatorSelect,3,0,value);
+            setParamValue(greenSelect,BLUE_LEVEL,operatorSelect,1,0,value);
           }
         }
         activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
