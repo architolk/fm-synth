@@ -343,18 +343,18 @@ uint8_t getParamType(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp,
   }
   uint16_t val = PARAMMAP[menu][bmenu][usedOp];
   if (val>4000) {
-    return 4;
+    return PARAMTYPE_ENV;
   } else {
     if (val>2999) {
-      return 3;
+      return PARAMTYPE_LEDCLICK;
     } else {
       if (val>1999) {
-        return 2;
+        return PARAMTYPE_CLICK;
       } else {
         if (val>999) {
-          return 1;
+          return PARAMTYPE_TOGGLE;
         } else {
-          return 0;
+          return PARAMTYPE_DEFAULT;
         }
       }
     }

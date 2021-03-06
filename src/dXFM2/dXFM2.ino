@@ -41,6 +41,12 @@
 #define DISPLAY_OVERVIEW 1
 #define DISPLAY_MENU 2
 
+#define PARAMTYPE_DEFAULT 0
+#define PARAMTYPE_TOGGLE 1
+#define PARAMTYPE_CLICK 2
+#define PARAMTYPE_LEDCLICK 3
+#define PARAMTYPE_ENV 4
+
 //Go back to the overview display after 2 seconds
 #define DISPLAYPERIOD 2000
 
@@ -196,22 +202,25 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
   if (encoder<7) {
     resetLastChange();
     uint8_t paramType = getParamType(greenSelect,blueSelect,operatorSelect,encoder,0);
-    if (paramType==4) {
+    if (paramType==PARAMTYPE_ENV) {
       if (clicked) {
-        uint8_t oldSelected = operatorSelect;
-        operatorSelect = encoder;
-        showDisplay(oldSelected); //Reset the display that is no longer selected
-        for (uint8_t op=0; op<7; op++) {
-          //Set encoder to the correct value for that operator
-          setEncoderValue(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+        if (encoder<6) { //Only operator encoders can be selected, ignore clicking the output-operator
+          uint8_t oldSelected = operatorSelect;
+          operatorSelect = encoder;
+          showDisplay(oldSelected); //Reset the display that is no longer selected
+          for (uint8_t op=0; op<7; op++) {
+            //Set encoder to the correct value for that operator
+            setEncoderValue(op,getParamValue(greenSelect,blueSelect,operatorSelect,op,0));
+          }
         }
       } else {
+        operatorSelect = operatorSelect<6 ? operatorSelect : 0; //Failsafe to make sure that output is not selected
         operatorUsed = encoder;
         setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
         activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
       }
     } else {
-      if (paramType==3) {
+      if (paramType==PARAMTYPE_LEDCLICK) {
         if (clicked) {
           operatorUsed = encoder;
           operatorSelect = encoder;
@@ -224,7 +233,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
           activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
         }
       } else {
-        if (paramType==2) {
+        if (paramType==PARAMTYPE_CLICK) {
           if (clicked) {
             operatorUsed = encoder;
             operatorSelect = encoder;
@@ -236,7 +245,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
             setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
             activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
           }
-        } else {
+        } else { //PARAMTYPE_DEFAULT
           operatorUsed = encoder;
           operatorSelect = encoder;
           setParamValue(greenSelect,blueSelect,operatorSelect,encoder,toggleMode,value);
@@ -248,11 +257,13 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
     if (greenSelect==GREEN_OSC && blueSelect>3) {
       showDisplay(6);
     } else {
+      /*
       if (greenSelect==GREEN_EFX && blueSelect==BLUE_VOLUME && operatorSelect==4) {
         showDisplay(3);
       } else {
         showDisplay(operatorSelect);
-      }
+      }*/
+      showDisplay(operatorSelect);
       /*
       DISABLED: Was necessary to have a screen per effect, we now go back to a screen per dial!
       if (greenSelect==GREEN_EFX) {
