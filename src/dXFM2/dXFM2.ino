@@ -225,10 +225,17 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
           if (encoder==1 && toggleMode==1) {
             //In duration and toggleMode=1, decay-1 will also change release-1, making it an ASR envelope (for plucked sounds)
             setParamValue(greenSelect,BLUE_DURATION,operatorSelect,4,0,value);
+            activateChange(greenSelect,BLUE_DURATION,operatorSelect,4,0);
+          }
+          if (encoder==4 && toggleMode==1) {
+            //In duration and toggleMode=1, release-1 will also change decay-1, making it an ASR envelope (for plucked sounds)
+            setParamValue(greenSelect,BLUE_DURATION,operatorSelect,1,0,value);
+            activateChange(greenSelect,BLUE_DURATION,operatorSelect,1,0);
           }
           if (encoder==3) {
             //In duration, sustain will also change the L2 level, making it a regular ADSR envelope (actually an ADSRR...)
             setParamValue(greenSelect,BLUE_LEVEL,operatorSelect,1,0,value);
+            activateChange(greenSelect,BLUE_LEVEL,operatorSelect,1,0);
           }
         }
         activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
