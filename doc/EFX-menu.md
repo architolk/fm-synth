@@ -7,7 +7,7 @@
 | 2 | *Reverb* Dry | | *Reverb* Decay |  | *Reverb* Damp | *Reverb* Mode | *Reverb* Wet |
 | 3 | *Phaser* Dry | *Phaser* LR Phase/Offset | *Phaser* Speed | *Phaser* Feedback | *Phaser* Depth | *Phaser* Mode/Stages | *Phaser* Wet |
 | 4 | *Delay* Dry | *Delay* Multiplier/Devider | *Delay* Time/Tempo | *Delay* Feedback | *Delay* Hi/Lo pass | *Delay* Mode | *Delay* Wet |
-| 5 |  | *AM* LR Phase |  |  | *AM* Range | *AM* Speed | *AM* Depth |
+| 5 |  | *AM* LR Phase | *AM* Speed |  | *AM* Range |  | *AM* Depth |
 
 Chorus/Flanger is the same effect, switching between those two is done via the **Mode** parameter.
 
@@ -26,60 +26,60 @@ Parameter value mapping:
 
 ![](../media/EFX.png)
 
-- 6 (Out): show which effects are active (Chorus, Reverb, Phaser)
-- 0 (Op1): show which effects are active (Delay, AM)
-- 1 (Op2): Bitcrusher
-- 2 (Op3): Decimator
-- 3 (Op4): Filter description
-- 4 (Op5): Filter graph
 - 5 (Op6): EFX Routing
+- 4 (Op5): Filter description
+- 3 (Op4): Filter graph
+- 2 (Op3): Decimator
+- 1 (Op2): Bitcrusher
+- 0 (Op1): show which effects are active (Delay, AM)
+- 6 (Out): show which effects are active (Chorus, Reverb, Phaser)
 
 ## Ratio (Chorus)
 
-- 6 (Out): Dry
-- 0 (Op1): LR Phase
-- 1 (Op2): Mode (Chorus long, Chorus short, Flanger long, Flanger short)
-- 2 (Op3): feedback
-- 3 (Op4): Depth
-- 4 (Op5): Speed
 - 5 (Op6): Wet
+- 4 (Op2): Mode (Chorus long, Chorus short, Flanger long, Flanger short)
+- 3 (Op4): Depth
+- 2 (Op3): Feedback
+- 1 (Op5): Speed
+- 0 (Op1): LR Phase
+- 6 (Out): Dry
 
 ## Pitch (Reverb)
 
-- 6 (Out): Dry
-- 0 (Op1): show text "Reverb"
-- 1 (Op2): Mode (Hall, Plate)
-- 2 (Op3): show text "Reverb"
-- 3 (Op4): Damp
-- 4 (Op5): Decay
 - 5 (Op6): Wet
+- 4 (Op2): Mode (Hall, Plate)
+- 3 (Op4): Damp
+- 2 (Op3): show text "Reverb"
+- 1 (Op5): Decay
+- 0 (Op1): show text "Reverb"
+- 6 (Out): Dry
 
 ## Feedback (Phaser)
 
-- 6 (Out): Dry
-- 0 (Op1): LR Phase/Offset
-- 1 (Op2): Mode/Stages (Mono phaser, Stereo phaser, Cross phaser)
-- 2 (Op3): Feedback
-- 3 (Op4): Depth
-- 4 (Op5): Speed
 - 5 (Op6): Wet
+- 4 (Op2): Mode/Stages (Mono phaser, Stereo phaser, Cross phaser)
+- 3 (Op4): Depth
+- 2 (Op3): Feedback
+- 1 (Op5): Speed
+- 0 (Op1): LR Phase/Offset
+- 6 (Out): Dry
 
 ## Duration (Delay)
 
-- 6 (Out): Dry
-- 0 (Op1): Multiplier/Devider
-- 1 (Op2): Mode (Stereo delay, Cross delay, Bounce delay)
-- 2 (Op3): Feedback
-- 3 (Op4): Filter
-- 4 (Op5): Time/Tempo
 - 5 (Op6): Wet
+- 4 (Op2): Mode (Stereo delay, Cross delay, Bounce delay)
+- 3 (Op4): Filter
+- 2 (Op3): Feedback
+- 1 (Op5): Time/Tempo
+- 0 (Op1): Multiplier/Devider
+- 6 (Out): Dry
 
 ## Level (AM)
 
-- 6 (Out): ??
-- 0 (Op1): Range
-- 1 (Op2): LR Phase
-- 2 (Op3): ??
-- 3 (Op4): ??
-- 4 (Op5): Speed
 - 5 (Op6): Depth
+- 4 (Op5): show text "AM"
+- 3 (Op4): Range
+- 2 (Op3): show nothing
+- 1 (Op2): Speed
+- 0 (Op1): LR Phase
+- 6 (Out): show nothing
