@@ -47,6 +47,10 @@
 #define PARAMTYPE_LEDCLICK 3
 #define PARAMTYPE_ENV 4
 
+#define ENVMODE_ADDSRR 0
+#define ENVMODE_ADSR 1
+#define ENVMODE_ASR 2
+
 //Go back to the overview display after 2 seconds
 #define DISPLAYPERIOD 2000
 
@@ -217,6 +221,16 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
         operatorSelect = operatorSelect<6 ? operatorSelect : 0; //Failsafe to make sure that output is not selected
         operatorUsed = encoder;
         setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
+        if (blueSelect==BLUE_DURATION) {
+          if (encoder==2 && toggleMode==1) {
+            //In duration and toggleMode=1, decay-1 will also change release-1, making it an ASR envelope (for plucked sounds)
+            setParamValue(greenSelect,BLUE_DURATION,operatorSelect,4,0,value);
+          }
+          if (encoder==4) {
+            //In duration, sustain will also change the L2 level, making it a regular ADSR envelope (actually an ADSRR...)
+            setParamValue(greenSelect,BLUE_LEVEL,operatorSelect,3,0,value);
+          }
+        }
         activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
       }
     } else {
@@ -245,7 +259,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
             setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
             activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
           }
-        } else { //PARAMTYPE_DEFAULT
+        } else { //PARAMTYPE_DEFAULT or PARAMTYPE_TOGGLE
           operatorUsed = encoder;
           operatorSelect = encoder;
           setParamValue(greenSelect,blueSelect,operatorSelect,encoder,toggleMode,value);

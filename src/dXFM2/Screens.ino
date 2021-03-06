@@ -740,13 +740,21 @@ void showRatioOnScreen(uint8_t screen, bool isPitch, uint8_t toggle, uint8_t coa
   display.display();
 }
 
-void showOperator(uint8_t screen, uint8_t op) {
+void showEnvOperatorOnScreen(uint8_t screen, uint8_t op, uint8_t envmode) {
   display.clearDisplay();
 
   display.setFont(&Dungeon9pt7b);
-  display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(30,40);
+  display.setTextSize(1);
+  display.setCursor(0,12);
+  switch (envmode) {
+    case ENVMODE_ADDSRR: display.print("ADDSRR XFM2"); break;
+    case ENVMODE_ADSR: display.print("ADSR"); break;
+    case ENVMODE_ASR: display.print("ASR Plucked"); break;
+  }
+
+  display.setTextSize(2);
+  display.setCursor(40,50);
   display.print(F("#"));
   display.print(op+1);
 
@@ -866,7 +874,7 @@ void showDelayModeOnScreen(uint8_t screen, uint8_t mode) {
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  
+
   switch (mode) {
     case 0: display.setCursor(20,25); display.print(F("Stereo")); break;
     case 1: display.setCursor(25,25); display.print(F("Cross")); break;

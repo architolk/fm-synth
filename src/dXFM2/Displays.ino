@@ -280,8 +280,8 @@ void showOSCRatio(uint8_t op) {
 // Operator submenu
 //
 void showAmplitudeEnvelope(uint8_t op) {
-  if (op==operatorSelect) {
-    showOperator(6,operatorSelect);
+  if (op==operatorSelect) { //Screen should always be updated, but only ones if all screens are updates - this is a quick hack that does just that
+    showEnvOperatorOnScreen(6,operatorSelect,blueSelect==BLUE_LEVEL ? 0 : toggleMode+1);
   }
   if (op<6) {
     env_type env;
