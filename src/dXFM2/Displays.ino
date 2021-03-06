@@ -80,8 +80,8 @@ void showDelayDisplay(uint8_t op) {
     case 0: showValueOnScreen(F("Ratio"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
     case 1: showDelayModeOnScreen(1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
     case 2: showValueOnScreen(F("Feedback"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
-    case 3: showValueOnScreen(F("Hi pass"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
-    case 4: showValueOnScreen(F("Lo pass"),4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
+    case 3: showFilterOnScreen(3,getParamValue(greenSelect,blueSelect,operatorSelect,4,0),getParamValue(greenSelect,blueSelect,operatorSelect,3,1));
+    case 4: showValueOnScreen(F("Time"),4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
     case 5: showValueOnScreen(F("Wet"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
     case 6: showValueOnScreen(F("Dry"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0)); break;
   }

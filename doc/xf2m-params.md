@@ -336,7 +336,7 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 316 | EFX Phaser offset | EFX | Phaser | ? |
 | 317 | EFX Phaser stages | EFX | Phaser | ? |
 | 318 | EFX Phaser phase | EFX | Phaser | ? |
-| 319 | EFX Phaser waveform | EFX | Phaser | ? |
+| 319 | EFX Phaser waveform | EFX | Phaser | - |
 | 320 | EFX Filter low pass | EFX | EFX | ? |
 | 321 | EFX Filter high pass | EFX | EFX | ? |
 | 322 | NOP | - | - | - |
