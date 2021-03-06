@@ -7,7 +7,7 @@
 | 2 | *Reverb* Dry | | *Reverb* Decay |  | *Reverb* Damp | *Reverb* Mode | *Reverb* Wet |
 | 3 | *Phaser* Dry | *Phaser* LR Phase/Offset | *Phaser* Speed | *Phaser* Feedback | *Phaser* Depth | *Phaser* Mode/Stages | *Phaser* Wet |
 | 4 | *Delay* Dry | *Delay* Multiplier/Devider | *Delay* Time/Tempo | *Delay* Feedback | *Delay* Hi/Lo pass | *Delay* Mode | *Delay* Wet |
-| 5 |  | *AM* Range | *AM* LR Phase |  | | *AM* Speed | *AM* Depth |
+| 5 |  | *AM* LR Phase |  |  | *AM* Range | *AM* Speed | *AM* Depth |
 
 Chorus/Flanger is the same effect, switching between those two is done via the **Mode** parameter.
 
@@ -20,7 +20,7 @@ Parameter value mapping:
 | 2 | 390 | 0 | 393 | 0 | 394 | 392 | 391 |
 | 3 | 310 | 318/316 | 314 | 315 | 313 | 312/317 | 311 |
 | 4 | 300 | 308/309 | 303/307 | 304 | 306/305 | 302 | 301 |
-| 5 | 0 | 331 | 333 | 0 | 0 | 330 | 332 |
+| 5 | 0 | 333 | 0 | 0 | 331 | 330 | 332 |
 
 ## Volume (Effects, bitcrusher, decimator and filter)
 
