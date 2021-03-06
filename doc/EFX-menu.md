@@ -49,9 +49,9 @@ Parameter value mapping:
 - 5 (Op6): Wet
 - 4 (Op2): Mode (Hall, Plate)
 - 3 (Op4): Damp
-- 2 (Op3): show text "Reverb"
+- 2 (Op3): show nothing
 - 1 (Op5): Decay
-- 0 (Op1): show text "Reverb"
+- 0 (Op1): show nothing
 - 6 (Out): Dry
 
 ## Feedback (Phaser)

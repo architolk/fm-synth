@@ -65,20 +65,20 @@ void showEFXDisplay(uint8_t op) {
 
 void showAMDisplay(uint8_t op) {
   switch (op) {
-    case 0: showValueOnScreen(F("LR Phase"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 0: showLRPhaseOnScreen(0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0),0,false); break;
     case 1: showValueOnScreen(F("Speed"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
-    case 2: showMessageOnScreen(2,F("AM")); break;
+    case 2: clearScreen(2); break;
     case 3: showValueOnScreen(F("Range"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
-    case 4: showMessageOnScreen(4,F("AM")); break;
+    case 4: showAMModeOnScreen(4); break;
     case 5: showValueOnScreen(F("Depth"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
-    case 6: showMessageOnScreen(6,F("AM")); break;
+    case 6: clearScreen(6); break;
   }
 }
 
 void showDelayDisplay(uint8_t op) {
   switch (op) {
-    case 0: showValueOnScreen(F("Ratio"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
-    case 1: showValueOnScreen(F("Time"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
+    case 0: showMulDivTempoOnScreen(0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0),getParamValue(greenSelect,blueSelect,operatorSelect,0,1)); break;
+    case 1: showTimeTempoOnScreen(1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0),getParamValue(greenSelect,blueSelect,operatorSelect,1,1)); break;
     case 2: showValueOnScreen(F("Feedback"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
     case 3: showFilterOnScreen(3,getParamValue(greenSelect,blueSelect,operatorSelect,3,1),getParamValue(greenSelect,blueSelect,operatorSelect,3,0));
     case 4: showDelayModeOnScreen(4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
@@ -89,11 +89,11 @@ void showDelayDisplay(uint8_t op) {
 
 void showPhaserDisplay(uint8_t op) {
   switch (op) {
-    case 0: showValueOnScreen(F("LR Phase"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 0: showLRPhaseOnScreen(0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0),getParamValue(greenSelect,blueSelect,operatorSelect,0,1),true); break;
     case 1: showValueOnScreen(F("Speed"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
     case 2: showValueOnScreen(F("Feedback"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
     case 3: showValueOnScreen(F("Depth"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
-    case 4: showPhaserModeOnScreen(4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
+    case 4: showPhaserModeOnScreen(4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0),getParamValue(greenSelect,blueSelect,operatorSelect,4,1)); break;
     case 5: showValueOnScreen(F("Wet"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
     case 6: showValueOnScreen(F("Dry"),6,getParamValue(greenSelect,blueSelect,operatorSelect,6,0)); break;
   }
@@ -101,9 +101,9 @@ void showPhaserDisplay(uint8_t op) {
 
 void showReverbDisplay(uint8_t op) {
   switch (op) {
-    case 0: showMessageOnScreen(0,F("Reverb")); break;
+    case 0: clearScreen(0); break;
     case 1: showValueOnScreen(F("Decay"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
-    case 2: showMessageOnScreen(2,F("Reverb")); break;
+    case 2: clearScreen(2); break;
     case 3: showValueOnScreen(F("Damp"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
     case 4: showReverbModeOnScreen(4,getParamValue(greenSelect,blueSelect,operatorSelect,4,0)); break;
     case 5: showValueOnScreen(F("Wet"),5,getParamValue(greenSelect,blueSelect,operatorSelect,5,0)); break;
@@ -113,7 +113,7 @@ void showReverbDisplay(uint8_t op) {
 
 void showChorusDisplay(uint8_t op) {
   switch (op) {
-    case 0: showValueOnScreen(F("LR Phase"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 0: showLRPhaseOnScreen(0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0),0,false); break;
     case 1: showValueOnScreen(F("Speed"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
     case 2: showValueOnScreen(F("Feedback"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
     case 3: showValueOnScreen(F("Depth"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
