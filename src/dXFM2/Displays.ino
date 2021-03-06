@@ -89,7 +89,7 @@ void showDelayDisplay(uint8_t op) {
 
 void showPhaserDisplay(uint8_t op) {
   switch (op) {
-    case 0: showValueOnScreen(F("Phase"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 0: showValueOnScreen(F("LR Phase"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
     case 1: showValueOnScreen(F("Speed"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
     case 2: showValueOnScreen(F("Feedback"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
     case 3: showValueOnScreen(F("Depth"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;
@@ -113,7 +113,7 @@ void showReverbDisplay(uint8_t op) {
 
 void showChorusDisplay(uint8_t op) {
   switch (op) {
-    case 0: showValueOnScreen(F("Phase"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
+    case 0: showValueOnScreen(F("LR Phase"),0,getParamValue(greenSelect,blueSelect,operatorSelect,0,0)); break;
     case 1: showValueOnScreen(F("Speed"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,0)); break;
     case 2: showValueOnScreen(F("Feedback"),2,getParamValue(greenSelect,blueSelect,operatorSelect,2,0)); break;
     case 3: showValueOnScreen(F("Depth"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,0)); break;

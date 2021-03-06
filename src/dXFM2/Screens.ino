@@ -881,7 +881,8 @@ void showDelayModeOnScreen(uint8_t screen, uint8_t mode) {
     case 2: display.setCursor(20,25); display.print(F("Bounce")); break;
   }
 
-  display.setCursor(25,45);
+  display.setFont(&Dungeon12pt7b);
+  display.setCursor(10,50);
   display.print(F("Delay"));
 
   TCA9548A(SCRMAP[screen]);
@@ -894,11 +895,15 @@ void showReverbModeOnScreen(uint8_t screen, uint8_t mode) {
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
 
-  display.setCursor(15,32);
+  display.setCursor(15,25);
   switch (mode) {
     case 0: display.print(F("Plate")); break;
     case 1: display.print(F("Hall")); break;
   }
+
+  display.setFont(&Dungeon12pt7b);
+  display.setCursor(10,50);
+  display.print(F("Reverb"));
 
   TCA9548A(SCRMAP[screen]);
   display.display();
@@ -916,7 +921,8 @@ void showPhaserModeOnScreen(uint8_t screen, uint8_t mode) {
     case 2: display.setCursor(25,25); display.print(F("Cross")); break;
   }
 
-  display.setCursor(20,45);
+  display.setFont(&Dungeon12pt7b);
+  display.setCursor(10,50);
   display.print(F("Phaser"));
 
   TCA9548A(SCRMAP[screen]);
@@ -929,12 +935,21 @@ void showChorusModeOnScreen(uint8_t screen, uint8_t mode) {
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
 
-  display.setCursor(15,32);
+  display.setCursor(15,25);
   switch (mode) {
-    case 0: display.print(F("Chorus L")); break;
-    case 1: display.print(F("Chorus S")); break;
-    case 2: display.print(F("Flanger L")); break;
-    case 3: display.print(F("Flanger S")); break;
+    case 0: display.print(F("Long")); break;
+    case 1: display.print(F("Short")); break;
+    case 2: display.print(F("Long")); break;
+    case 3: display.print(F("Short")); break;
+  }
+
+  display.setFont(&Dungeon12pt7b);
+  display.setCursor(10,50);
+  switch (mode) {
+    case 0: display.print(F("Chorus")); break;
+    case 1: display.print(F("Chorus")); break;
+    case 2: display.print(F("Flanger")); break;
+    case 3: display.print(F("Flanger")); break;
   }
 
   TCA9548A(SCRMAP[screen]);
