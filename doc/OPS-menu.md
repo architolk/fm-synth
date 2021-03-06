@@ -43,7 +43,7 @@ Parameter value mapping:
 ![](../media/OPS-Envelope.png)
 
 In envelope mode, the dials do not correspond to a particular operator, but to a particular phase of the envelope:
-- Output dial: delay phase;
+- Output dial: delay phase (L0/R0);
 - Operator 1 dial: attack phase (L1/R1);
 - Operator 2 dial: decay-1 phase (L2/R2);
 - Operator 3 dial: decay-2 phase (L3/R3);
@@ -54,6 +54,8 @@ In envelope mode, the dials do not correspond to a particular operator, but to a
 You select the particular operator, by pressing the corresponding dial. This is made visible on the bottom screen.
 
 When you click on the output-dial, you enter "rate" mode and in this mode, you can change the rate values for any of the operator envelopes. You can change the rate for all operators at the same time, by turning the output-dial.
+
+(maybe we can do the same for output-dial click and blue=level? Then we could change stuff like eg loop?)
 
 ![](Envelope.png)
 
