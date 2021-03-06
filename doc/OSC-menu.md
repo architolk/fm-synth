@@ -38,6 +38,19 @@ Parameter value mapping:
 
 ![](../media/OSC-Envelope.png)
 
+In envelope mode, the dials do not correspond to a particular operator, but to a particular phase of the envelope:
+- Output dial: delay phase;
+- Operator 1 dial: attack phase (L1/R1);
+- Operator 2 dial: decay-1 phase (L2/R2);
+- Operator 3 dial: decay-2 phase (L3/R3);
+- Operator 4 dial: sustain phase (L3);
+- Operator 5 dial: release-1 phase (L4/R4);
+- Operator 6 dial: release-2 phase (L5/R5).
+
+You select the particular operator, by pressing the corresponding dial. This is made visible on the bottom screen.
+
+When you click on the output-dial, you enter "rate" mode and in this mode, you can change the rate values for any of the operator envelopes. You can change the rate for all operators at the same time, by turning the output-dial.
+
 ![](Envelope.png)
 
 In **Duration** mode, sustain acts as a "normal" ADSR sustain level, so not only L3 is affected, but also L2 (end of Decay-1 level). With settings L0=L4=L5=0 and L1=255, you get a "normal" ADSR. Attack sets the attack rate, decay-1 sets the decay rate and release-1 sets the release rate.
