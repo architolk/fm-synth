@@ -288,6 +288,10 @@ The correct conversion is as follows:
 |-----|------|
 | 13,34,55,76,97,118 | 140 - 145 |
 
+- This parameter will make higher notes have a faster envelope than lower, bass, notes. It works rougly the same on the DX7 and XFM2.
+- The operator level envelope rate key on the XFM2 works the same as other rates: 0 gives the normal, slowest envelope, 255 gives a very snappy, fast envelope (at high notes).
+- The DX7 works the same way, but with a different scale: 0 gives the normal, slowest envelope, 7 gives the fasted envelope (at high notes).
+
 ### Pitch envelope rate key
 
 | DX7 | XFM2 |
