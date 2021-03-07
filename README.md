@@ -12,7 +12,7 @@ The dXFM2 is based on the incredible work of René Ceballos. He created the XFM2
 
 ## Build description
 
-All build descriptions can be found [here](BUILD.md). Please note that this is a somewhat free-format description and not intended as build instructions: most things I just found out on-the-fly, so some descriptions might not be completely correct any more.
+All build descriptions can be found [here](build/README.md). Please note that this is a somewhat free-format description and not intended as build instructions: most things I just found out on-the-fly, so some descriptions might not be completely correct any more.
 
 ## Concept of the synth
 
