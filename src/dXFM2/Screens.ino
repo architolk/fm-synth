@@ -808,16 +808,16 @@ void ShowFilterMessageOnScreen(uint8_t screen, bool lopass, bool hipass) {
   display.setTextColor(SSD1306_WHITE);
 
   if (lopass) {
-    display.setCursor(20,20);
+    display.setCursor(15,20);
     display.print(F("Low pass"));
   }
   if (hipass) {
-    display.setCursor(20,20);
+    display.setCursor(12,20);
     display.print(F("High pass"));
   }
 
   display.setFont(&Dungeon12pt7b);
-  display.setCursor(20,50);
+  display.setCursor(30,50);
   display.print(F("Filter"));
 
   TCA9548A(SCRMAP[screen]);
@@ -872,13 +872,13 @@ void showDelayModeOnScreen(uint8_t screen, uint8_t mode) {
   display.setTextColor(SSD1306_WHITE);
 
   switch (mode) {
-    case 0: display.setCursor(20,20); display.print(F("Stereo")); break;
-    case 1: display.setCursor(25,20); display.print(F("Cross")); break;
-    case 2: display.setCursor(20,20); display.print(F("Bounce")); break;
+    case 0: display.setCursor(25,20); display.print(F("Stereo")); break;
+    case 1: display.setCursor(30,20); display.print(F("Cross")); break;
+    case 2: display.setCursor(25,20); display.print(F("Bounce")); break;
   }
 
   display.setFont(&Dungeon12pt7b);
-  display.setCursor(10,50);
+  display.setCursor(25,50);
   display.print(F("Delay"));
 
   TCA9548A(SCRMAP[screen]);
@@ -891,9 +891,9 @@ void showAMModeOnScreen(uint8_t screen) {
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
 
-  display.setCursor(15,25);
+  display.setCursor(12,25);
   display.print(F("Amplitude"));
-  display.setCursor(15,50);
+  display.setCursor(8,50);
   display.print(F("Modulation"));
 
   TCA9548A(SCRMAP[screen]);
@@ -906,14 +906,13 @@ void showReverbModeOnScreen(uint8_t screen, uint8_t mode) {
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
 
-  display.setCursor(15,20);
   switch (mode) {
-    case 0: display.print(F("Plate")); break;
-    case 1: display.print(F("Hall")); break;
+    case 0: display.setCursor(32,20); display.print(F("Plate")); break;
+    case 1: display.setCursor(42,20); display.print(F("Hall")); break;
   }
 
   display.setFont(&Dungeon12pt7b);
-  display.setCursor(10,50);
+  display.setCursor(15,50);
   display.print(F("Reverb"));
 
   TCA9548A(SCRMAP[screen]);
@@ -926,9 +925,11 @@ void showPhaserModeOnScreen(uint8_t screen, uint8_t mode, uint8_t stages) {
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
 
-  display.setCursor(10,20);
+  uint8_t cw = getNumberWidth(stages) + 10 + (mode==0 ? 30 : mode==1 ? 40 : 35);
+
+  display.setCursor(67-cw,20);
   display.print(stages);
-  display.print(F("x"));
+  display.print(F("x "));
 
   switch (mode) {
     case 0: display.print(F("Mono")); break;
@@ -937,7 +938,7 @@ void showPhaserModeOnScreen(uint8_t screen, uint8_t mode, uint8_t stages) {
   }
 
   display.setFont(&Dungeon12pt7b);
-  display.setCursor(10,50);
+  display.setCursor(15,50);
   display.print(F("Phaser"));
 
   TCA9548A(SCRMAP[screen]);
@@ -950,14 +951,13 @@ void showChorusModeOnScreen(uint8_t screen, uint8_t mode) {
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
 
-  display.setCursor(15,20);
   switch (mode/2) {
-    case 0: display.print(F("Long")); break;
-    case 1: display.print(F("Short")); break;
+    case 0: display.setCursor(35,20); display.print(F("Long")); break;
+    case 1: display.setCursor(30,20); display.print(F("Short")); break;
   }
 
   display.setFont(&Dungeon12pt7b);
-  display.setCursor(10,50);
+  display.setCursor(15,50);
   switch (mode%2) {
     case 0: display.print(F("Chorus")); break;
     case 1: display.print(F("Flanger")); break;
@@ -1001,8 +1001,8 @@ void showMulDivTempoOnScreen(uint8_t screen, uint8_t mul, uint8_t div) {
   display.print(F("Div "));
   display.print(div);
 
-    TCA9548A(SCRMAP[screen]);
-    display.display();
+  TCA9548A(SCRMAP[screen]);
+  display.display();
 }
 
 void showLRPhaseOnScreen(uint8_t screen, uint8_t lrphase, uint8_t offset, bool showOffset) {
@@ -1020,6 +1020,9 @@ void showLRPhaseOnScreen(uint8_t screen, uint8_t lrphase, uint8_t offset, bool s
     display.print(offset);
     display.print(F("Hz"));
   }
+
+  TCA9548A(SCRMAP[screen]);
+  display.display();
 }
 
 void showPhaseOnScreen(uint8_t screen, uint8_t phase, uint8_t sync) {
