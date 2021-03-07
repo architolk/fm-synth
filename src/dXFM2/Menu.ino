@@ -49,7 +49,7 @@ void executeParamMenu(uint8_t param, uint8_t value) {
 
 void executeInit() {
   clearAlgoLEDs(); //Algorithm LEDs will be off during init process
-  showMessage(F("Init dXFM2"));
+  showMessage(6,F("Init dXFM2"));
   if (xfm2InitPatch()) {
     if (xfm2GetActiveProgram(0)) {
       updateLEDs();
@@ -66,7 +66,7 @@ void executeInit() {
 void activatePatch(uint8_t patch) {
   //Only unit 0 supported
   clearAlgoLEDs(); //Algorithm LEDs will be off during loading process
-  showMessage(F("DX7 Mode!"));
+  showMessage(6,F("DX7 Mode!"));
   loadDefaultPatch(0,patch);
   xfm2PushActiveProgram(0);
   updateLEDs();
@@ -76,7 +76,7 @@ void activatePatch(uint8_t patch) {
 
 void setAlgorithm(uint8_t algo) {
   //Only unit 0 supported
-  showMessage(F("Algorithm"));
+  showMessage(6,F("Algorithm"));
   xfm2SetAlgorithm(0,algo);
   updateLEDs();
   patchChanged = true;
@@ -88,10 +88,10 @@ void setSynthMode(uint8_t mode) {
   //Warning: doing this, you can't tell what is the actual value, and some small changes might not be visible
   //Also: at this moment, it doesn't compensate for differences in the engine between XFM2 and DX7
   if (mode==0) {
-    showMessage(F("XFM2 mode"));
+    showMessage(6,F("XFM2 mode"));
     dx7LegacyMode = false;
   } else {
-    showMessage(F("DX7 mode"));
+    showMessage(6,F("DX7 mode"));
     dx7LegacyMode = true;
   }
   delay(1000);

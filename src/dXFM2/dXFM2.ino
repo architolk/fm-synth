@@ -48,8 +48,9 @@
 #define PARAMTYPE_ENV 4
 
 #define ENVMODE_ADDSRR 0
-#define ENVMODE_ADSR 1
-#define ENVMODE_ASR 2
+#define ENVMODE_RATE 1
+#define ENVMODE_ADSR 2
+#define ENVMODE_ASR 3
 
 //Go back to the overview display after 2 seconds
 #define DISPLAYPERIOD 2000
@@ -218,9 +219,17 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
           }
         }
       } else {
-        operatorSelect = operatorSelect<6 ? operatorSelect : 0; //Failsafe to make sure that output is not selected
-        operatorUsed = encoder;
-        setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
+        if (blueSelect==BLUE_LEVEL && toggleMode==1) {
+          operatorSelect = encoder;
+          operatorUsed = encoder;
+          setParamValue(greenSelect,blueSelect,operatorSelect,encoder,1,value);
+          activateChange(greenSelect,blueSelect,operatorSelect,encoder,1);
+        } else {
+          operatorSelect = operatorSelect<6 ? operatorSelect : 0; //Failsafe to make sure that output is not selected
+          operatorUsed = encoder;
+          setParamValue(greenSelect,blueSelect,operatorSelect,encoder,0,value);
+          activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
+        }
         if (blueSelect==BLUE_DURATION) {
           if (encoder==1 && toggleMode==1) {
             //In duration and toggleMode=1, decay-1 will also change release-1, making it an ASR envelope (for plucked sounds)
@@ -238,7 +247,6 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
             activateChange(greenSelect,BLUE_LEVEL,operatorSelect,1,0);
           }
         }
-        activateChange(greenSelect,blueSelect,operatorSelect,encoder,0);
       }
     } else {
       if (paramType==PARAMTYPE_LEDCLICK) {
@@ -275,7 +283,7 @@ void doEncoderUsed(uint8_t encoder, bool clicked, uint8_t value) {
       }
     }
     //A bit of a hack, better if this is done via paramType
-    if (greenSelect==GREEN_OSC && blueSelect>3) {
+    if (greenSelect==GREEN_OSC && (blueSelect==4 || (blueSelect==5 && toggleMode==0))) {
       showDisplay(6);
     } else {
       /*

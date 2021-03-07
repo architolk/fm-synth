@@ -154,7 +154,7 @@ void showDebug(uint16_t debug) {
   delay(2000); //Make sure the debug message is visible for two seconds
 }
 
-void showMessage(const String& msg) {
+void showMessage(uint8_t screen, const String& msg) {
   display.clearDisplay();
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
@@ -162,7 +162,7 @@ void showMessage(const String& msg) {
   display.setCursor(0,32);
   display.print(msg);
 
-  TCA9548A(SCRMAP[6]);
+  TCA9548A(SCRMAP[screen]);
   display.display();
 }
 
@@ -571,11 +571,20 @@ void showOperatorOverviewOnScreen(uint8_t screen, env_type env, uint8_t level, u
   display.display();
 }
 
+//Draws a wave: scale is a value between 1-64, 64 being scale 1:1
+void drawWave(const int8_t wave[122], uint8_t cx, uint8_t cy, uint8_t scale) {
+  for (uint8_t i=1; i<122; i++) {
+    uint16_t x1 = (1+i)*scale/64;
+    uint16_t x2 = (2+i)*scale/64;
+    uint16_t y1 = (32+wave[i-1]/4)*scale/64;
+    uint16_t y2 = (32+wave[i]/4)*scale/64;
+    display.drawLine(x1+cx,y1+cy,x2+cx,y2+cy,SSD1306_WHITE);
+  }
+}
+
 void showWaveOnScreen(const int8_t wave[122], uint8_t screen) {
   display.clearDisplay();
-  for (uint8_t i=1; i<122; i++) {
-    display.drawLine(1+i,32+wave[i-1]/4,2+i,32+wave[i]/4,SSD1306_WHITE);
-  }
+  drawWave(wave,0,0,64);
 
   TCA9548A(SCRMAP[screen]);
   display.display();
@@ -744,6 +753,7 @@ void showEnvOperatorOnScreen(uint8_t screen, uint8_t op, uint8_t envmode) {
   display.setCursor(0,12);
   switch (envmode) {
     case ENVMODE_ADDSRR: display.print("AddSrr XFM2"); break;
+    case ENVMODE_RATE: display.print("Rate"); break;
     case ENVMODE_ADSR: display.print("ADSR"); break;
     case ENVMODE_ASR: display.print("ASR Plucked"); break;
   }
@@ -1007,16 +1017,16 @@ void showMulDivTempoOnScreen(uint8_t screen, uint8_t mul, uint8_t div) {
 
 void showLRPhaseOnScreen(uint8_t screen, uint8_t lrphase, uint8_t offset, bool showOffset) {
   display.clearDisplay();
-  display.drawCircle(31,31,PIERADIUS,SSD1306_WHITE);
+  displayLRPhase(screen,lrphase);
 
   display.setFont(&Dungeon9pt7b);
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(55,15);
+  display.setCursor(90,62);
   display.print(lrphase*90/128); //128 = 90 degree phase difference, so 0 = 0 degree phase difference and 255 = about 180 degrees phase difference
 
   if (showOffset) {
-    display.setCursor(60,60);
+    display.setCursor(5,12);
     display.print(offset);
     display.print(F("Hz"));
   }
@@ -1084,20 +1094,20 @@ void showEnvelopeOnScreen(uint8_t screen, uint8_t op, const env_type& env, bool 
       case 0: display.print(F("Attack")); break;
       case 1: display.print(F("Decay-1")); break;
       case 2: display.print(F("Decay-2")); break;
-      case 3: break;
+      case 3: display.print(F("Sustain")); break;
       case 4: display.print(F("Rel-1")); break;
       case 5: display.print(F("Rel-2")); break;
       case 6: display.print(F("Delay")); break;
       case 7: display.print(F("Attack")); break;
       case 8: display.print(F("Decay-1")); break;
-      case 9: display.print(F("Decay-2")); break;
+      case 9: display.print(F("Sustain")); break;
       case 10: display.print(F("Sustain")); break;
       case 11: display.print(F("Rel-1")); break;
       case 12: display.print(F("Rel-2")); break;
-      case 13: display.print(F("Rate")); break;
-      case 14: display.print(F("Range")); break;
+      case 13: display.print(F("Start")); break;
+      case 14: display.print(F("Rate")); break;
     }
-    if (op!=3) {
+    if (op<14) {
       if (balanced) {
         drawNumber(param-128,127,12);
       } else {

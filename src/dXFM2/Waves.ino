@@ -48,3 +48,12 @@ void displayWave(uint8_t screen,uint8_t wave) {
 void displayLFOWave(uint8_t screen,uint8_t wave) {
   showWaveOnScreen(WAVES[LFOMAP[wave]],screen);
 }
+
+void displayLRPhase(uint8_t screen, uint8_t lrphase) {
+  uint16_t phasediv = lrphase*30;
+  phasediv = phasediv/255;
+  uint8_t x = 30-phasediv/2;
+  drawWave(WAVES[0],x,30,28);
+  drawWave(WAVES[0],x+phasediv,30,28);
+
+}

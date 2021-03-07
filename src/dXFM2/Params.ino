@@ -19,7 +19,7 @@ const uint16_t PARAMMAP[6][6][7] PROGMEM = {
     {268,269,270,271,272,273,180},
     {2040,2041,2042,2043,2044,2045,180},
     {134,135,136,132,137,208,206},
-    {130,131,132,132,133,207,205}
+    {1054,1055,1056,1057,1058,1059,1060}
   },
   {  //2 & 6, Operators
     {33,34,35,36,37,38,180},
@@ -54,7 +54,7 @@ const uint16_t PARAMMAP[6][6][7] PROGMEM = {
     {1,2,3,4,5,6}
   }
 };
-const uint16_t PARAMEXMAP[54][2] PROGMEM = {
+const uint16_t PARAMEXMAP[61][2] PROGMEM = {
   {51,63},{52,64},{53,65},{54,66},{55,67},{56,68}, //LFO 1000-1005
   {27,14},{28,14},{29,14},{30,14},{31,14},{32,14}, //OPS 2006-2011
   {15,21},{16,22},{17,23},{18,24},{19,25},{20,26}, //OPS 1012-1017
@@ -65,7 +65,8 @@ const uint16_t PARAMEXMAP[54][2] PROGMEM = {
   {7,1},{8,2},{9,3},{10,4},{11,5},{12,6}, //OPS 3034-3039
   {286,13},{287,13},{288,13},{289,13},{290,13},{291,13}, //OSC 2040 - 2045
   {57,69},{58,70},{59,71},{60,72},{61,73},{62,74}, //LFO 1046 - 1051
-  {303,307},{318,316} //EFX 1052-1053
+  {303,307},{318,316}, //EFX 1052-1053
+  {130,0},{131,138},{132,0},{132,139},{133,0},{207,0},{205,146} // OPS 1054-1060
 };
 
 //Maximum values for every parameter
@@ -312,7 +313,11 @@ param_type getParam(uint8_t green, uint8_t blue, uint8_t selOp, uint8_t usedOp, 
   }
   uint16_t val = PARAMMAP[menu][bmenu][usedOp];
   if (val>4000) {
-    return {unit,val-4000+selOp};
+    if (blue==5 && toggle==1) {
+      return {unit,140+usedOp}; //Very special case: envelope rate key mode. The param value 140 is NOT in map table
+    } else {
+      return {unit,val-4000+selOp};
+    }
   } else {
     if (val>2999) {
       return {unit,PARAMEXMAP[val-3000][toggle]};

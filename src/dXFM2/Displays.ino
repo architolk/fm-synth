@@ -240,15 +240,27 @@ void showPitchEnvelope(uint8_t op) {
     env.rate[4] = getParamValue(greenSelect,BLUE_DURATION,op,4,0); //Rate of releease-1 phase
     env.rate[5] = getParamValue(greenSelect,BLUE_DURATION,op,5,0); //Rate of releease-2 phase
 
-    uint8_t sel = (blueSelect-4)*7+operatorUsed;
-    if (sel==13) {
-      sel = 14; //Not "rate" but "range" for pitch envelope
-    }
-
-    showEnvelopeOnScreen(6,sel,env,true,getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0),blueSelect==BLUE_LEVEL && sel!=14,getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,6,0)); //Last parameter is incorrect!
+    showEnvelopeOnScreen(6,(blueSelect==BLUE_LEVEL && toggleMode==1) ? 14 : (blueSelect-4)*7+operatorUsed,env,true,getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0),blueSelect==BLUE_LEVEL,getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,6,1));
   } else {
-    // Pitch envelope is only displayed in screen 6, so other screens can display the "overview" mode
-    showOverview(op);
+    if (toggleMode==1) {
+      switch (op) {
+        case 0: clearScreen(0); break;
+        case 1: showValueOnScreen(F("Range"),1,getParamValue(greenSelect,blueSelect,operatorSelect,1,1)); break;
+        case 2: clearScreen(2); break;
+        case 3: showValueOnScreen(F("Range velo"),3,getParamValue(greenSelect,blueSelect,operatorSelect,3,1)); break;
+        case 4: clearScreen(4); break;
+        case 5: showMessage(5,F("    Pitch         envelope")); break;
+      }
+    } else {
+      switch (op) {
+        case 0: showMessage(0,F("Attack")); break;
+        case 1: showMessage(1,F("Decay-1")); break;
+        case 2: showMessage(2,F("Decay-2")); break;
+        case 3: showMessage(3,F("Sustain")); break;
+        case 4: showMessage(4,F("Release-1")); break;
+        case 5: showMessage(5,F("Release-2")); break;
+      }
+    }
   }
 }
 
@@ -281,7 +293,7 @@ void showOSCRatio(uint8_t op) {
 //
 void showAmplitudeEnvelope(uint8_t op) {
   if (op==operatorSelect) { //Screen should always be updated, but only ones if all screens are updates - this is a quick hack that does just that
-    showEnvOperatorOnScreen(6,operatorSelect,blueSelect==BLUE_LEVEL ? 0 : toggleMode+1);
+    showEnvOperatorOnScreen(6,operatorSelect,blueSelect==BLUE_LEVEL ? toggleMode : toggleMode+2);
   }
   if (op<6) {
     env_type env;
@@ -298,7 +310,7 @@ void showAmplitudeEnvelope(uint8_t op) {
     env.rate[4] = getParamValue(greenSelect,BLUE_DURATION,op,4,0); //Rate of releease-1 phase
     env.rate[5] = getParamValue(greenSelect,BLUE_DURATION,op,5,0); //Rate of releease-2 phase
 
-    showEnvelopeOnScreen(op,(blueSelect-4)*7+operatorUsed,env,(op==operatorSelect),getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0),false,getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,6,0)); //Last parameter is incorrect
+    showEnvelopeOnScreen(op,(blueSelect==BLUE_LEVEL && toggleMode==1) ? 14 : (blueSelect-4)*7+operatorUsed,env,(blueSelect==BLUE_LEVEL && toggleMode==1) || (op==operatorSelect),getParamValue(greenSelect,blueSelect,operatorSelect,operatorUsed,0),false,getParamValue(greenSelect,BLUE_LEVEL,operatorSelect,op,1));
   }
 }
 
