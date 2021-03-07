@@ -7,7 +7,7 @@
 | 2 | Volume | Wave 2 | Wave 2 | Wave 2 | Wave 2 | Wave 2 | Wave 2 |
 | 3 | Volume | Phase+sync | Phase+sync | Phase+sync | Phase+sync | Phase+sync | Phase+sync |
 | 4 | R0 (delay) | R1 (attack) | R2 (decay-1) | R3 (decay-2) | L2 & L3 (sustain) | R4 (release-1) | R5 (release-2) |
-| 5 | L0 (delay) | L1 (attack) | L2 (decay-1) | L3 (decay-2) | L3 (sustain) | L4 (release-1) | L5 (release-2) |
+| 5 | L0 (delay)/Rate | L1 (attack) | L2 (decay-1)/Range | L3 (decay-2) | L3 (sustain)/Range velo | L4 (release-1) | L5 (release-2) |
 
 The sustain dial in Blue-4 (duration mode) will change both L2 and L3 values.
 
@@ -20,7 +20,7 @@ Parameter value mapping:
 | 2 | 180 | 268 | 269 | 270 | 271 | 272 | 273 |
 | 3 | 180 | 286/13 | 287/13 | 288/13 | 289/13 | 290/13 | 291/13 |
 | 4 | 206 | 134 | 135 | 136 | 131 & 132 | 137 | 208 |
-| 5 | 205 | 130 | 131 | 132 | 132 | 133 | 207 |
+| 5 | 205/146 | 130/0 | 131/138 | 132/0 | 132/139 | 133/0 | 207/0 |
 
 ## Volume & Pitch (waves oscillator #1 & #2)
 
@@ -49,10 +49,6 @@ In envelope mode, the dials do not correspond to a particular operator, but to a
 
 You select the particular operator, by pressing the corresponding dial. This is made visible on the bottom screen.
 
-When you click on the output-dial, you enter "rate" mode and in this mode, you can change the rate values for any of the operator envelopes. You can change the rate for all operators at the same time, by turning the output-dial.
-
-(Because we don't use op-1 to op-6 dial in "rate" mode, maybe we can use this to change range and velocity??)
-
 ![](Envelope.png)
 
 In **Duration** mode, sustain acts as a "normal" ADSR sustain level, so not only L3 is affected, but also L2 (end of Decay-1 level). With settings L0=L4=L5=0 and L1=255, you get a "normal" ADSR. Attack sets the attack rate, decay-1 sets the decay rate and release-1 sets the release rate.
@@ -62,3 +58,8 @@ Two duration modes are available:
 - ADDS: "plucked" operation, rates for decay and release are matched. In this mode, you can quickly create plucked envelopes (the rate change of the sound after the attack phase matches the rate change of the sound after key release).
 
 In **Level** mode, all dials correspond to the end level of that phase. Because the end level of decay-2 is the same as the end level of sustain, these dials respond to the same parameter, L3.
+
+In level mode you can toggle between "regular" level mode and a mode in which you can change some other pitch envelope parameters:
+- Rate key (output dial);
+- Range (Op-2 dial);
+- Range velocity sensitivity (Op-4 dial).

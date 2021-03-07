@@ -155,15 +155,15 @@ This page gives an overview of all XFM2 parameters. It is a cross-reference to t
 | 135 | Pitch envelope rate 2 | OSC | Level | Op-2 dial (decay-1) |
 | 136 | Pitch envelope rate 3 | OSC | Level | Op-4 dial (decay-2) |
 | 137 | Pitch envelope rate 4 | OSC | Level | Op-5 dial (release-1) |
-| 138 | Pitch envelope range | ? | ? | ? |
-| 139 | Pitch envelope range velocity | ? | ? | ? |
-| 140 | Envelope rate key, Op-1 | OPS | Duration | *Op-1 dial* |
-| 141 | Envelope rate key, Op-2 | OPS | Duration | *Op-2 dial* |
-| 142 | Envelope rate key, Op-3 | OPS | Duration | *Op-3 dial* |
-| 143 | Envelope rate key, Op-4 | OPS | Duration | *Op-4 dial* |
-| 144 | Envelope rate key, Op-5 | OPS | Duration | *Op-5 dial* |
-| 145 | Envelope rate key, Op-6 | OPS | Duration | *Op-6 dial* |
-| 146 | Pitch envelope rate key | OSC | Duration | *Output dial* |
+| 138 | Pitch envelope range | OSC | *Level* | Op-2 dial |
+| 139 | Pitch envelope range velocity | OSC | *Level* | Op-4 dial |
+| 140 | Envelope rate key, Op-1 | OPS | *Level* | Op-1 dial |
+| 141 | Envelope rate key, Op-2 | OPS | *Level* | Op-2 dial |
+| 142 | Envelope rate key, Op-3 | OPS | *Level* | Op-3 dial |
+| 143 | Envelope rate key, Op-4 | OPS | *Level* | Op-4 dial |
+| 144 | Envelope rate key, Op-5 | OPS | *Level* | Op-5 dial |
+| 145 | Envelope rate key, Op-6 | OPS | *Level* | Op-6 dial |
+| 146 | Pitch envelope rate key | OSC | *Level* | Output dial |
 | 147 | NOP | - | - | - |
 | 148 | NOP | - | - | - |
 | 149 | LFO pitch depth | LFO | Volume | Op-5 dial |

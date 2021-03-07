@@ -53,10 +53,6 @@ In envelope mode, the dials do not correspond to a particular operator, but to a
 
 You select the particular operator, by pressing the corresponding dial. This is made visible on the bottom screen.
 
-When you click on the output-dial, you enter "rate" mode and in this mode, you can change the rate values for any of the operator envelopes. You can change the rate for all operators at the same time, by turning the output-dial.
-
-(maybe we can do the same for output-dial click and blue=level? Then we could change stuff like eg loop?)
-
 ![](Envelope.png)
 
 In **Duration** mode, sustain acts as a "normal" ADSR sustain level, so not only L3 is affected, but also L2 (end of Decay-1 level). With settings L0=L4=L5=0 and L1=255, you get a "normal" ADSR. Attack sets the attack rate, decay-1 sets the decay rate and release-1 sets the release rate.
@@ -66,3 +62,6 @@ Two duration modes are available:
 - ADDS: "plucked" operation, rates for decay and release are matched. In this mode, you can quickly create plucked envelopes (the rate change of the sound after the attack phase matches the rate change of the sound after key release).
 
 In **Level** mode, all dials correspond to the end level of that phase. Because the end level of decay-2 is the same as the end level of sustain, these dials respond to the same parameter, L3.
+
+
+In level mode you can toggle between "regular" level mode and a mode in which you can change the rate key. In rate key mode, all operator dials correspond to their usual operator, as in a non-envelope mode.
