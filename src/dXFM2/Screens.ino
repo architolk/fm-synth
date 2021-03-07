@@ -1013,7 +1013,7 @@ void showLRPhaseOnScreen(uint8_t screen, uint8_t lrphase, uint8_t offset, bool s
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(55,15);
-  display.print(lrphase);
+  display.print(lrphase*90/128); //128 = 90 degree phase difference, so 0 = 0 degree phase difference and 255 = about 180 degrees phase difference
 
   if (showOffset) {
     display.setCursor(60,60);
@@ -1043,6 +1043,11 @@ void showPhaseOnScreen(uint8_t screen, uint8_t phase, uint8_t sync) {
 
   TCA9548A(SCRMAP[screen]);
   display.display();
+}
+
+//Draws a filled pie with radius 20 for phase 0-180 degree
+void drawPiePart(uint8_t cx, uint8_t cy, uint8_t phase) {
+  //TODO
 }
 
 //Draws a filled pie with radius 20 for phases 0, 1 (=90), 2 (=180) or 3 (=270)
