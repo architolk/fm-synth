@@ -207,6 +207,27 @@ The correct conversion is as follows:
 - Unsure whether the conversion should be linear or some other function. Assumption is linear, so LEVEL * 255/99
 - Maybe this info is needed? https://sound.stackexchange.com/questions/31709/what-is-the-level-of-frequency-modulation-of-many-synthesizers
 
+DX7 Levels with respect to modulation index (from FM Theory & Applications, John Chowning):
+
+| DX7 | Index | Approximation |
+|-----|-------|---------------|
+| 10 | 0.003 | 0.005 |
+| 20 | 0.013 | 0.013 |
+| 30 | 0.031 | 0.031 |
+| 40 | 0.079 | 0.075 |
+| 50 | 0.188 | 0.181 |
+| 60 | 0.446 | 0.434 |
+| 65 | 0.690 | 0.673 |
+| 70 | 1.068 | 1.042 |
+| 75 | 1.639 | 1.615 |
+| 80 | 2.512 | 2.502 |
+| 85 | 3.894 | 3.876 |
+| 90 | 6.029 | 6.004 |
+| 95 | 9.263 | 9.302 |
+| 99 | 13.119 | 13.202 |
+
+If we make the assuption that this table would correspond to an exponential function f(x) = ab^(cx), a good approximation can be made using a = 1/440, b = 2.4 and c = 1/10, displayed in the third column.
+
 ### Key velocity sensitivity
 
 | DX7 | XMF2 |
