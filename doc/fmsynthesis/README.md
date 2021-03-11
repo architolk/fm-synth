@@ -70,6 +70,24 @@ This means that we have two ways of obtaining a "higher" tembre:
 
 ## Examples
 
+### Sawtooth-like (M=1, I=1,3)
+Fc = 440, Fm = 440, C = 1, M = 1, I = 1,3
+
+![](Sidebands_Sawtooth.png)
+
+![](Graph_Sawtooth.png)
+
+![](Wave_Sawtooth.png)
+
+### Square-like (M=2, I=1,3)
+Fc = 440, Fm = 440, C = 1, M = 1, I = 1,3
+
+![](Sidebands_Square.png)
+
+![](Graph_Square.png)
+
+![](Wave_Square.png)
+
 ### M=1, I=0 (no modulation)
 Fc = 440, Fm = 440, C = 1, M = 1, I = 0
 
