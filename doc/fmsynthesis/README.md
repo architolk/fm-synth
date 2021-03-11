@@ -8,7 +8,7 @@
 - https://www.soundonsound.com/techniques/more-frequency-modulation
 - http://ccrma.stanford.edu/software/snd/snd/fm.html
 
-## Theory
+## Theory - simple FM (one carrier, one modulator)
 
 Let:
 Fc: the frequency of the carrier
@@ -74,7 +74,7 @@ A pure wave (for example 440 Hz) can be displayed in the time domain as a sinoid
 
 In FM, the frequency domain graph can be calculated using Bessel functions, as described above. But you can also "calculate" the frequency domain graph from the time domain graph using Fourier transforms. Using Fourier transforms, you could actually "analyse" any available sound and using the results, calculate the appropriate values for carriers and modulators as described in [this article](http://www.javelinart.com/FM_Synthesis_of_Real_Instruments.pdf).
 
-The matlab script [fourier.m](fourier.m) will create a frequency domain graph from any FM created sound wave with one carrier and one modulator. It also contains the calculation of sideband frequencies and amplitudes, so you can compare the two different ways to achieve the same result. You can use the open source tool GNU Octave (https://octave.org) to execute this script.
+The Matlab script [fourier.m](fourier.m) will create a frequency domain graph from any FM created sound wave with one carrier and one modulator. It also contains the calculation of sideband frequencies and amplitudes, so you can compare the two different ways to achieve the same result. You can use the open source tool GNU Octave (https://octave.org) to execute this script.
 
 ## Examples
 
@@ -227,3 +227,54 @@ Sidebands at 0, ±3, ±6, ±9, ...
 Frequency components with amplitude larger than 10% at R1, R2, R4, R5, R7 (440, 880, 1760, 2200, 3080)
 
 ![](Wave_C1_M3_I5.png)
+
+## Theory - feedback FM
+
+Feedback FM is actually easier to calculate than "simple" FM:
+
+- Only positive sidebands will occur: k = 1,2,3,..
+- The amplitude is calculated using the formula: Amplitude = 2 * BesselJ(k,I * k) / (I * k)
+- This function won't work for I = 0 (division by zero), but interestingly, the whole function resolved to 0 for k>1 and to 1 for k=1 (as you would expect: just a regular sinoid wave at feedback level zero).
+
+[This excel spreadsheet](fmfeedback.xlsx) calculates the correct sideband frequencies and amplitudes for a give carrier frequency and modulation index (=feedback ratio), for modulation index < 1.3).
+
+Some interesting things can be said about this spreadsheet:
+- Because only the first 20 sidebands are calculated, the calculated wave from the sidebands is a bit "blocky" with respect to the real calculated FM wave. With feedback: higher level sideband DO realy add up!
+- From around modulation index 1.3, negative frequencies occur at the highest feedback levels. This introduces noise in the calculated FM wave, but not in the sidebands: they still add up nicely (although resulting in a wave with an increasingly lower amplitude).
+
+## Examples
+
+Only the frequency components graph is displayed, the sidebands are always the same as the frequency components.
+
+### I = 0.5
+Fc = 440, C = 1, I = 0.5
+
+![](Graph_F05.png)
+
+![](Wave_F05.png)
+
+### I = 1.0
+
+![](Graph_F10.png)
+
+![](Wave_F10.png)
+
+### I = 1.2
+
+![](Graph_F12.png)
+
+![](Wave_F12.png)
+
+### I = 1.4
+
+![](Graph_F14.png)
+
+![](Wave_F14.png)
+
+The wave above is from the excel and because the resolution is only 360 point, you can't actually see the "noise" part very accurately. Using Octave, we can plot a graph that looks a bit better.
+
+![](WaveO_F14.png)
+
+The summed wave from the calculated sideband amplitudes look very well-behaved, but is probably very wrong (not resembling the sound that is actually heard).
+
+![](WaveS_F14.png)
