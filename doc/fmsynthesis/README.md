@@ -74,7 +74,7 @@ A pure wave (for example 440 Hz) can be displayed in the time domain as a sinoid
 
 In FM, the frequency domain graph can be calculated using Bessel functions, as described above. But you can also "calculate" the frequency domain graph from the time domain graph using Fourier transforms. Using Fourier transforms, you could actually "analyse" any available sound and using the results, calculate the appropriate values for carriers and modulators as described in [this article](http://www.javelinart.com/FM_Synthesis_of_Real_Instruments.pdf).
 
-This [matlab](fourier.m) code will create a frequency domain graph from any FM created sound wave with one carrier and one modulator. It also contains the calculation of sideband frequencies and amplitudes, so you can compare the two different ways to achieve the same result.
+The matlab script [fourier.m](fourier.m) will create a frequency domain graph from any FM created sound wave with one carrier and one modulator. It also contains the calculation of sideband frequencies and amplitudes, so you can compare the two different ways to achieve the same result. You can use the open source tool GNU Octave (https://octave.org) to execute this script.
 
 ## Examples
 
