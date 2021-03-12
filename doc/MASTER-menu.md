@@ -22,8 +22,16 @@ Parameter value mapping:
 
 ## Volume (master main page)
 
-![](../media/MASTER.png)
+![](../media/MASTER-Volume.png)
+
+## Ratio
+
+Reserved: this page is not yet assigned to any parameter
+
+## Pitch & Feedback (velosity offset & sensitivity)
+
+![](../media/MASTER-Pitch.png)
 
 ## Duration & Level (mixer for unit #1 & #2)
 
-![](../media/MASTER-Mix.png)
+![](../media/MASTER-Duration.png)
