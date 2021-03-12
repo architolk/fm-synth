@@ -68,7 +68,7 @@ The table below give the DX7 Sysex parameters, captures from the [original DX7 m
 
 ## Explanation of the DX7 parameters
 
-[This article](https://www.muzines.co.uk/articles/understanding-the-dx7/7842) gives a lot of useful insights.
+[Understanding the DX7, Jay Chapman](https://www.muzines.co.uk/articles/understanding-the-dx7/7842) and [How to program the DX7, Bo Tomlyn](https://homepages.abdn.ac.uk/d.j.benson/pages/dx7/manuals/prgrmdx7.pdf) give a lot of useful insights.
 
 Very detailed information about the DX7 envelope generators can be found here:
 - [The Yamaha DX7 Envelope Generator, part one](https://tlbflush.org/notes/post/dx7eg1/)

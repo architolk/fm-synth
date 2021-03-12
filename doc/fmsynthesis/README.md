@@ -7,6 +7,7 @@
 - http://www.soundonsound.com/sos/apr00/articles/synthsecrets.htm
 - https://www.soundonsound.com/techniques/more-frequency-modulation
 - http://ccrma.stanford.edu/software/snd/snd/fm.html
+- https://homepages.abdn.ac.uk/d.j.benson/pages/html/music.pdf
 
 ## Theory - simple FM (one carrier, one modulator)
 
