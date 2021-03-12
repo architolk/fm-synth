@@ -22,9 +22,11 @@ Parameter value mapping:
 
 ## Volume (LFO main page)
 
-![](../media/LFO.png)
+![](../media/LFO-Volume.png)
 
 ## Ratio, Pitch & Feedback (Keyboard level scale)
+
+![](../media/LFO-Ratio.png)
 
 - **Ratio** changes the left depth & curve
 - **Pitch** changes the keyboard Breakpoint
@@ -32,8 +34,8 @@ Parameter value mapping:
 
 ## Duration (LFO pitch sensitivity)
 
-![](../media/LFO-Pitch.png)
+![](../media/LFO-Duration.png)
 
 ## Level (LFO amplitude sensitivity)
 
-![](../media/LFO-Amplitude.png)
+![](../media/LFO-Level.png)
