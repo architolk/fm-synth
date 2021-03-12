@@ -84,7 +84,7 @@ Parameter value mapping:
 
 ## Level (AM)
 
-![](EFX-AM.png)
+![](../media/EFX-AM.png)
 
 - 5 (Op6): Depth
 - 4 (Op5): show text "AM"
