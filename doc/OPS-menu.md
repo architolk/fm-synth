@@ -40,8 +40,6 @@ Parameter value mapping:
 
 ## Duration & Level (amplitude envelope)
 
-![](../media/OPS-Envelope.png)
-
 In envelope mode, the dials do not correspond to a particular operator, but to a particular phase of the envelope:
 - Output dial: delay phase (L0/R0);
 - Operator 1 dial: attack phase (L1/R1);
@@ -57,11 +55,14 @@ You select the particular operator, by pressing the corresponding dial. This is 
 
 In **Duration** mode, sustain acts as a "normal" ADSR sustain level, so not only L3 is affected, but also L2 (end of Decay-1 level). With settings L0=L4=L5=0 and L1=255, you get a "normal" ADSR. Attack sets the attack rate, decay-1 sets the decay rate and release-1 sets the release rate.
 
+![](../media/OPS-Duration.png)
+
 Two duration modes are available:
 - ADDSRR: "normal" operation, rates for decay and release can be set independently.
 - ADDS: "plucked" operation, rates for decay and release are matched. In this mode, you can quickly create plucked envelopes (the rate change of the sound after the attack phase matches the rate change of the sound after key release).
 
-In **Level** mode, all dials correspond to the end level of that phase. Because the end level of decay-2 is the same as the end level of sustain, these dials respond to the same parameter, L3.
+![](../media/OPS-Level.png)
 
+In **Level** mode, all dials correspond to the end level of that phase. Because the end level of decay-2 is the same as the end level of sustain, these dials respond to the same parameter, L3.
 
 In level mode you can toggle between "regular" level mode and a mode in which you can change the rate key. In rate key mode, all operator dials correspond to their usual operator, as in a non-envelope mode.

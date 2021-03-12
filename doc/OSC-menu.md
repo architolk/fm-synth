@@ -24,7 +24,7 @@ Parameter value mapping:
 
 ## Volume & Pitch (waves oscillator #1 & #2)
 
-![](../media/OSC-Waves.png)
+![](../media/OSC-Volume.png)
 
 ## Ratio
 
@@ -32,7 +32,7 @@ Parameter value mapping:
 
 ## Feedback (oscillator phase)
 
-![](../media/OSC-Phase.png)
+![](../media/OSC-Feedback.png)
 
 ## Duration & Level (pitch envelope)
 

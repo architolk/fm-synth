@@ -36,6 +36,8 @@ Parameter value mapping:
 
 ## Ratio (Chorus)
 
+![](../media/EFX-Chorus.png)
+
 - 5 (Op6): Wet
 - 4 (Op2): Mode (Chorus long, Chorus short, Flanger long, Flanger short)
 - 3 (Op4): Depth
@@ -45,6 +47,8 @@ Parameter value mapping:
 - 6 (Out): Dry
 
 ## Pitch (Reverb)
+
+![](../media/EFX-Reverb.png)
 
 - 5 (Op6): Wet
 - 4 (Op2): Mode (Hall, Plate)
@@ -56,6 +60,8 @@ Parameter value mapping:
 
 ## Feedback (Phaser)
 
+![](../media/EFX-Phaser.png)
+
 - 5 (Op6): Wet
 - 4 (Op2): Mode/Stages (Mono phaser, Stereo phaser, Cross phaser)
 - 3 (Op4): Depth
@@ -66,6 +72,8 @@ Parameter value mapping:
 
 ## Duration (Delay)
 
+![](../media/EFX-Delay.png)
+
 - 5 (Op6): Wet
 - 4 (Op2): Mode (Stereo delay, Cross delay, Bounce delay)
 - 3 (Op4): Filter
@@ -75,6 +83,8 @@ Parameter value mapping:
 - 6 (Out): Dry
 
 ## Level (AM)
+
+![](EFX-AM.png)
 
 - 5 (Op6): Depth
 - 4 (Op5): show text "AM"
