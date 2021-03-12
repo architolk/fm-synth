@@ -46,6 +46,6 @@ When you look at the green LED buttons, you see that two rows of identical optio
 - **[MASTER](doc/MASTER-menu.md)** will enable the parameter page for some global parameters.
 
 And if you really want to do some menu-diving, three additional dials are available:
-- The **Param** dial gives you access to a regular menu. From this menu, you can change some more exotic parameters or have some extra options to ease the workflow while shaping FM sounds.
-- With the **Data** dial you change some parameter value, as selected with the Param dial.
-- With the **Patch** dial you activate a previously stored patch from the XFM2 memory banks (127 patches are available). Select a patch by turning the dial, and activate a patch by pushing the dial (all dials are actually push buttons as well as encoders).
+- The **[Param](doc/MENU.md)** dial gives you access to a regular menu. From this menu, you can change some more exotic parameters or have some extra options to ease the workflow while shaping FM sounds.
+- With the **[Data](doc/MENU.md)** dial you change some parameter value, as selected with the Param dial.
+- With the **[Patch](doc/MENU.md)** dial you activate a previously stored patch from the XFM2 memory banks (127 patches are available). Select a patch by turning the dial, and activate a patch by pushing the dial (all dials are actually push buttons as well as encoders).
