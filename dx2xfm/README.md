@@ -207,33 +207,43 @@ The correct conversion is as follows:
 - Unsure whether the conversion should be linear or some other function. Assumption is linear, so LEVEL * 255/99
 - Maybe this info is needed? https://sound.stackexchange.com/questions/31709/what-is-the-level-of-frequency-modulation-of-many-synthesizers
 
-DX7 Levels with respect to modulation index (from [Music: a mathematical offering, Apendix B](https://homepages.abdn.ac.uk/d.j.benson/pages/html/music.pdf), David Benson:
+DX7 Levels with respect to modulation index (from [Music: a mathematical offering, Apendix B](https://homepages.abdn.ac.uk/d.j.benson/pages/html/music.pdf), David Benson. The calculation in [Synthesis: FM pt2](https://sites.google.com/site/yalaorg/audio-music-synthesis/fmsynth/fmsynthdx) are the same, but have a higher accuracy, and this page describes the actual formula that is used:
 
-| DX7 | Index | Approximation | Original |
-|-----|-------|---------------|----------|
-|  0 | 0.0002 | 0.002 | 0? |
-| 10 | 0.0032 | 0.005 | 0.003 |
-| 20 | 0.0140 | 0.013 | 0.013 |
-| 30 | 0.0332 | 0.031 | 0.031 |
-| 40 | 0.0791 | 0.075 | 0.079 |
-| 50 | 0.1880 | 0.181 | 0.188 |
-| 60 | 0.4472 | 0.434 | 0.446 |
-| 65 | 0.6897 | 0.673 | 0.690 |
-| 70 | 1.0636 | 1.042 | 1.068 |
-| 75 | 1.6403 | 1.615 | 1.639 |
-| 80 | 2.5298 | 2.502 | 2.512 |
-| 85 | 3.9014 | 3.876 | 3.894 |
-| 90 | 6.0168 | 6.004 | 6.029 |
-| 95 | 9.2792 | 9.302 | 9.263 |
-| 99 | 13.123 | 13.202 | 13.119 |
+Let:
+- DX7: the parameter value (range 0-99)
+- TL, the TL-number (?), TL = 99-DX7 for DX7>=20, and for lower values we have to use a look-up table (the output is non-lineair)
+- I: the modulation index, I = PI * 2^((33/16) - (TL/8))
 
-([this excel](../doc/fmsynthesis/DX7ModulationIndex.xlsx) sheet has all the individual numbers).
+Look-up table for TL:
+DX7 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 |
+----|---|---|---|---|---|---|---|---|---|---|----|----|----|----|----|----|----|----|----|----|
+TL  |127|122|118|114|110|107|104|102|100| 98| 96 | 94 | 92 | 90 | 88 | 86 | 85 | 84 | 82 | 81 |
+
+| DX7 | Index | Original | Difference |
+|-----|-------|----------|------------|
+|  0 | 0.0002 | 0? | |
+| 10 | 0.0032 | 0.003 | 6,79% |
+| 20 | 0.0140 | 0.013 | 7,50% |
+| 30 | 0.0332 | 0.031 | 7,22% |
+| 40 | 0.0791 | 0.079 | 0,07% |
+| 50 | 0.1880 | 0.188 | 0,01% |
+| 60 | 0.4472 | 0.446 | 0,27% |
+| 65 | 0.6897 | 0.690 | 0,05% |
+| 70 | 1.0636 | 1.068 | 0,41% |
+| 75 | 1.6403 | 1.639 | 0,08% |
+| 80 | 2.5298 | 2.512 | 0,71% |
+| 85 | 3.9014 | 3.894 | 0,19% |
+| 90 | 6.0168 | 6.029 | 0,20% |
+| 95 | 9.2792 | 9.263 | 0,17% |
+| 99 | 13.123 | 13.119 | 0,03% |
+
+([this excel](../doc/fmsynthesis/DX7ModulationIndex.xlsx) sheet has all the individual numbers and the actual calculation).
 
 ![](../doc/fmsynthesis/DX7ModulationIndex.png)
 
-If we make the assuption that this table would correspond to an exponential function f(x) = ab^(cx), a good approximation can be made using a = 1/440, b = 2.4 and c = 1/10, displayed in the third column.
+The numbers differ a bit from the numbers in  *FM Theory & Applications, John Chowning*, the fourth column named "Original". Especially the calculated index for 0 seems a bit odd, probably the result of using an exponential function with y asymptote = 0. The DX7 would not use a function to calculate these indices, but a lookup table, so param value 0 would probably be set to modulation index 0. But as you can see from the graph below, the differences are very small. From param value 40, the difference is always less than 1%
 
-The numbers differ a bit from the numbers in  *FM Theory & Applications, John Chowning*, the fourth column named "Original". Especially the calculated index for 0 seems a bit odd, probably the result of using an exponential function with y asymptote = 0. The DX7 would not use a function to calculate these indices, but a lookup table, so param value 0 would probably be set to modulation index 0.
+![](../doc/fmsynthesis/ChowningCalculated.png)
 
 ### Key velocity sensitivity
 
