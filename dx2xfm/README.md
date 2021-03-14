@@ -207,26 +207,33 @@ The correct conversion is as follows:
 - Unsure whether the conversion should be linear or some other function. Assumption is linear, so LEVEL * 255/99
 - Maybe this info is needed? https://sound.stackexchange.com/questions/31709/what-is-the-level-of-frequency-modulation-of-many-synthesizers
 
-DX7 Levels with respect to modulation index (from FM Theory & Applications, John Chowning):
+DX7 Levels with respect to modulation index (from [Music: a mathematical offering, Apendix B](https://homepages.abdn.ac.uk/d.j.benson/pages/html/music.pdf), David Benson:
 
-| DX7 | Index | Approximation |
-|-----|-------|---------------|
-| 10 | 0.003 | 0.005 |
-| 20 | 0.013 | 0.013 |
-| 30 | 0.031 | 0.031 |
-| 40 | 0.079 | 0.075 |
-| 50 | 0.188 | 0.181 |
-| 60 | 0.446 | 0.434 |
-| 65 | 0.690 | 0.673 |
-| 70 | 1.068 | 1.042 |
-| 75 | 1.639 | 1.615 |
-| 80 | 2.512 | 2.502 |
-| 85 | 3.894 | 3.876 |
-| 90 | 6.029 | 6.004 |
-| 95 | 9.263 | 9.302 |
-| 99 | 13.119 | 13.202 |
+| DX7 | Index | Approximation | Original |
+|-----|-------|---------------|----------|
+|  0 | 0.0002 | 0.002 | 0? |
+| 10 | 0.0032 | 0.005 | 0.003 |
+| 20 | 0.0140 | 0.013 | 0.013 |
+| 30 | 0.0332 | 0.031 | 0.031 |
+| 40 | 0.0791 | 0.075 | 0.079 |
+| 50 | 0.1880 | 0.181 | 0.188 |
+| 60 | 0.4472 | 0.434 | 0.446 |
+| 65 | 0.6897 | 0.673 | 0.690 |
+| 70 | 1.0636 | 1.042 | 1.068 |
+| 75 | 1.6403 | 1.615 | 1.639 |
+| 80 | 2.5298 | 2.502 | 2.512 |
+| 85 | 3.9014 | 3.876 | 3.894 |
+| 90 | 6.0168 | 6.004 | 6.029 |
+| 95 | 9.2792 | 9.302 | 9.263 |
+| 99 | 13.123 | 13.202 | 13.119 |
+
+([this excel](../doc/fmsynthesis/DX7ModulationIndex.xlsx) sheet has all the individual numbers).
+
+![](../doc/fmsynthesis/DX7ModulationIndex.png)
 
 If we make the assuption that this table would correspond to an exponential function f(x) = ab^(cx), a good approximation can be made using a = 1/440, b = 2.4 and c = 1/10, displayed in the third column.
+
+The numbers differ a bit from the numbers in  *FM Theory & Applications, John Chowning*, the fourth column named "Original". Especially the calculated index for 0 seems a bit odd, probably the result of using an exponential function with y asymptote = 0. The DX7 would not use a function to calculate these indices, but a lookup table, so param value 0 would probably be set to modulation index 0.
 
 ### Key velocity sensitivity
 
