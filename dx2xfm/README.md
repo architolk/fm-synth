@@ -241,7 +241,7 @@ TL  |127|122|118|114|110|107|104|102|100| 98| 96 | 94 | 92 | 90 | 88 | 86 | 85 |
 
 ![](../doc/fmsynthesis/DX7ModulationIndex.png)
 
-The numbers differ a bit from the numbers in  *FM Theory & Applications, John Chowning*, the fourth column named "Original". Especially the calculated index for 0 seems a bit odd, probably the result of using an exponential function with y asymptote = 0. The DX7 would not use a function to calculate these indices, but a lookup table, so param value 0 would probably be set to modulation index 0. But as you can see from the graph below, the differences are very small. From param value 40, the difference is always less than 1%
+The numbers differ a bit from the numbers in  *FM Theory & Applications, John Chowning*, the third column named "Original". Especially the calculated index for 0 seems a bit odd, probably the result of using an exponential function with y asymptote = 0. The DX7 would not use a function to calculate these indices, but a lookup table, so param value 0 would probably be set to modulation index 0. But as you can see from the fourth column and the graph below, the differences are very small. From param value 40, the difference is always less than 1%.
 
 ![](../doc/fmsynthesis/ChowningCalculated.png)
 
