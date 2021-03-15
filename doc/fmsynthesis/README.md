@@ -272,10 +272,14 @@ Fc = 440, C = 1, I = 0.5
 
 ![](Wave_F14.png)
 
-The wave above is from the excel and because the resolution is only 360 point, you can't actually see the "noise" part very accurately. Using Octave, we can plot a graph that looks a bit better (see [feedback.m](feedback.m) for the script).
+The wave above is from the excel and only shows the calculated spots, not a line. The burst of noise is actually the oscillator going very rapidly going between two extreme values, that's why two separate lines are visible. Using Octave, we can plot a graph that depicts a little bit better what is going on (see [feedback.m](feedback.m) for the script).
 
 ![](WaveO_F14.png)
 
 The summed wave from the calculated sideband amplitudes look very well-behaved, but is probably very wrong (not resembling the sound that is actually heard).
 
 ![](WaveS_F14.png)
+
+The noise burst is the result of the sampling rate of digital synthesizers. It is the reason that Yamaha originally used an averaging filter for the feedback, using not only the previous value, but actually the average between the previous two values, which will make the noise burst disappear. The explanation is mentioned in [this patent](https://patents.google.com/patent/US4249447A/en), as is visible in the graph below, using the same parameters, but with the average filter (see [feedback-filter.m](feedback-filter.m) for the script).
+
+![](WaveO_F14-filter.png)

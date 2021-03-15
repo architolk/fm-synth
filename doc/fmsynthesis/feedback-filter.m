@@ -10,8 +10,9 @@ I = 1.4;              % Modulation index
 X = sin(2*pi*Fc*t);
 % Feedback loop: from i = 2, using previous value
 X(1) = 0;
-for i = 2:L-1
-  X(i) = sin(2*pi*Fc*i*T + I*X((i-1)));
+X(2) = sin(2*pi*Fc*2*T);
+for i = 3:L-1
+  X(i) = sin(2*pi*Fc*i*T + I*(X((i-2))+ X((i-1)))/2);
 end
 
 figure (1)
