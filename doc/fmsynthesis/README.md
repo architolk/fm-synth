@@ -272,7 +272,7 @@ Fc = 440, C = 1, I = 0.5
 
 ![](Wave_F14.png)
 
-The wave above is from the excel and because the resolution is only 360 point, you can't actually see the "noise" part very accurately. Using Octave, we can plot a graph that looks a bit better.
+The wave above is from the excel and because the resolution is only 360 point, you can't actually see the "noise" part very accurately. Using Octave, we can plot a graph that looks a bit better (see [feedback.m](feedback.m) for the script).
 
 ![](WaveO_F14.png)
 
