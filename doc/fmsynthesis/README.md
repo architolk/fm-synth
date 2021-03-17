@@ -79,8 +79,10 @@ The Matlab script [fourier.m](fourier.m) will create a frequency domain graph fr
 
 ## Examples
 
-### Sawtooth-like (M=1, I=1,3)
-Fc = 440, Fm = 440, C = 1, M = 1, I = 1,3
+### Sawtooth-like (M=1, I=1.3)
+Fc = 440, Fm = 440, C = 1, M = 1, I = 1.3
+
+`y = sin(x + 1.3 * sin(x))` ([show math](https://www.wolframalpha.com/input/?i=y%3Dsin%28x%2B1.3*sin%28x%29%29))
 
 ![](Sidebands_Sawtooth.png)
 
@@ -90,6 +92,8 @@ Fc = 440, Fm = 440, C = 1, M = 1, I = 1,3
 
 ### Square-like (M=2, I=1,3)
 Fc = 440, Fm = 440, C = 1, M = 1, I = 1,3
+
+`y = sin(x + 1.3 * sin(2x))` ([show math](https://www.wolframalpha.com/input/?i=y%3Dsin%28x%2B1.3*sin%282x%29%29))
 
 ![](Sidebands_Square.png)
 
@@ -250,6 +254,8 @@ Only the frequency components graph is displayed, the sidebands are always the s
 ### I = 0.5
 Fc = 440, C = 1, I = 0.5
 
+`y = sin(x + 0.5 * sin(y))` ([show math](https://www.wolframalpha.com/input/?i=y+%3D+sin%28x+%2B+0.5+*+sin%28y%29%29))
+
 ![](Graph_F05.png)
 
 ![](Wave_F05.png)
@@ -283,3 +289,7 @@ The summed wave from the calculated sideband amplitudes look very well-behaved, 
 The noise burst is the result of the sampling rate of digital synthesizers. It is the reason that Yamaha originally used an averaging filter for the feedback, using not only the previous value, but actually the average between the previous two values, which will make the noise burst disappear. The explanation is mentioned in [this patent](https://patents.google.com/patent/US4249447A/en), as is visible in the graph below, using the same parameters, but with the average filter (see [feedback-filter.m](feedback-filter.m) for the script).
 
 ![](WaveO_F14-filter.png)
+
+Interestingly the "pure" math equation results in a graph that is actually "not possible" from a sound perspective (it goes "back in time"):
+
+`y = sin(x + 1.4 * sin(y))` ([show math](https://www.wolframalpha.com/input/?i=y+%3D+sin%28x+%2B+1.4+*+sin%28y%29%29))
