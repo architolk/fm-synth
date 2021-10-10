@@ -19,23 +19,3 @@ Parameter value mapping:
 | 3 | 180 | 57/69 | 58/70 | 59/71 | 60/72 | 61/73 | 62/74 |
 | 4 | 180 | 222 | 223 | 224 | 225 | 226 | 227 |
 | 5 | 180 | 159 | 160 | 161 | 162 | 163 | 164 |
-
-## Volume (LFO main page)
-
-![](../media/LFO-Volume.png)
-
-## Ratio, Pitch & Feedback (Keyboard level scale)
-
-![](../media/LFO-Ratio.png)
-
-- **Ratio** changes the left depth & curve
-- **Pitch** changes the keyboard Breakpoint
-- **Feedback** changes the right depth & curve
-
-## Duration (LFO pitch sensitivity)
-
-![](../media/LFO-Duration.png)
-
-## Level (LFO amplitude sensitivity)
-
-![](../media/LFO-Level.png)

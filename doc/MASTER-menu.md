@@ -19,19 +19,3 @@ Parameter value mapping:
 | 3 | 242 | 39 | 40 | 41 | 42 | 43 | 44 |
 | 4 | 180 | 256/257 | 258/259 | 260/261 | 262/263 | 264/265 | 266/267 |
 | 5 | 180 | 256/257 | 258/259 | 260/261 | 262/263 | 264/265 | 266/267 |
-
-## Volume (master main page)
-
-![](../media/MASTER-Volume.png)
-
-## Ratio
-
-Reserved: this page is not yet assigned to any parameter
-
-## Pitch & Feedback (velosity offset & sensitivity)
-
-![](../media/MASTER-Pitch.png)
-
-## Duration & Level (mixer for unit #1 & #2)
-
-![](../media/MASTER-Duration.png)
