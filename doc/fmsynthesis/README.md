@@ -12,11 +12,11 @@
 ## Theory - simple FM (one carrier, one modulator)
 
 Let:
-Fc: the frequency of the carrier
-Fm: the frequency of the modulator
-C: The frequency-ratio of the carrier (we will only use a value of C=1)
-M: The frequency-ratio of the modulator
-I: The modulation index
+- Fc: the frequency of the carrier
+- Fm: the frequency of the modulator
+- C: The frequency-ratio of the carrier (we will only use a value of C=1)
+- M: The frequency-ratio of the modulator
+- I: The modulation index
 
 The "side band order" k=0,1,2,3,..
 
